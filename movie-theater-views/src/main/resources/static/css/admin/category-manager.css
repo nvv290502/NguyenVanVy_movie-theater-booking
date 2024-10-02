@@ -1,0 +1,21 @@
+.form-category-add, .form-category-detail{
+    min-width: 500px;
+    min-height: 300px;
+}
+
+.list-category{
+    width: 700px;
+}
+
+.form-category-add-content .content-movie, .form-category-detail-content .content-movie{
+    width: 100%;
+}
+
+.form-category-add-content .category-description, .form-category-detail-content .category-description{
+    width:60%;
+    min-height: 100px;
+    font-size: 13px;
+    background-color: black;
+    padding: 6px;
+    color: #d9d7d7 !important;
+}

@@ -1,0 +1,71 @@
+.form-cinema-add,
+.form-cinema-detail {
+    min-width: 700px;
+    min-height: 300px;
+}
+.manager-container-cinema {
+    opacity: 0;
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+}
+.form-container {
+    display: flex;
+    padding: 20px 0;
+    align-items: center;
+}
+.form-cinema-manager-image {
+    width: 40% !important;
+    justify-content: center !important;
+    height: auto !important;
+}
+.form-cinema-manager-content {
+    width: 60% !important;
+}
+.form-cinema-manager-image .image-large {
+    width: 200px !important;
+    height: 200px !important;
+}
+
+.content-cinema {
+    width: 100% !important;
+}
+.content-cinema p {
+    display: flex;
+    justify-content: center;
+}
+.content-cinema .content-form-title {
+    width: 80px;
+}
+.cinema-description {
+    width: 60%;
+    background-color: black;
+    font-size: 13px;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 5px;
+}
+.btn-manager-room {
+    border: none;
+    border-radius: 5px;
+    padding: 3px 5px;
+    margin-left: 10px;
+    background-color: rgb(222, 101, 8);
+}
+.btn-enable,
+.btn-disable {
+    margin-left: 0 !important;
+}
+
+.btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.form-movie-manager-image {
+    max-width: 30%;
+}

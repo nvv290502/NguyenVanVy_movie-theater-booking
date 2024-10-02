@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+  <link rel="stylesheet" href="/css/libraries.css" />
+  <link rel="stylesheet" href="/css/admin/room-details-style.css" />
+  <link rel="stylesheet" href="/css/admin/menu.css" />
+  <link rel="stylesheet" href="/css/loading.css" />
+
+  <title>Chi Tiết Phòng Chiếu Phim</title>
+</head>
+
+<body class="bg-yeah">
+  <div class="menu-admin z-3 position-absolute"></div>
+  <div class="background">
+    <div class="spinner">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row py-3">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="movie-management-title">
+          <h4 class="text-white" id="title">Quản Lý Phòng Chiếu Phim</h4>
+        </div>
+        <hr style="color: white" />
+        <div class="row py-5">
+          <div class="col-md-1"></div>
+          <div class="col-md-10 rounded-5 bg-dark py-3">
+            <div class="row mt-3">
+              <div class="col-md-3"></div>
+              <h4 class="text-white col-md-6 text-center">
+                Phòng Chiếu Phim
+              </h4>
+              <div class="col-md-3"></div>
+            </div>
+            <div class="row my-3 mx-3 bg-black rounded-3">
+              <div class="d-flex justify-content-center py-3 pb-0">
+                <p class="text-white">
+                  <i><b>Tên : </b></i><span id="room-name"></span>
+                </p>
+                <span style="width: 50px"></span>
+                <p class="text-white">
+                  <i><b>Vị Trí : </b></i><span id="room-location"></span>
+                </p>
+                <span style="width: 50px"></span>
+                <p class="text-white">
+                  <i><b>Kích Thước Màn Hình : </b></i><span id="room-screen-size"></span>
+                </p>
+                <span style="width: 50px"></span>
+                <p class="text-white">
+                  <i><b>Loại Phòng : </b></i>
+                  <span id="room-type"></span>
+                </p>
+                <span style="width: 50px"></span>
+                <p class="text-white">
+                  <i><b>Trạng Thái : </b></i>
+                  <span id="room-status"></span>
+                </p>
+              </div>
+            </div>
+            <div class="row my-3 mx-3 bg-black rounded-3">
+              <div id="room-display"></div>
+            </div>
+            <div class="row my-3 mx-3 bg-black rounded-3" id="type-seat"></div>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-yeah">
+        <div class="modal-header text-white">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Tạo Bố Cục Mới Cho Rạp Phim
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="seat-row-numbers" class="form-label text-white">Số Hàng Ghế <span
+                  style="color: red">*</span></label>
+              <input type="text" class="form-control" id="seat-row-numbers"
+                aria-describedby="seat-column-numbers-validation" placeholder="Nhập số hàng ghế" />
+              <div id="seat-row-numbers-validation" class="form-text text-danger"></div>
+            </div>
+            <div class="mb-3">
+              <label for="seat-column-numbers" class="form-label text-white">Số Cột Ghế <span
+                  style="color: red">*</span></label>
+              <input type="text" class="form-control" id="seat-column-numbers"
+                aria-describedby="seat-column-numbers-validation" placeholder="Nhập số cột ghế" />
+              <div id="seat-row-numbers-validation" class="form-text text-danger"></div>
+            </div>
+            <div class="mb-3">
+              <label for="aisle-position" class="form-label text-white">Vị Trí Lối Đi (Sau Cột Bao Nhiêu)<span
+                  style="color: red">*</span></label>
+              <input type="text" class="form-control" id="aisle-position" aria-describedby="aisle-position-validation"
+                placeholder="Nhập vị trí lối đi (sau cột bao nhiêu)" />
+              <div id="aisle-position-validation" class="form-text text-danger"></div>
+            </div>
+            <div class="mb-3">
+              <label for="aisle-width" class="form-label text-white">Độ Rộng Lối Đi (Bao Nhiêu Cột)<span
+                  style="color: red">*</span></label>
+              <input type="text" class="form-control" id="aisle-width" aria-describedby="aisle-width-validation"
+                placeholder="Nhập độ rộng lối đi" />
+              <div id="aisle-width-validation" class="form-text text-danger"></div>
+            </div>
+            <div class="mb-3">
+              <label for="aisle-height" class="form-label text-white">Chiều Cao Lối Đi (Bao Nhiêu Hàng Tính Từ Hàng
+                A)<span style="color: red">*</span></label>
+              <input type="text" class="form-control" id="aisle-height" aria-describedby="aisle-height-validation"
+                placeholder="Nhập chiều cao lối đi" />
+              <div id="aisle-height-validation" class="form-text text-danger"></div>
+            </div>
+            <div class="mb-3">
+              <label for="double-seat-row-numbers" class="form-label text-white">Số Hàng Ghế Đôi <span
+                  style="color: red">*</span></label>
+              <input type="text" class="form-control" id="double-seat-row-numbers"
+                aria-describedby="double-seat-row-numbers-validation" placeholder="Nhập số hàng ghế đôi" />
+              <div id="double-seat-row-numbers-validation" class="form-text text-danger"></div>
+            </div>
+            <input type="hidden" id="seat-numbers" />
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Đóng
+          </button>
+          <button type="button" class="btn btn-primary" id="create-room-btn">
+            Tạo Phòng Chiếu Theo Bố Cục
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="fixModal" tabindex="-1" aria-labelledby="fixModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-yeah">
+        <div class="modal-header text-white">
+          <h1 class="modal-title fs-5">Sửa Phòng Chiếu Phim</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="disabled-seats" class="form-label text-white">Ghế <span style="color: red">*</span></label>
+              <select id="disabled-seats" class="form-select" aria-describedby="disabled-seats-validation">
+                <option selected>Chọn ghế</option>
+              </select>
+              <div id="disabled-seats-validation" class="form-text text-danger"></div>
+            </div>
+            <div class="mb-3">
+              <label for="seat-status" class="form-label text-white">Trạng Thái <span
+                  style="color: red">*</span></label>
+              <select id="seat-status" class="form-select text-dark" aria-describedby="seat-status-validation">
+                <option selected>Chọn trạng thái</option>
+                <option value="NORMAL">Ghế Thường</option>
+                <option value="VIP">Ghế VIP</option>
+                <option value="DOUBLE">Ghế Đôi</option>
+              </select>
+              <div id="seat-status-validation" class="form-text text-danger"></div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Đóng
+          </button>
+          <button type="button" class="btn btn-primary" id="edit-seat-btn">
+            Sửa
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+<script src="/js/admin/room-details-script.js"></script>
+
+</html>

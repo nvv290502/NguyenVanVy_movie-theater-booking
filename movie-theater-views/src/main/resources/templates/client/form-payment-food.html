@@ -1,0 +1,55 @@
+<div class="order-form-container">
+    <form class="order-form">
+        <h2>NHẬP THÔNG TIN</h2>
+
+        <div class="form-group">
+            <label for="cinema">Chọn rạp phim:</label>
+            <select id="cinema" name="cinema" required>
+                <option value="" disabled selected>Chọn rạp phim</option>
+                <option value="cinema1">Rạp Phim 1</option>
+                <option value="cinema2">Rạp Phim 2</option>
+                <option value="cinema3">Rạp Phim 3</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="screening-room">Chọn phòng chiếu:</label>
+            <select id="screening-room" name="screening-room" required>
+                <option value="" disabled selected>Chọn phòng chiếu</option>
+                <option value="screen1">Phòng Chiếu 1</option>
+                <option value="screen2">Phòng Chiếu 2</option>
+                <option value="screen3">Phòng Chiếu 3</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="seats">Nhập vị trí ghế:</label>
+            <input type="text" id="seats" name="seats" min="1" placeholder="Vị trí ghế (A1, A2)" required>
+        </div>
+
+        <div class="order-summary">
+            <h3>Thông tin đặt hàng</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Tổng tiền sản phẩm</th>
+                </tr>
+                </thead>
+                <tbody class="body-order">
+                <tr>
+                    <td>Phim XYZ</td>
+                    <td id="quantity">1</td>
+                    <td id="total-price">200,000 VNĐ</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <button type="submit" class="submit-button">Thanh Toán</button>
+    </form>
+
+    <button type="button" class="close-btn">&times;</button>
+</div>

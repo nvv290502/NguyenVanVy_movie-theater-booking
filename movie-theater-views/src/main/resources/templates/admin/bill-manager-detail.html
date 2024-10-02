@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/admin/index.css">
+    <link rel="stylesheet" href="/css/admin/bill-manager.css">
+    <link rel="stylesheet" href="/css/admin/movies-manager.css">
+    <link rel="stylesheet" href="/css/admin/menu.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <title>Chi tiết đơn hàng</title>
+</head>
+
+<body>
+    <div class="admin-containers">
+        <div class="menu-admin"></div>
+        <div class="background">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="movie-management bill-management">
+                <div class="movie-management-title">
+                    <i class="fas fa-home"></i>Trang Quản Trị
+                    <i class="fas fa-chevron-right"></i>
+                    <span style="color:white;">Quản Lý Đơn Hàng</span>
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Đơn hàng <span class="invoice-code-title"></span></span>
+                </div>
+                <hr>
+                <div class="bill-detail-content">
+                    <div class="bill-header">
+                        <a href="#" class="back-link"><i class="fas fa-chevron-left"></i> Quay lại</a>
+                    </div>
+                    <div style="display: flex;">
+                        <div class="bill-sections">
+                            <div class="bill-section">
+                                <h2>Thông tin đơn hàng</h2>
+                                <div class="info-grid">
+                                    <div class="info-item"><span>Mã đơn hàng:</span>
+                                        <span class="invoice-code"></span>
+                                    </div>
+                                    <div class="info-item"><span>Phim:</span>
+                                        <span class="movie-name"></span>
+                                    </div>
+                                    <div class="info-item"><span>Giờ chiếu:</span>
+                                        <span class="schedule-time">
+                                            <span class="time-start"></span> -
+                                            <span class="time-end"></span>
+                                        </span>
+                                    </div>
+                                    <div class="info-item"><span>Ngày chiếu:</span>
+                                        <span class="date-schedule"></span>
+                                    </div>
+                                    <div class="info-item"><span>Phòng chiếu:</span>
+                                        <span class="room-name"></span>
+                                    </div>
+                                    <div class="info-item"><span>Rạp chiếu:</span>
+                                        <span class="cinema-name"></span>
+                                    </div>
+                                    <div class="info-item"><span>Ngày đặt:</span>
+                                        <span class="created-date"></span>
+                                    </div>
+                                    <div class="info-item"><span>Trạng thái:</span>
+                                        <span class="is-ticket-issued"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bill-section">
+                                <h2>Thông tin khách hàng</h2>
+                                <div class="info-grid">
+                                    <div class="info-item"><span>Khách hàng:</span> <span
+                                            class="customer-full-name"></span></div>
+                                    <div class="info-item"><span>Điện thoại:</span>
+                                        <span class="customer-phone"></span>
+                                    </div>
+                                    <div class="info-item"><span>Email:</span>
+                                        <span class="customer-email"></span>
+                                    </div>
+                                    <div class="info-item"><span>Thành tiền:</span> <span
+                                            class="highlight amount-money-old">0</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span>Giảm giá :</span>
+                                        <span class="highlight">
+                                            <span class="discount">0</span>
+                                            <span class="percent-discount"></span>
+                                        </span>
+                                    </div>
+                                    <div class="info-item"><span>Tổng tiền:</span> <span
+                                            class="highlight amount-money-new">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bill-section">
+                            <h2>Ghế</h2>
+                            <table class="service-table seat-service-table">
+                                <thead>
+                                    <tr>
+                                        <th>Thông tin ghế</th>
+                                        <th>Loại ghế</th>
+                                        <th>Giá tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>A1</td>
+                                        <td>Ghế thường</td>
+                                        <td>100,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>C2</td>
+                                        <td>Ghế thường</td>
+                                        <td>100,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>C3</td>
+                                        <td>Ghế thường</td>
+                                        <td>100,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>C4</td>
+                                        <td>Ghế thường</td>
+                                        <td>100,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>D4</td>
+                                        <td>Ghế thường</td>
+                                        <td>100,000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2>Dịch vụ</h2>
+                            <table class="service-table food-service-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tên dịch vụ</th>
+                                        <th>Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Tổng tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>HCINEMA COMBO</td>
+                                        <td>1</td>
+                                        <td>113,000</td>
+                                        <td>113,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MY COMBO</td>
+                                        <td>1</td>
+                                        <td>87,000</td>
+                                        <td>87,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>LADIES LOVE SET</td>
+                                        <td>2</td>
+                                        <td>183,000</td>
+                                        <td>366,000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        var billCode = urlParams.get('bill');
+        var accessToken = localStorage.getItem('accessToken');
+        var sumNew = 0;
+        var moneyTicket = 0;
+        var moneyFood = 0;
+
+        $(document).ready(function () {
+            $('.menu-admin').load("/menu", function () {
+                $.getScript('/js/admin/menu.js');
+            });
+
+            callApiGetBill(billCode, accessToken);
+            callApiGetBillDetail(billCode);
+            callApiGetBillFood(billCode);
+            calculateSumMoney(moneyTicket, moneyFood);
+
+            $('.back-link').click(function (e) {
+                e.preventDefault();
+                window.history.back();
+            });
+        });
+
+        //Hàm gọi api lấy thông tin hóa đơn theo billCode
+        function callApiGetBill(billCode, accessToken) {
+            var settings = {
+                url: "http://localhost:8080/user/api/pub/history-order?billCode=" + billCode,
+                method: "GET",
+                contentType: "application/json",
+                success: function (res) {
+                    let code = res.data.content[0].billCode;
+                    let createdDate = res.data.content[0].createdDate;
+                    let movieName = res.data.content[0].movieName;
+                    let scheduleDate = res.data.content[0].scheduleDate;
+                    let scheduleTime = res.data.content[0].scheduleTime;
+                    let isTicketIssued = res.data.content[0].isTicketIssued;
+                    let amountMoneyNew = res.data.content[0].amountMoney;
+                    let duration = res.data.content[0].duration;
+                    let userId = res.data.content[0].userId;
+                    renderBillInfo(code, createdDate, movieName, scheduleDate, scheduleTime, isTicketIssued, amountMoneyNew, duration);
+                    callApiGetUserById(accessToken, userId);
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+        //Hàm map dữ liệu thông tin hóa đơn 
+        function renderBillInfo(billCode, createdDate, movieName, scheduleDate, scheduleTime, isTicketIssued, amountMoneyNew, duration) {
+
+            const amountMoney = amountMoneyNew.toLocaleString('vi-VN');
+            const statusTicketIssued = isTicketIssued ? 'Đã giao vé' : 'Chưa giao vé';
+            const statusTicketClass = isTicketIssued ? 'issued' : 'no-issued';
+            const timeStart = formatTimeWithoutSeconds(`${scheduleDate}T${scheduleTime}`);
+            const timeEnd = new Date(new Date(`${scheduleDate}T${scheduleTime}`).getTime() + duration * 60000);
+            const timeEndFormatted = formatTimeWithoutSeconds(timeEnd);
+
+            $('.invoice-code-title').text(billCode);
+            $('.invoice-code').text(billCode);
+            $('.movie-name').text(movieName);
+            $('.time-start').text(timeStart);
+            $('.time-end').text(timeEndFormatted);
+            $('.date-schedule').text(scheduleDate);
+            $('.created-date').text(formatDateTime(createdDate));
+            $('.is-ticket-issued').text(statusTicketIssued);
+            $('.is-ticket-issued').addClass(statusTicketClass);
+            $('.amount-money-new').text(amountMoney);
+        }
+
+        //Hàm gọi api lấy thông tin khách hàng theo token
+        function callApiGetUserById(accessToken, userId) {
+            $.ajax({
+                url: "http://localhost:8080/user/" + userId,
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                success: function (response) {
+                    renderCustomerInfo(response);
+                },
+                error: function (xhr) {
+                    console.error("Có lỗi khi tải dữ liệu!");
+                }
+            });
+        }
+
+        function renderCustomerInfo(user) {
+            $('.customer-full-name').text(user.fullName);
+            $('.customer-phone').text(user.phone);
+            $('.customer-email').text(user.email);
+        }
+
+        //hàm gọi api lấy thông tin vé theo mã hóa đơn
+        function callApiGetBillDetail(billCode) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/bill-detail?billCode=" + billCode,
+                method: "GET",
+                success: function (res) {
+                    const roomName = res.data[0].roomName;
+                    const cinemaName = res.data[0].cinemaName;
+                    $('.seat-service-table tbody').empty();
+                    for (let ticket of res.data) {
+                        renderTicket(ticket);
+                        moneyTicket += ticket.priceTicket;
+                    }
+                    $('.room-name').text(roomName);
+                    $('.cinema-name').text(cinemaName);
+                    calculateSumMoney(moneyTicket, moneyFood);
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+        function renderTicket(ticket) {
+            const seat = `${ticket.rowName}${ticket.columnName}`;
+            let typeSeat = "";
+            let typeSeatClass = "";
+            const price = ticket.priceTicket.toLocaleString('vi-VN');
+            switch (ticket.typeSeat) {
+                case 'NORMAL':
+                    typeSeat = 'Ghế thường';
+                    typeSeatClass = 'seat-normal';
+                    break;
+                case 'VIP':
+                    typeSeat = 'Ghế vip';
+                    typeSeatClass = 'seat-vip';
+                    break;
+            }
+            const tr = `<tr>
+                            <td>${seat}</td>
+                            <td><span class="${typeSeatClass}">${typeSeat}</span></td>
+                            <td class="highlight">${price}</td>
+                        </tr>`;
+            $('.seat-service-table tbody').append(tr);
+        }
+
+        //Hàm gọi api lấy hóa đơn đồ ăn theo mã hóa đơn
+        function callApiGetBillFood(billCode) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/bill-food-detail?billCode=" + billCode,
+                method: "GET",
+                success: function (res) {
+                    const tbody = $('.food-service-table tbody');
+                    tbody.empty();
+                    for (let bill of res.data) {
+                        renderBillFood(bill);
+                        moneyFood += parseFloat(bill.amountMoney);
+                    }
+                    calculateSumMoney(moneyTicket, moneyFood);
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm tình tổng tiền hóa đơn
+        function calculateSumMoney(ticketMoney, foodMoney) {
+            let sumMoney = ticketMoney + foodMoney;
+            $('.amount-money-old').text(sumMoney.toLocaleString('vi-VN')); // Định dạng theo tiền tệ Việt Nam
+            sumNew = parseFloat($('.amount-money-new').text().replace(/[^0-9]/g, ''));
+            const discount = sumMoney - sumNew;
+            $('.discount').text(discount.toLocaleString('vi-VN'));
+            const persentDiscount = (100 - (sumNew / sumMoney) * 100);
+            $('.percent-discount').text('(' + persentDiscount + '%)');
+        }
+
+        //Hàm map dữ liệu danh sách đồ ăn
+        function renderBillFood(bill) {
+            const tr = `<tr>
+                            <td>${bill.foodName}</td>
+                            <td>${bill.quantity}</td>
+                            <td class="highlight">${bill.price}</td>
+                            <td class="highlight">${bill.amountMoney}</td>
+                        </tr>`;
+            $('.food-service-table tbody').append(tr);
+        }
+
+        //Hàm format date trả về kiểu 'yyyy-mm-dd'
+        function formatDate(date) {
+            return date.getFullYear() + '-' +
+                ('0' + (date.getMonth() + 1)).slice(-2) + '-' +
+                ('0' + date.getDate()).slice(-2);
+        }
+        //Hàm định dạng kiểu localDateTime
+        function formatDateTime(dateTimeString) {
+            const date = new Date(dateTimeString);
+
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+
+            return date.toLocaleString('vi-VN', options);
+        }
+        //Hàm format giờ
+        function formatTimeWithoutSeconds(dateTimeString) {
+            const date = new Date(dateTimeString);
+
+            const hours = ('0' + date.getHours()).slice(-2);
+            const minutes = ('0' + date.getMinutes()).slice(-2);
+
+            return `${hours}:${minutes}`;
+        }
+    </script>
+</body>
+
+</html>

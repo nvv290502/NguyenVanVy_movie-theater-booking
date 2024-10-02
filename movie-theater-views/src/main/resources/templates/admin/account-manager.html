@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Quản Lý Khách Hàng</title>
+
+  <link href="/css/admin/account-manager_style.css" rel="stylesheet" />
+  <link href="/css/libraries.css" rel="stylesheet" />
+  <link href="/css/client/index.css" rel="stylesheet" />
+  <link href="/css/admin/index.css" rel="stylesheet" />
+  <link href="/css/admin/menu.css" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+</head>
+
+<body>
+  <div class="admin-containers">
+    <div class="menu-admin"></div>
+    <div class="background">
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="account-management">
+        <div class="account-management-title">
+          <i class="fas fa-home"></i>Trang Quản Trị
+          <i class="fas fa-chevron-right"></i>
+          <span>Quản Lý Khách Hàng</span>
+        </div>
+        <hr />
+        <div class="list-manager list-account">
+          <div class="list-manager-head">
+            <div style="display: flex">
+              <div class="size-of-page">
+                Show
+                <select class="number-element-of-page-account">
+                  <option value="3">3</option>
+                  <option value="6">6</option>
+                  <option value="12">12</option>
+                </select>
+              </div>
+              <a href="">
+                <div class="add-new add-account">
+                  <i class="fas fa-plus"></i>
+                  Tạo tài khoản
+                </div>
+              </a>
+            </div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Ảnh đại diện</th>
+                <th class="th-search">
+                  <span>Họ tên</span>
+                  <i class="fas fa-search search-icon" data-column="fullName"></i>
+                  <input type="text" class="search-input" data-column="fullName" placeholder="Tìm kiếm theo tên...">
+                </th>
+                <th>Số điện thoại</th>
+                <th class="th-search">
+                  <span>Email</span>
+                  <i class="fas fa-search search-icon" data-column="email"></i>
+                  <input type="text" class="search-input" data-column="email" placeholder="Tìm kiếm theo email...">
+                </th>
+                <th>Cấp bậc thành viên</th>
+                <th>Trạng thái</th>
+                <th>Ngày tạo</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="manager-container">
+          <div class="form-account-manager form-account-add">
+            <i class="fas fa-times-circle close-icon"></i>
+            <div class="form-account-manager-title form-account-add-title">
+              Thêm mới tài khoản
+            </div>
+            <hr />
+            <div class="form-account-manager-image form-account-add-image">
+              <div class="image-avatar">
+                <img src="https://via.placeholder.com/150?text=Thêm+Avatar" id="img-avatar" alt="" />
+                <input type="file" class="image-avatar-upload" id="image-avatar-add" name="imageAvatar"
+                  accept="image/*" />
+                <button class="change-image-button">Thay ảnh</button>
+              </div>
+            </div>
+            <div class="form-account-manager-content form-account-add-content">
+              <div class="content-account">
+                <p>
+                  <span class="content-form-title">Tên tài khoản:<span class="required-star">*</span></span>
+                  <input type="text" class="account-username" id="account-username-add"
+                    placeholder="Nhập tên tài khoản..." />
+                </p>
+                <p>
+                  <span class="content-form-title">Tên đầy đủ:<span class="required-star">*</span></span>
+                  <input type="text" class="account-fullName" id="account-fullName-add" placeholder="Nhập họ tên..." />
+                </p>
+                <p>
+                  <span class="content-form-title">Email:<span class="required-star">*</span></span>
+                  <input type="email" class="account-email" id="account-email-add" placeholder="Nhập email..." />
+                </p>
+                <p>
+                  <span class="content-form-title">Mật khẩu:<span class="required-star">*</span></span>
+                  <input type="text" class="account-password" id="account-password-add" placeholder="Nhập mật khẩu" />
+                </p>
+              </div>
+              <div class="content-account">
+                <p>
+                  <span class="content-form-title">Ngày sinh:</span>
+                  <input type="date" class="account-dob" id="account-dob-add" />
+                </p>
+                <p>
+                  <span class="content-form-title">Số điện thoại:</span>
+                  <input type="text" class="account-phone" id="account-phone-add" placeholder="Nhập số điện thoại.." />
+                </p>
+              </div>
+            </div>
+            <button class="btn-manager-account btn-add-account">
+              Thêm mới
+            </button>
+          </div>
+        </div>
+        <div class="paging paging-account">
+          <a href="" class="paging-item previous">&laquo;</a>
+          <div class="paging-number-account"></div>
+          <a href="" class="paging-item next">&raquo;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/js/admin/account-manager.js"></script>
+  <script>
+    var total = 0;
+    var allAccounts = [];
+    var filteredAccounts = [];
+    var searchTerms = {};
+    var sizeElementAccount = localStorage.getItem("sizeElementAccount") || 6;
+    var numberPageAccount = 0;
+    var columnSort = "";
+    var sortType = "";
+    $(document).ready(function () {
+
+      $(".menu-admin").load("/menu", function () {
+        $.getScript("/js/admin/menu.js");
+      });
+
+      $(document).on("click", ".account-enable", function () {
+        $(this).css("display", "none");
+        $(".account-disable").css("display", "inline-block");
+      });
+
+      $(document).on("click", ".account-disable", function () {
+        $(this).css("display", "none");
+        $(".account-enable").css("display", "inline-block");
+      });
+
+      //Hàm hiển thị ảnh khi chọn input
+      $('input[type="file"]').on("change", function () {
+        var $fileInput = $(this);
+        var $img = $fileInput.siblings("img");
+        var file = this.files[0];
+
+        if (file) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+            $img.attr("src", e.target.result);
+          };
+
+          reader.readAsDataURL(file);
+        }
+      });
+
+      $(".number-element-of-page-account").val(sizeElementAccount);
+
+      saveAccount();
+      callApiGetAllAccount(numberPageAccount, sizeElementAccount, "", "");
+
+      $(document).on("change", ".number-element-of-page-account", function () {
+        sizeElementAccount = parseInt($(this).val());
+        localStorage.setItem("sizeElementAccount", sizeElementAccount);
+        numberPageAccount = 0;
+        renderAccounts();
+      });
+
+      $(document).on("click", ".paging-item-account", function (e) {
+        e.preventDefault();
+        numberPageAccount = $(this).data("value");
+        renderAccounts();
+      });
+
+      $(document).on("click", ".next", function (e) {
+        e.preventDefault();
+        numberPageAccount = total - 1;
+        renderAccounts();
+      });
+
+      $(document).on("click", ".previous", function (e) {
+        e.preventDefault();
+        numberPageAccount = 0;
+        renderAccounts();
+      });
+
+      $(document).on("click", ".btn-customer-detail", function (e) {
+        e.preventDefault();
+        const customerId = $(this).data("customer-id");
+        console.log(customerId);
+        window.location.href = "/admin/customer-detail?user=" + customerId;
+      });
+
+      $(document).on("click", ".btn-update-isEnable", function () {
+        var $isEnable = $(this).data("value");
+        var $idAccount = $(this).data("id");
+        callApiUpdateIsEnable($idAccount, !$isEnable);
+      });
+
+      // Thực hiện tìm kiếm khi nhập vào thanh tìm kiếm
+      $(document).on("input", ".search-input", function () {
+        const column = $(this).data('column');
+        const value = $(this).val().toLowerCase();
+        if (value) {
+          searchTerms[column] = value;
+        } else {
+          delete searchTerms[column];
+        }
+        filterAndDisplayAccounts();
+      });
+    });
+  </script>
+  <script>
+
+    //Hàm gọi api lấy danh sách khách hàng
+    function callApiGetAllAccount(page, size, column, sortType) {
+      var settings = {
+        url: "http://localhost:8080/user?size" + size + "&page=" + page + "&column=" + column + "&sortType=" + sortType,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+        success: function (response) {
+          allAccounts = response.data.content;
+          filteredAccounts = allAccounts;
+          total = response.data.totalPages;
+          renderAccounts();
+        },
+        error: function (xhr) {
+          var response = JSON.parse(xhr.responseText);
+          console.log(response.message);
+        },
+      };
+      $.ajax(settings);
+    }
+
+    function filterAndDisplayAccounts() {
+      filteredAccounts = allAccounts.filter(account => {
+        return Object.entries(searchTerms).every(([column, term]) => {
+          switch (column) {
+            case 'fullName':
+              return account.fullName.toLowerCase().includes(term);
+            case 'email':
+              return account.email.toLowerCase().includes(term);
+            default:
+              return true;
+          }
+        });
+      });
+      numberPageAccount = 0;
+      renderAccounts();
+    }
+
+    function renderAccounts() {
+      $(".list-account tbody").empty();
+      const startIndex = numberPageAccount * sizeElementAccount;
+      const endIndex = startIndex + parseInt(sizeElementAccount);
+      const accountsToShow = filteredAccounts.slice(startIndex, endIndex);
+
+      if (accountsToShow.length === 0) {
+        $(".list-account tbody").append('<tr><td colspan="8" style="text-align: center;">Không tìm thấy tài khoản nào!</td></tr>');
+      } else {
+        for (let user of accountsToShow) {
+          renderAccount(user);
+        }
+      }
+      renderPagingNumberAccount(Math.ceil(filteredAccounts.length / sizeElementAccount), numberPageAccount);
+    }
+
+    function renderPagingNumberAccount(totalPages, currentPage) {
+      var pagingAccount = $(".paging-number-account");
+      pagingAccount.empty();
+
+      const maxPagesToShow = 3;
+      const pageRange = Math.floor(maxPagesToShow / 2);
+      let startPage, endPage;
+
+      if (totalPages <= maxPagesToShow) {
+        startPage = 0;
+        endPage = totalPages - 1;
+      } else {
+        if (currentPage <= pageRange) {
+          startPage = 0;
+          endPage = maxPagesToShow - 1;
+        } else if (currentPage + pageRange >= totalPages) {
+          startPage = totalPages - maxPagesToShow;
+          endPage = totalPages - 1;
+        } else {
+          startPage = currentPage - pageRange;
+          endPage = currentPage + pageRange;
+        }
+      }
+
+      if (startPage > 0) {
+        pagingAccount.append(
+          '<a href="#" class="paging-item paging-item-account" data-value="0">1</a>'
+        );
+        if (startPage > 1) {
+          pagingAccount.append('<span class="hidden-paging">...</span>');
+        }
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        const isActive = (i === currentPage) ? "active" : "";
+        pagingAccount.append(
+          `<a href="#" class="paging-item paging-item-account ${isActive}" data-value="${i}">${i + 1
+          }</a>`
+        );
+      }
+
+      if (endPage < totalPages - 1) {
+        if (endPage < totalPages - 2) {
+          pagingAccount.append('<span class="hidden-paging">...</span>');
+        }
+        pagingAccount.append(
+          `<a href="#" class="paging-item paging-item-account" data-value="${totalPages - 1
+          }">${totalPages}</a>`
+        );
+      }
+    }
+
+    function renderAccount(user) {
+      let btnEnableDisplay = user.isEnabled ? 'inline' : 'none';
+      let btnDisableDisplay = user.isEnabled ? 'none' : 'inline';
+      let createdDate = user.createdDate;
+      let formatDate;
+      if (createdDate != null) {
+        formatDate = formatDateTime(createdDate);
+      }
+
+      // Xác định lớp CSS cho rank
+      let rankClass = '';
+      switch (user.membershipLevel) {
+        case 'BASIC':
+          rankClass = 'rank-basic';
+          break;
+        case 'SILVER':
+          rankClass = 'rank-silver';
+          break;
+        case 'GOLD':
+          rankClass = 'rank-gold';
+          break;
+        case 'PLATINUM':
+          rankClass = 'rank-platinum';
+          break;
+        case 'DIAMOND':
+          rankClass = 'rank-diamond';
+          break;
+      }
+
+      // Xác định lớp CSS cho trạng thái
+      let statusClass = user.isConfirm ? 'status-active' : 'status-inactive';
+
+      const userTr = `<tr>
+                            <td>
+                              <img class="user-avatar" src="${user.avatarUrl}" alt="${user.username}"/>
+                            </td>
+                            <td><a href="#" class="btn-customer-detail" data-customer-id="${user.id}">${user.fullName}</a></td>
+                            <td>${user.phone}</td>
+                            <td>${user.email}</td>
+                            <td><span class="${rankClass}">${user.membershipLevel}</span></td>
+                            <td><span class="${statusClass}">${user.isConfirm ? "Đã kích hoạt" : "Chưa kích hoạt"}</span></td>
+                            <td>${formatDate}</td>
+                            <td>
+                                <button class = "btn-update-isEnable btn-enable account-enable" data-id = "${user.id}" data-value="${user.isEnabled}" style="display: ${btnEnableDisplay}">
+                                  <i class="fas fa-unlock-alt"></i>
+                                </button>
+                                <button class = "btn-update-isEnable btn-disable account-disable" data-id = "${user.id}" data-value="${user.isEnabled}" style="display: ${btnDisableDisplay}">
+                                  <i class="fas fa-lock"></i>
+                                </button>
+                            </td>
+                        </tr>`;
+      $(".list-account tbody").append(userTr);
+    }
+
+    function saveAccount() {
+      $(document).on("click", ".btn-add-account", function (e) {
+        e.preventDefault();
+        var form = new FormData();
+        var avatarUrl = $("#image-avatar-add")[0].files[0];
+        form.append("avatarUrl", avatarUrl);
+        form.append("username", $("#account-username-add").val());
+        form.append("fullName", $("#account-fullName-add").val());
+        form.append("email", $("#account-email-add").val());
+        form.append("password", $("#account-password-add").val());
+        form.append("phone", $("#account-phone-add").val());
+        console.log("password: " + $("#account-password-add").val());
+
+        var dob = new Date($("#account-dob-add").val());
+        var formattedDate = "";
+        if (!isNaN(dob.getTime())) {
+          formattedDate = dob.toISOString().split("T")[0];
+        }
+        form.append("dob", formattedDate);
+
+        callApiSaveAccount(form);
+      });
+    }
+    function callApiSaveAccount(formData) {
+      $('.background').show();
+      var settings = {
+        url: "http://localhost:8080/account/create/customer",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+        success: function (data) {
+          $('.background').hide();
+          toastr.success(data.message);
+          callApiGetAllAccount(localStorage.getItem("numberPageAccount"), localStorage.getItem("sizeElementAccount"), "", "");
+          $(".form-account-manager").css("opacity", "0").css("top", "150%");
+          $(".manager-container").css("opacity", "0").css("z-index", "-1");
+        },
+        error: function (xhr) {
+          $('.background').hide();
+          var response = JSON.parse(xhr.responseText);
+          toastr.error(response.message);
+          console.error(response.message);
+        },
+      };
+      $.ajax(settings);
+    }
+
+    function callApiUpdateIsEnable(id, isEnable) {
+      var settings = {
+        url:
+          "http://localhost:8080/account/isEnable?id=" +
+          id +
+          "&isEnable=" +
+          isEnable,
+        method: "POST",
+        contentType: "application/json",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+        success: function (response) {
+          updateAccountIsEnable(id, isEnable);
+          callApiGetAllAccount(
+            0,
+            localStorage.getItem("sizeElementAccount"),
+            "",
+            ""
+          );
+          toastr.success(response.message);
+        },
+        error: function (xhr) {
+          var response = JSON.parse(xhr.responseText);
+          toastr.error(response.message);
+        },
+      };
+      $.ajax(settings);
+    }
+
+    function updateAccountIsEnable(id, isEnable) {
+      var $row = $('button[data-id="' + id + '"]').closest("tr");
+      var $btnEnable = $row.find(".btn-enable");
+      var $btnDisable = $row.find(".btn-disable");
+
+      if (isEnable) {
+        $btnEnable.show();
+        $btnDisable.hide();
+      } else {
+        $btnEnable.hide();
+        $btnDisable.show();
+      }
+    }
+    //Hàm định dạng kiểu localDateTime
+    function formatDateTime(dateTimeString) {
+      const date = new Date(dateTimeString);
+
+      const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      };
+
+      return date.toLocaleString('vi-VN', options);
+    }
+  </script>
+</body>
+
+</html>

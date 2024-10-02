@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+  <link rel="stylesheet" href="/css/libraries.css" />
+  <link rel="stylesheet" href="/css/admin/schedule-style.css" />
+  <link rel="stylesheet" href="/css/admin/menu.css" />
+  <link rel="stylesheet" href="/css/loading.css" />
+  <link rel="stylesheet" href="/css/admin/movies-manager.css">
+  <link rel="stylesheet" href="/css/client/index.css">
+  <link rel="stylesheet" href="/css/admin/index.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+  <title>Quản Lý Lịch Chiếu</title>
+</head>
+
+<body class="bg-yeah">
+  <div class="menu-admin z-3 position-absolute"></div>
+  <div class="background">
+    <div class="spinner">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
+  </div>
+  <div class="header-schedule">
+    <div class="movie-management-title">
+      <i class="fas fa-home"></i>Trang Quản Trị
+      <i class="fas fa-chevron-right"></i>
+      <span>Quản Lý Suất Chiếu</span>
+    </div>
+    <div class="menu-schedule">
+      <button class="set-showtime">Lên lịch chiếu</button>
+      <button class="showtime-manager">Quản lý lịch chiếu</button>
+    </div>
+  </div>
+  <div class="schedule-container">
+
+  </div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap5@6.1.15/index.global.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+<script src="/js/admin/schedule-script.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  $(document).ready(function () {
+    $(".menu-admin").load("/menu", function () {
+      $.getScript("/js/admin/menu.js");
+    });
+
+    loadShowtimeManager();
+
+    $('.menu-schedule .showtime-manager').addClass('active');
+
+    $(document).on('click', '.set-showtime', function () {
+      $('.menu-schedule button').removeClass('active');
+      loadSetShowtime();
+      $(this).addClass('active');
+    });
+
+    $(document).on('click', '.showtime-manager', function () {
+      $('.menu-schedule button').removeClass('active');
+      loadShowtimeManager();
+      $(this).addClass('active');
+    });
+  });
+
+  function loadShowtimeManager() {
+    $('.schedule-container').load('/showtime-manager', function () {
+      $.getScript('/js/admin/showtime-manager.js');
+    });
+  }
+
+  function loadSetShowtime() {
+    $('.schedule-container').load('/set-showtime', function () {
+      $.getScript('/js/admin/schedule-script.js', function () {
+        initializeDraggable();
+      });
+    });
+  }
+
+</script>
+
+</html>

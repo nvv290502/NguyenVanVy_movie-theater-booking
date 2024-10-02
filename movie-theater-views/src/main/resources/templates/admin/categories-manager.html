@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/admin/index.css">
+    <link rel="stylesheet" href="/css/admin/movies-manager.css">
+    <link rel="stylesheet" href="/css/admin/menu.css">
+    <link rel="stylesheet" href="/css/admin/category-manager.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <title>Quản Lý Thể Loại</title>
+</head>
+
+<body>
+    <div class="admin-containers">
+        <div class="menu-admin"></div>
+        <div class="content">
+            <div class="movie-management">
+                <div class="movie-management-title">
+                    <i class="fas fa-home"></i>Trang Quản Trị
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Quản Lý Thể Loại</span>
+                </div>
+                <hr>
+
+                <div class="list-manager list-category">
+                    <div class="list-manager-head">
+                        <div style="display: flex">
+                            <div class="size-of-page">
+                                Show
+                                <select class="number-element-of-page-category">
+                                    <option value="3">3</option>
+                                    <option value="6">6</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <a href="">
+                                <div class="add-new add-category">
+                                    <i class="fas fa-plus"></i>
+                                    Thêm mới
+                                </div>
+                            </a>
+                        </div>
+                        <div class="search-movie">
+                            <input type="text" id="search-category" placeholder="Tìm kiếm theo tên thể loại...">
+                            <button class="btn-search" id="btn-search-category"><i class="fas fa-search"></i></button>
+                            <ul id="suggestions-list" class="suggestions-list"></ul>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="category-sort" data-value="id" data-id="asc">Tăng dần</li>
+                                            <li class="category-sort" data-value="id" data-id="desc">Giảm dần</li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Tên thể loại
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="category-sort" data-value="name" data-id="asc">Tăng dần</li>
+                                            <li class="category-sort" data-value="name" data-id="desc">Giảm dần</li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Mô tả</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Hoạt hình</td>
+                                <td class="td-description">Mô tả hoạt hình</td>
+                                <td>
+                                    <button class="btn-detail btn-detail-category-manager">
+                                        <i class="fas fa-info-circle"></i>
+                                        Xem chi tiết
+                                    </button>
+                                    <button class="btn-enable category-enable">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Ẩn
+                                    </button>
+                                    <button class="btn-disable category-disable">
+                                        <i class="fas fa-eye"></i>
+                                        Hiện
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- form thêm mới category-->
+                <div class="manager-container-category">
+                    <div class="form-movie-manager form-category-add">
+                        <i class="fas fa-times-circle close-icon"></i>
+                        <div class="form-movie-manager-title form-category-add-title">Thêm mới thể loại</div>
+                        <hr>
+                        <div class="form-movie-manager-content form-category-add-content">
+                            <div class="content-movie">
+                                <p style="display: none;"><span class="content-form-title">Id:</span> <input type="text"
+                                        class="category-id" value="1" readonly></p>
+                                <p><span class="content-form-title">Tên thể loại:<span
+                                            class="required-star">*</span></span> <input type="text"
+                                        class="category-name" id="category-name-add" value=""
+                                        placeholder="Nhập tên thể loại"></p>
+                                <p><span class="content-form-title">Mô tả:</span> <textarea class="category-description"
+                                        id="category-description-add" rows="4"
+                                        placeholder="Nhập mô tả thế loại..."></textarea></p>
+                            </div>
+                        </div>
+                        <button class="btn-manager-movie btn-add-category">Thêm mới</button>
+                    </div>
+
+                    <!--                Form xem chi tiết và cập nhật phim-->
+                    <div class="form-movie-manager form-category-detail">
+                        <i class="fas fa-times-circle close-icon"></i>
+                        <div class="form-movie-manager-title form-category-detail-title">Thông tin chi tiết thể loại
+                        </div>
+                        <hr>
+                        <div class="form-movie-manager-content form-category-detail-content">
+                            <div class="content-movie">
+                                <p><span class="content-form-title">Id:</span> <input
+                                        style="background-color: #d2d0d0; color: black" type="text" class="category-id"
+                                        id="category-id-update" readonly></p>
+                                <p><span class="content-form-title">Tên thế loại:</span> <input type="text"
+                                        class="category-name" id="category-name-update"></p>
+                                <p><span class="content-form-title">Mô tả:</span> <textarea class="category-description"
+                                        id="category-description-update" rows="4"></textarea></p>
+                                <input type="hidden" name="isEnable" id="category-isEnable-update" value="">
+                            </div>
+                        </div>
+                        <button class="btn-manager-movie btn-update-category">Cập nhật category</button>
+                    </div>
+                </div>
+
+
+                <div class="paging paging-category">
+                    <a href="#" class="paging-item previous">&laquo;</a>
+                    <div class="paging-number-category">
+                    </div>
+                    <a href="#" class="paging-item next">&raquo;</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/admin/movies-manager.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('.menu-admin').load("/menu", function () {
+                $.getScript('/js/admin/menu.js');
+            });
+            $(document).on('click', '.add-category', function (e) {
+                e.preventDefault();
+                $('.form-category-add').css('opacity', '1').css('top', '50%');
+                $('.manager-container-category').css('opacity', '1').css('z-index', '1');
+            });
+
+            $(document).on('click', '.btn-detail-category-manager', function (e) {
+                e.preventDefault();
+                $('.form-category-detail').css('opacity', '1').css('top', '50%');
+                $('.manager-container-category').css('opacity', '1').css('z-index', '1');
+            });
+
+            $(document).on('click', '.close-icon', function (e) {
+                e.preventDefault();
+                $('.form-movie-manager').css('opacity', '0').css('top', '150%');
+                $('.manager-container-category').css('opacity', '0').css('z-index', '-1');
+            });
+
+        });
+    </script>
+    <script>
+        var total = 0;
+        var listCategoryName = [];
+        $(document).ready(function () {
+
+            var sizeElementCategory = localStorage.getItem('sizeElementCategory') || 6;
+            var numberPageCategory = 0;
+            var columnSort = "";
+            var sortType = "";
+            $('.number-element-of-page-category').val(sizeElementCategory);
+
+            callApiGetAllCategory(numberPageCategory, sizeElementCategory, columnSort, sortType);
+
+            $(document).on('click', '.btn-add-category', function (e) {
+                e.preventDefault();
+                saveCategory();
+            });
+
+            $(document).on('change', '.number-element-of-page-category', function () {
+                sizeElementCategory = $(this).val();
+                localStorage.setItem('sizeElementCategory', sizeElementCategory);
+                callApiGetAllCategory(numberPageCategory, sizeElementCategory, columnSort, sortType);
+            })
+
+            $(document).on('click', '.paging-item-category', function (e) {
+                e.preventDefault();
+                numberPageCategory = $(this).data("value");
+                callApiGetAllCategory(numberPageCategory, sizeElementCategory, columnSort, sortType);
+            })
+
+            $(document).on('click', '.btn-detail-category-manager', function (e) {
+                e.preventDefault();
+                var $id = $(this).data("id");
+                callApiGetCategoryById($id);
+            })
+
+            $(document).on('click', ".btn-update-category", function () {
+                updateCategory();
+            })
+
+            $(document).on('click', '.btn-update-isEnable', function () {
+                var $isEnable = $(this).data("value");
+                var $idMovie = $(this).data("id");
+                console.log($isEnable);
+                console.log($idMovie);
+                callApiUpdateIsEnableCategory($idMovie, !$isEnable);
+            });
+
+            $(document).on('click', '.category-sort', function () {
+                columnSort = $(this).data("value");
+                sortType = $(this).data("id");
+                callApiGetAllCategory(numberPageCategory, sizeElementCategory, columnSort, sortType);
+            })
+
+            $(document).on('click', '.next', function (e) {
+                e.preventDefault();
+                callApiGetAllCategory(total - 1, sizeElementCategory, columnSort, sortType);
+            })
+
+            $(document).on('click', '.previous', function (e) {
+                e.preventDefault();
+                callApiGetAllCategory(0, sizeElementCategory, columnSort, sortType);
+            })
+
+            $(document).on('click', '#btn-search-category', function (e) {
+                e.preventDefault();
+                var name = $('#search-category').val();
+                callApiSearchCategoryByName(name);
+            })
+
+        });
+
+        function saveCategory() {
+            var category = {
+                name: $('#category-name-add').val(),
+                description: $('#category-description-add').val()
+            }
+            callApiSaveCategory(category);
+        }
+
+        function callApiSaveCategory(category) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/category",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(category),
+                success: function (data) {
+                    toastr.success(data.message);
+                    callApiGetAllCategory(0, localStorage.getItem('sizeElementCategory'), "", "");
+                    $('.form-movie-manager').css('opacity', '0').css('top', '150%');
+                    $('.manager-container-category').css('opacity', '0').css('z-index', '-1');
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiGetAllCategory(page, size, column, sortType) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/category?size=" + size + "&page=" + page + "&column=" + column + "&sortType=" + sortType,
+                method: "GET",
+                success: function (response) {
+                    $('.paging-number-category').empty();
+                    $('tbody').empty();
+                    total = response.data.totalPages;
+                    renderPagingNumberCategory(total, page);
+                    for (var category of response.data.content) {
+                        renderAllCategory(category);
+                    }
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function renderPagingNumberCategory(totalPages, currentPage) {
+            var pagingCategory = $('.paging-number-category');
+            pagingCategory.empty();
+
+            const maxPagesToShow = 3; // Số trang tối đa để hiển thị
+            const pageRange = Math.floor(maxPagesToShow / 2); // Số trang trước và sau trang hiện tại
+            let startPage, endPage;
+
+            if (totalPages <= maxPagesToShow) {
+                // Nếu số trang nhỏ hơn số trang tối đa để hiển thị, hiển thị tất cả
+                startPage = 0;
+                endPage = totalPages - 1;
+            } else {
+                // Nếu không, chỉ hiển thị một số trang quanh trang hiện tại
+                if (currentPage <= pageRange) {
+                    startPage = 0;
+                    endPage = maxPagesToShow - 1;
+                } else if (currentPage + pageRange >= totalPages) {
+                    startPage = totalPages - maxPagesToShow;
+                    endPage = totalPages - 1;
+                } else {
+                    startPage = currentPage - pageRange;
+                    endPage = currentPage + pageRange;
+                }
+            }
+
+            if (startPage > 0) {
+                pagingCategory.append('<a href="#" class="paging-item paging-item-category" data-value="0">1</a>');
+                if (startPage > 1) {
+                    pagingCategory.append('<span class="hidden-paging">...</span>');
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const isActive = i === currentPage ? 'active' : '';
+                pagingCategory.append(`<a href="#" class="paging-item paging-item-category ${isActive}" data-value="${i}">${i + 1}</a>`);
+            }
+
+            if (endPage < totalPages - 1) {
+                if (endPage < totalPages - 2) {
+                    pagingCategory.append('<span class="hidden-paging">...</span>');
+                }
+                pagingCategory.append(`<a href="#" class="paging-item paging-item-category" data-value="${totalPages - 1}">${totalPages}</a>`);
+            }
+
+        }
+
+
+        function renderAllCategory(category) {
+            let btnEnableDisplay = category.isEnable ? 'inline' : 'none';
+            let btnDisableDisplay = category.isEnable ? 'none' : 'inline';
+            const categoryTr = ` <tr>
+                            <td>${category.id}</td>
+                            <td>${category.name}</td>
+                            <td class="td-description">${category.description}</td>
+                            <td>
+                                <button class="btn-detail btn-detail-category-manager" data-id="${category.id}">
+                                        <i class="fas fa-info-circle"></i>
+                                        Xem chi tiết
+                                    </button>
+                                    <button class = "btn-update-isEnable btn-enable category-enable" data-id="${category.id}" data-value="${category.isEnable}" style="display: ${btnEnableDisplay}">
+                                        <i class="fas fa-eye"></i>
+                                        Hiện
+                                    </button>
+                                    <button class = "btn-update-isEnable btn-disable category-disable" data-id="${category.id}" data-value="${category.isEnable}" style="display: ${btnDisableDisplay}">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Ẩn
+                                    </button>
+                            </td>
+                        </tr>`;
+            $('tbody').append(categoryTr);
+        }
+
+        function callApiGetCategoryById(id) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/category/" + id,
+                method: "GET",
+                success: function (response) {
+                    renderDetailCategoryPage(response.data);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+
+            $.ajax(settings);
+        }
+
+        function renderDetailCategoryPage(category) {
+            $('#category-id-update').val(category.id);
+            $('#category-name-update').val(category.name);
+            $('#category-isEnable-update').val(category.isEnable);
+            $('#category-description-update').val(category.description);
+        }
+
+        function updateCategory() {
+            const category = {
+                id: parseInt($('#category-id-update').val()),
+                name: $('#category-name-update').val(),
+                isEnable: $('#category-isEnable-update').val(),
+                description: $('#category-description-update').val()
+            }
+            callApiUpdateCategory(category);
+        }
+
+        function callApiUpdateCategory(category) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/category",
+                method: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify(category),
+                success: function (response) {
+                    toastr.success(response.message);
+                    callApiGetAllCategory(0, localStorage.getItem('sizeElementCategory'), "", "");
+                    $('.form-movie-manager').css('opacity', '0').css('top', '150%');
+                    $('.manager-container-category').css('opacity', '0').css('z-index', '-1');
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message)
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiUpdateIsEnableCategory(id, isEnable) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/category/isEnable?id=" + id + "&isEnable=" + isEnable,
+                method: "POST",
+                contentType: "application/json",
+                success: function (response) {
+                    updateCategoryIsEnable(id, isEnable);
+                    toastr.success(response.message);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function updateCategoryIsEnable(id, isEnable) {
+            var $row = $('button[data-id="' + id + '"]').closest('tr');
+            var $btnEnable = $row.find('.btn-enable');
+            var $btnDisable = $row.find('.btn-disable');
+
+            if (isEnable) {
+                $btnEnable.show();
+                $btnDisable.hide();
+            } else {
+                $btnEnable.hide();
+                $btnDisable.show();
+            }
+        }
+
+
+        $(document).ready(function () {
+
+            var suggestionsList = $('#suggestions-list');
+
+            callApiGetNameCategory();
+
+            $('#search-category').on('input', function () {
+                var query = $(this).val().toLowerCase();
+                if (query.length >= 2) { // Chỉ hiển thị gợi ý khi người dùng gõ ít nhất 2 ký tự
+                    displaySuggestions(query);
+                } else {
+                    suggestionsList.empty();
+                }
+            });
+
+            function displaySuggestions(query) {
+                var filteredNames = listCategoryName.filter(function (name) {
+                    return name.toLowerCase().includes(query);
+                });
+
+                suggestionsList.empty();
+
+                if (filteredNames.length === 0) {
+                    suggestionsList.append('<li>Không có gợi ý nào</li>');
+                } else {
+                    for (var name of filteredNames) {
+                        suggestionsList.append(`<li>${name}</li>`);
+                    }
+                }
+            }
+
+            suggestionsList.on('click', 'li', function () {
+                var selectedName = $(this).text();
+                $('#search-category').val(selectedName);
+                $('#suggestions-list').empty();
+            });
+
+            $(document).on('click', function (event) {
+                if (!$(event.target).closest('#search-category, #suggestions-list').length) {
+                    $('#suggestions-list').empty();
+                }
+            });
+        });
+
+        function callApiGetNameCategory() {
+            var settings = {
+                url: "http://localhost:8080/api/pub/category/getName",
+                method: "GET",
+                success: function (response) {
+                    listCategoryName = response.data;
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiSearchCategoryByName(name) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/category/search?name=" + name,
+                method: "GET",
+                success: function (response) {
+                    var idCategory = response.data.id;
+                    var numberPage = Math.ceil(idCategory / localStorage.getItem('sizeElementCategory'));
+                    callApiGetAllCategory(numberPage - 1, localStorage.getItem('sizeElementCategory'), "", "");
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+    </script>
+</body>
+
+</html>

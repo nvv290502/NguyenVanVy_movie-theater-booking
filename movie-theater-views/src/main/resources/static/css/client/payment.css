@@ -1,0 +1,76 @@
+p{
+    margin: 0;
+}
+.payment-container{
+    width: 50%;
+    min-height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    border: 2px solid white;
+    padding: 20px;
+}
+
+.payment-title{
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+hr{
+    border: 1px solid white;
+}
+
+.payment-status{
+    font-size: 20px;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+}
+.payment-status img{
+    width: 70px;
+    height: 70px;
+}
+.payment-info{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.payment-notification{
+    font-size: 13px;
+    font-style: italic;
+    text-align: center;
+    margin: 20px;
+    color: #0a58ca;
+}
+.payment-info-table{
+    width: 80%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+.payment-info-table tr {
+    border: 1px solid #ddd;
+}
+.payment-info-table td {
+    padding: 10px 20px;
+}
+.td-right{
+    text-align: right;
+}
+.sum-money{
+    color: red;
+    font-weight: bold;
+}
+
+.payment-bank img{
+    width: 80px;
+    border-radius: 10px;
+    height: 30px;
+    object-fit: cover;
+}

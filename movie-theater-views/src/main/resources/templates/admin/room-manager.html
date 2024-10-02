@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/2.1.4/css/dataTables.bootstrap5.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/bootstrap-table.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <link rel="stylesheet" href="/css/libraries.css" />
+    <link rel="stylesheet" href="/css/admin/room-style.css" />
+    <link rel="stylesheet" href="/css/admin/menu.css" />
+    <link rel="stylesheet" href="/css/loading.css"/>
+
+    <title>Quản Lý Phòng Chiếu Phim</title>
+  </head>
+
+  <body class="bg-yeah">
+    <div class="menu-admin z-3 position-absolute"></div>
+    <div class="background">
+      <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+      </div>
+  </div>
+    <div class="container-fluid">
+      <div class="row py-3">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <div>
+            <h4 class="text-white" id="title">Quản Lý Phòng Chiếu Phim</h4>
+          </div>
+          <hr style="color: white" />
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 text-light">
+              <div
+                id="toolbar"
+                class="d-flex justify-content-between align-items-center pt-3 pb-4"
+              >
+                <button
+                  class="btn bg-black text-white"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  data-whatever="@add"
+                >
+                  Thêm Phòng Chiếu Phim
+                </button>
+                <input
+                  id="customSearch"
+                  class="bg-dark text-white form-control w-25 border-dark"
+                  placeholder="Tìm kiếm..."
+                  type="text"
+                />
+              </div>
+              <table
+                class="table custom-table"
+                id="table"
+                data-toggle="table"
+                data-sortable="true"
+                data-pagination="true"
+                data-pagination-v-align="bottom"
+                data-pagination-pre-text="<<"
+                data-pagination-next-text=">>"
+                data-page-list="[3, 6, 12]"
+              data-page-size="3"
+              >
+                <thead>
+                  <tr>
+                    <th data-field="id" data-sortable="true" data-width="1">
+                      ID
+                    </th>
+                    <th data-field="name" data-sortable="true">Tên</th>
+                    <th data-field="location" data-sortable="true">Vị trí</th>
+                    <th data-field="screenSize" data-sortable="true" data-formatter="customSSFormatter">
+                      Kích Thước Màn Hình
+                    </th>
+                    <th data-field="roomType" data-sortable="true" data-formatter="customRTFormatter">Loại Phòng</th>
+                    <th data-field="roomStatus" data-sortable="true" data-formatter="customRSFormatter">Trạng Thái</th>
+                    <th
+                      data-field="operate"
+                      data-formatter="operateFormatter"
+                      data-width="300"
+                    >
+                      Thao Tác
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+          </div>
+          <div class="col-md-1"></div>
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-yeah">
+            <div class="modal-header text-white">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Thêm Phòng Chiếu Phim Mới
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="room-name" class="form-label text-white"
+                    >Tên <span style="color: red;">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="room-name"
+                    aria-describedby="room-name-validation"
+                    placeholder="Nhập tên phòng chiếu phim"
+                  />
+                  <div
+                    id="room-name-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="location" class="form-label text-white"
+                    >Vị Trí <span style="color: red;">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="location"
+                    aria-describedby="room-location-validation"
+                    placeholder="Nhập vị trí phòng chiếu phim"
+                  />
+                  <div
+                    id="room-location-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="screen-size" class="form-label text-white"
+                    >Kích Thước Màn Hình</label
+                  >
+                  <select
+                    id="screen-size"
+                    class="form-select"
+                    aria-describedby="room-screenSize-validation"
+                  >
+                    <option selected>Chọn kích thước màn hình</option>
+                    <option value="SMALL">Nhỏ</option>
+                    <option value="MEDIUM">Trung Bình</option>
+                    <option value="LARGE">Rộng</option>
+                  </select>
+                  <div
+                    id="room-screenSize-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="room-type" class="form-label text-white"
+                    >Loại Phòng </label
+                  >
+                  <select
+                    id="room-type"
+                    class="form-select"
+                    aria-describedby="room-roomType-validation"
+                  >
+                    <option selected>Chọn loại phòng</option>
+                    <option value="STANDARD">2D</option>
+                    <option value="THREE_D">3D</option>
+                    <option value="IMAX">IMAX</option>
+                  </select>
+                  <div
+                    id="room-roomType-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="room-status" class="form-label text-white"
+                    >Trạng Thái</label
+                  >
+                  <select
+                    id="room-status"
+                    class="form-select text-dark"
+                    aria-describedby="room-roomStatus-validation"
+                    disabled
+                  >
+                    <option value="UNASSIGNED" selected>Chưa khởi tạo</option>
+                  </select>
+                  <div
+                    id="room-roomStatus-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+              >
+                Đóng
+              </button>
+              <button type="button" class="btn btn-primary" id="create-room-btn">Tạo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal fade"
+        id="editModal"
+        tabindex="-1"
+        aria-labelledby="editModel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-yeah">
+            <div class="modal-header text-white">
+              <h1 class="modal-title fs-5" id="editModel">Sửa Phòng Chiếu Phim</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <input type="hidden" id="room-id"/>
+                  <label for="edit-room-name" class="form-label text-white"
+                    >Tên <span style="color: red;">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="edit-room-name"
+                    aria-describedby="edit-room-name-validation"
+                    placeholder="Enter room name"
+                  />
+                  <div
+                    id="edit-room-name-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="edit-location" class="form-label text-white"
+                    >Vị Trí <span style="color: red;">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="edit-location"
+                    aria-describedby="edit-room-location-validation"
+                    placeholder="Enter room location"
+                  />
+                  <div
+                    id="edit-room-location-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="edit-screen-size" class="form-label text-white"
+                    >Kích Thước Màn Hình <span style="color: red;">*</span></label
+                  >
+                  <select
+                    id="edit-screen-size"
+                    class="form-select"
+                    aria-describedby="edit-room-screenSize-validation"
+                  >
+                    <option selected>Chọn Kích Thước Màn Hình</option>
+                    <option value="SMALL">Nhỏ</option>
+                    <option value="MEDIUM">Trung Bình</option>
+                    <option value="LARGE">Rộng</option>
+                  </select>
+                  <div
+                    id="edit-room-screenSize-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="edit-room-type" class="form-label text-white"
+                    >Loại Phòng <span style="color: red;">*</span></label
+                  >
+                  <select
+                    id="edit-room-type"
+                    class="form-select"
+                    aria-describedby="edit-room-roomType-validation"
+                  >
+                    <option selected>Chọn loại phòng</option>
+                    <option value="STANDARD">2D</option>
+                    <option value="THREE_D">3D</option>
+                    <option value="IMAX">IMAX</option>
+                  </select>
+                  <div
+                    id="edit-room-roomType-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="edit-room-status" class="form-label text-white"
+                    >Trạng Thái <span style="color: red;">*</span></label
+                  >
+                  <select
+                    id="edit-room-status"
+                    class="form-select text-dark"
+                    aria-describedby="edit-room-roomStatus-validation"
+                  >
+                  <option selected>Chọn trạng thái</option>
+                  <option value="UNASSIGNED">Unassigned</option>
+                  <option value="AVAILABLE">Available</option>
+                  <option value="MAINTENANCE">Maintenance</option>
+                  </select>
+                  <div
+                    id="edit-room-roomStatus-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+              >
+                Đóng
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="edit-room-btn"
+              >
+                Sửa
+              </button>
+            </div>
+          </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/bootstrap-table.min.js"></script>
+  <script src="/js/admin/room-script.js"></script>
+</html>

@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Document</title>
+
+    <link href="/css/admin/account-manager_style.css" rel="stylesheet" />
+    <link href="/css/libraries.css" rel="stylesheet" />
+    <link href="/css/client/index.css" rel="stylesheet" />
+    <link href="/css/admin/index.css" rel="stylesheet" />
+    <link href="/css/admin/menu.css" rel="stylesheet" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
+  </head>
+  <body>
+    <div class="admin-containers">
+      <div class="menu-admin"></div>
+      <div class="content">
+        <div class="staff-management">
+          <div class="account-management-title">Quản Lý Staff</div>
+          <hr />
+          <div class="list-manager list-account">
+            <div class="list-manager-head">
+              <div style="display: flex">
+                <div class="size-of-page">
+                  Show
+                  <select class="number-element-of-page-account">
+                    <option value="3">3</option>
+                    <option value="6">6</option>
+                    <option value="12">12</option>
+                  </select>
+                </div>
+                <a href="">
+                  <div class="add-new add-account">
+                    <i class="fas fa-plus"></i>
+                    Thêm mới
+                  </div>
+                </a>
+              </div>
+              <div class="search-account">
+                <input type="text" placeholder="Tìm kiếm theo tên user..." />
+                <button class="btn-search">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Tên tài khoản</th>
+                  <th>Tên đầy đủ</th>
+                  <th>Số điện thoại</th>
+                  <th>Ngày sinh</th>
+                  <th>Email</th>
+                  <th>Chức vụ</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="manager-container">
+            <div class="form-account-manager form-account-add">
+              <i class="fas fa-times-circle close-icon"></i>
+              <div class="form-account-manager-title form-account-add-title">
+                Thêm mới tài khoản
+              </div>
+              <hr />
+              <div class="form-account-manager-image form-account-add-image">
+                <div class="image-avatar">
+                  <img
+                    src="https://ravanna.vidangel.com/file/ravanna/b/8/account-557_0010_03_b8a522c759d3ef7e.jpg"
+                    id="img-avatar"
+                    alt=""
+                  />
+                  <input
+                    type="file"
+                    class="image-avatar-upload"
+                    id="image-avatar-add"
+                    name="imageAvata"
+                    accept="image/*"
+                  />
+                  <button class="change-image-button">Thay ảnh</button>
+                </div>
+              </div>
+              <div
+                class="form-account-manager-content form-account-add-content"
+              >
+                <!-- <div class="content-account">
+                  <p style="display: none">
+                    <span class="content-form-title">Id:</span>
+                    <input class="account-id" readonly type="text" value="1" />
+                  </p> -->
+
+                <div class="content-account">
+                  <p>
+                    <span class="content-form-title">Tên tài khoản:</span>
+                    <input
+                      type="text"
+                      class="account-username"
+                      id="account-username-add"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">Tên đầy đủ:</span>
+                    <input
+                      type="text"
+                      class="account-fullName"
+                      id="account-fullName-add"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">email:</span>
+                    <input
+                      type="email"
+                      class="account-email"
+                      id="account-email-add"
+                    />
+                  </p>
+                  <!-- <p>
+                      <span class="content-form-title">Thời lượng:</span>
+                      <input
+                        style="width: 50% !important"
+                        type="number"
+                        class="account-duration"
+                        id="account-duration-update"
+                      />
+                      phút
+                    </p> -->
+                  <!-- <p>
+                      <span class="content-form-title">Ngôn ngữ:</span>
+                      <select
+                        class="account-language"
+                        id="account-language-update"
+                        multiple="multiple"
+                        style="width: 100%"
+                      >
+                        <option value="Tiếng Anh">Tiếng Anh</option>
+                        <option value="Tiếng Việt">Tiếng Việt</option>
+                        <option value="Tiếng Trung">Tiếng Trung</option>
+                        <option value="Tiếng Nhật">Tiếng Nhật</option>
+                        <option value="Tiếng Hàn">Tiếng Hàn</option>
+                        <option value="Tiếng Pháp">Tiếng Pháp</option>
+                        <option value="Tiếng Đức">Tiếng Đức</option>
+                        <option value="Tiếng Tây Ban Nha">
+                          Tiếng Tây Ban Nha
+                        </option>
+                        <option value="Tiếng Ý">Tiếng Ý</option>
+                        <option value="Tiếng Bồ Đào Nha">Tiếng Bồ Đào Nha</option>
+                      </select>
+                    </p>
+                    <p>
+                      <span class="content-form-title">Trạng thái:</span>
+                      <select class="account-status" id="account-enable-update">
+                        <option value="isEnable">IsEnable</option>
+                        <option value="Disable">Disable</option>
+                      </select>
+                    </p>
+                    <p>
+                      <span class="content-form-title">Trailer:</span>
+                      <input
+                        type="text"
+                        class="account-trailer"
+                        id="account-trailer-update"
+                      />
+                    </p>
+                    <p>
+                      <span class="content-form-title">Tóm tắt:</span>
+                      <textarea
+                        class="account-summary"
+                        id="account-summary-update"
+                        rows="4"
+                      ></textarea>
+                    </p> -->
+                </div>
+                <div class="content-account">
+                  <p>
+                    <span class="content-form-title">Ngày sinh:</span>
+                    <input
+                      type="date"
+                      class="account-dob"
+                      id="account-dob-add"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">Số điện thoại:</span>
+                    <input
+                      type="text"
+                      class="account-phone"
+                      id="account-phone-add"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">cấp độ thành viên:</span>
+                    <input
+                      type="text"
+                      class="account-membershipLevel"
+                      id="account-membershipLevel-add"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">Role</span>
+                    <select id="account-role-add" readonly>
+<!--                      <option value="1">User</option>-->
+                      <option value="2">Staff</option>
+                    </select>
+                  </p>
+                </div>
+              </div>
+              <button class="btn-manager-account btn-add-account">
+                Thêm mới
+              </button>
+            </div>
+
+            <!-- form xem chi tiết -->
+            <div class="form-account-manager form-account-detail">
+              <i class="fas fa-times-circle close-icon"></i>
+              <div class="form-account-manager-title form-account-detail-title">
+                Thông tin chi tiết tài khoản
+              </div>
+              <hr />
+              <div class="form-account-manager-image form-account-detail-image">
+                <div class="image-avatar">
+                  <img
+                    src="https://ravanna.vidangel.com/file/ravanna/b/8/account-557_0010_03_b8a522c759d3ef7e.jpg"
+                    id="image-avatar-update"
+                    alt=""
+                  />
+                  <input
+                    type="file"
+                    class="image-avatar-upload"
+                    id="image-avatar"
+                    name="imageAvata"
+                    accept="image/*"
+                  />
+                  <button class="change-image-button">Thay ảnh</button>
+                </div>
+              </div>
+              <div
+                class="form-account-manager-content form-account-detail-content"
+              >
+                <div class="content-account">
+                  <p>
+                    <span class="content-form-title">Tên tài khoản:</span>
+                    <input
+                      type="text"
+                      class="account-username"
+                      id="account-username-update"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">Tên đầy đủ:</span>
+                    <input
+                      type="text"
+                      class="account-fullName"
+                      id="account-fullName-update"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">email:</span>
+                    <input
+                      type="email"
+                      class="account-email"
+                      id="account-email-update"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">Ngày sinh:</span>
+                    <input
+                      type="date"
+                      class="account-dob"
+                      id="account-dob-update"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">Số điện thoại:</span>
+                    <input
+                      type="text"
+                      class="account-phone"
+                      id="account-phone-update"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">cấp độ thành viên:</span>
+                    <input
+                      type="text"
+                      class="account-membershipLevel"
+                      id="account-membershipLevel-update"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">Role</span>
+                    <select id="account-role-update">
+                      <option value="1">User</option>
+                      <option value="2">Staff</option>
+                    </select>
+                  </p>
+                  <!-- <p>
+                    <span class="content-form-title">Thời lượng:</span>
+                    <input
+                      style="width: 50% !important"
+                      type="number"
+                      class="account-duration"
+                      id="account-duration-update"
+                    />
+                    phút
+                  </p> -->
+                  <!-- <p>
+                    <span class="content-form-title">Ngôn ngữ:</span>
+                    <select
+                      class="account-language"
+                      id="account-language-update"
+                      multiple="multiple"
+                      style="width: 100%"
+                    >
+                      <option value="Tiếng Anh">Tiếng Anh</option>
+                      <option value="Tiếng Việt">Tiếng Việt</option>
+                      <option value="Tiếng Trung">Tiếng Trung</option>
+                      <option value="Tiếng Nhật">Tiếng Nhật</option>
+                      <option value="Tiếng Hàn">Tiếng Hàn</option>
+                      <option value="Tiếng Pháp">Tiếng Pháp</option>
+                      <option value="Tiếng Đức">Tiếng Đức</option>
+                      <option value="Tiếng Tây Ban Nha">
+                        Tiếng Tây Ban Nha
+                      </option>
+                      <option value="Tiếng Ý">Tiếng Ý</option>
+                      <option value="Tiếng Bồ Đào Nha">Tiếng Bồ Đào Nha</option>
+                    </select>
+                  </p>
+                  <p>
+                    <span class="content-form-title">Trạng thái:</span>
+                    <select class="account-status" id="account-enable-update">
+                      <option value="isEnable">IsEnable</option>
+                      <option value="Disable">Disable</option>
+                    </select>
+                  </p>
+                  <p>
+                    <span class="content-form-title">Trailer:</span>
+                    <input
+                      type="text"
+                      class="account-trailer"
+                      id="account-trailer-update"
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">Tóm tắt:</span>
+                    <textarea
+                      class="account-summary"
+                      id="account-summary-update"
+                      rows="4"
+                    ></textarea>
+                  </p> -->
+                </div>
+                <div class="content-account">
+                  <p>
+                    <span class="content-form-title">Id:</span>
+                    <input
+                      style="background-color: #d2d0d0; color: black"
+                      type="text"
+                      class="account-id"
+                      id="account-id-update"
+                      readonly
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">Ngày tạo:</span>
+                    <input
+                      style="background-color: #d2d0d0; color: black"
+                      type="text"
+                      class="account-createDate"
+                      id="account-createDate-update"
+                      readonly
+                    />
+                  </p>
+                  <p>
+                    <span class="content-form-title">Ngày cập nhật:</span>
+                    <input
+                      style="background-color: #d2d0d0; color: black"
+                      type="text"
+                      class="account-updateDate"
+                      id="account-updateDate-update"
+                      readonly
+                    />
+                  </p>
+                </div>
+              </div>
+              <button class="btn-manager-account btn-update-account">
+                Cập nhật
+              </button>
+            </div>
+          </div>
+
+          <div class="paging paging-account">
+            <a href="" class="paging-item previous">&laquo;</a>
+            <div class="paging-number-account"></div>
+            <a href="" class="paging-item next">&raquo;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/admin/account-manager.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".menu-admin").load("/menu", function () {
+          $.getScript("/js/admin/menu.js");
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $(document).on("click", ".account-enable", function () {
+          $(this).css("display", "none");
+          $(".account-disable").css("display", "inline-block");
+        });
+        $(document).on("click", ".account-disable", function () {
+          $(this).css("display", "none");
+          $(".account-enable").css("display", "inline-block");
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        // $('.manager-container-account').load("/account-manager");
+
+        // Xử lí việc chọn ảnh từ thiết bị để hiển thị lên
+        $('input[type="file"]').on("change", function () {
+          var $fileInput = $(this);
+          var $img = $fileInput.siblings("img");
+          var file = this.files[0];
+
+          if (file) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+              $img.attr("src", e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+          }
+        });
+
+        var sizeElementAccount =
+          localStorage.getItem("sizeElementAccount") || 6;
+        var numberPageAccount = 0;
+        var columnSort = "";
+        var sortType = "";
+
+        $(".number-element-of-page-account").val(sizeElementAccount);
+
+        saveAccount();
+        updateAccount();
+        callApiGetAllAccount(numberPageAccount, sizeElementAccount, "", "");
+
+        $(document).on(
+          "change",
+          ".number-element-of-page-account",
+          function () {
+            sizeElementAccount = $(this).val();
+            localStorage.setItem("sizeElementAccount", sizeElementAccount);
+            callApiGetAllAccount(
+              numberPageAccount,
+              sizeElementAccount,
+              columnSort,
+              sortType
+            );
+          }
+        );
+
+        $(document).on("click", ".paging-item-account", function (e) {
+          e.preventDefault();
+          numberPageAccount = $(this).data("value");
+          callApiGetAllAccount(
+            numberPageAccount,
+            sizeElementAccount,
+            columnSort,
+            sortType
+          );
+        });
+
+        $(document).on("click", ".btn-detail-account-manager", function (e) {
+          e.preventDefault();
+          var accountId = $(this).data("id");
+          callApiGetAccountById(accountId);
+        });
+
+        $(document).on("click", ".btn-update-isEnable", function () {
+          var $isEnable = $(this).data("value");
+          var $idAccount = $(this).data("id");
+          console.log($isEnable);
+          console.log($idAccount);
+          callApiUpdateIsEnable($idAccount, !$isEnable);
+        });
+
+        $(document).on("click", ".account-sort", function () {
+          columnSort = $(this).data("value");
+          sortType = $(this).data("id");
+          callApiGetAllAccount(
+            numberPageAccount,
+            sizeElementAccount,
+            columnSort,
+            sortType
+          );
+        });
+
+        $(document).on("click", ".next", function (e) {
+          e.preventDefault();
+          callApiGetAllAccount(
+            total - 1,
+            sizeElementAccount,
+            columnSort,
+            sortType
+          );
+        });
+
+        $(document).on("click", ".previous", function (e) {
+          e.preventDefault();
+          callApiGetAllAccount(0, sizeElementAccount, columnSort, sortType);
+        });
+
+        $(document).on("click", "#btn-search-account", function (e) {
+          e.preventDefault();
+          var name = $("#search-account").val();
+          callApiSearchAccountByName(name);
+        });
+      });
+    </script>
+    <script>
+      function callApiGetAllAccount(page, size, column, sortType) {
+        var settings = {
+          url:
+            "http://localhost:8080/user?size=" +
+            size +
+            "&page=" +
+            page +
+            "&column=" +
+            column +
+            "&sortType=" +
+            sortType,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+          success: function (response) {
+            $(".paging-number-account").empty();
+            $(".list-account tbody").empty();
+            renderPagingNumberAccount(response.data.totalPages, page);
+            for (let user of response.data.content) {
+              renderAccount(user);
+            }
+            // console.log(response)
+          },
+          error: function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response.message);
+          },
+        };
+        $.ajax(settings);
+      }
+
+      function renderPagingNumberAccount(totalPages, currentPage) {
+        var pagingAccount = $(".paging-number-account");
+        pagingAccount.empty();
+
+        const maxPagesToShow = 3; // Số trang tối đa để hiển thị
+        const pageRange = Math.floor(maxPagesToShow / 2); // Số trang trước và sau trang hiện tại
+        let startPage, endPage;
+
+        if (totalPages <= maxPagesToShow) {
+          // Nếu số trang nhỏ hơn số trang tối đa để hiển thị, hiển thị tất cả
+          startPage = 0;
+          endPage = totalPages - 1;
+        } else {
+          // Nếu không, chỉ hiển thị một số trang quanh trang hiện tại
+          if (currentPage <= pageRange) {
+            startPage = 0;
+            endPage = maxPagesToShow - 1;
+          } else if (currentPage + pageRange >= totalPages) {
+            startPage = totalPages - maxPagesToShow;
+            endPage = totalPages - 1;
+          } else {
+            startPage = currentPage - pageRange;
+            endPage = currentPage + pageRange;
+          }
+        }
+
+        if (startPage > 0) {
+          pagingAccount.append(
+            '<a href="#" class="paging-item paging-item-account" data-value="0">1</a>'
+          );
+          if (startPage > 1) {
+            pagingAccount.append('<span class="hidden-paging">...</span>');
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const isActive = i === currentPage ? "active" : "";
+          pagingAccount.append(
+            `<a href="#" class="paging-item paging-item-account ${isActive}" data-value="${i}">${
+              i + 1
+            }</a>`
+          );
+        }
+
+        if (endPage < totalPages - 1) {
+          if (endPage < totalPages - 2) {
+            pagingAccount.append('<span class="hidden-paging">...</span>');
+          }
+          pagingAccount.append(
+            `<a href="#" class="paging-item paging-item-account" data-value="${
+              totalPages - 1
+            }">${totalPages}</a>`
+          );
+        }
+      }
+
+      function renderAccount(user) {
+        let btnEnableDisplay = user.isEnable ? 'inline' : 'none';
+        let btnDisableDisplay = user.isEnable ? 'none' : 'inline';
+        const userTr = `<tr>
+                            <td>${user.username}</td>
+                            <td>${user.fullName}</td>
+                            <td>${user.phone}</td>
+                            <td>${user.dob}</td>
+                            <td>${user.email}</td>
+                            <td>${user.roles[0].roleName}</td>
+                            // <td>${user.isEnabled ? "enabled" : "disabled"}</td>
+                            <td>
+                                <button class="btn-detail btn-detail-account-manager" data-id="${
+                                  user.id
+                                }">
+                                    <i class="fas fa-info-circle"></i>
+                                </button>
+                                <button class = "btn-update-isEnable btn-enable account-enable" data-id = "${user.id}" data-value="${user.isEnabled}" style="display: ${btnEnableDisplay}">
+                                        <i class="fas fa-eye"></i>
+
+                                    </button>
+                                    <button class = "btn-update-isEnable btn-disable account-disable" data-id = "${user.id}" data-value="${user.isEnabled}" style="display: ${btnDisableDisplay}">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>
+                            </td>
+                        </tr>`;
+        user.roles[0].roleName === "ROLE_STAFF" ? ($(".list-account tbody").append(userTr)) : null;
+      }
+
+      // function renderPagingNumber(size) {
+      //   for (var i = 1; i <= size; i++) {
+      //     const number = `<a href="" class="paging-item" data-value="${
+      //       i - 1
+      //     }">${i}</a>`;
+      //     $(".paging-number").append(number);
+      //   }
+      // }
+
+      function saveAccount() {
+        $(document).on("click", ".btn-add-account", function (e) {
+          e.preventDefault();
+          var form = new FormData();
+          var imageAvatar = $("#image-avatar-add")[0].files[0];
+          console.log("image avata" + imageAvatar);
+
+          form.append("imageAvatar", imageAvatar);
+          form.append("username", $("#account-username-add").val());
+          form.append("fullName", $("#account-fullName-add").val());
+          form.append("email", $("#account-email-add").val());
+          form.append("phone", $("#account-phone-add").val());
+
+          var dob = new Date($("#account-dob-add").val());
+          var formattedDate = "";
+          if (!isNaN(dob.getTime())) {
+            formattedDate = dob.toISOString().split("T")[0];
+          }
+          form.append("dob", formattedDate);
+          form.append("roleId", $("#account-role-add").val());
+          // form.append('status', $('#account-status-add').val().toString());
+          for (var [key, value] of form) {
+            console.log("key: " + key + ", value: " + value);
+          }
+
+          callApiSaveAccount(form);
+        });
+      }
+      function callApiSaveAccount(formData) {
+        var settings = {
+          url: "http://localhost:8080/account",
+          type: "POST",
+          data: formData,
+          contentType: false,
+          processData: false,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+          success: function (data) {
+            toastr.success(data.message);
+            callApiGetAllAccount(
+              localStorage.getItem("numberPageAccount"),
+              localStorage.getItem("sizeElementAccount"),
+              "",
+              ""
+            );
+            $(".form-account-manager").css("opacity", "0").css("top", "150%");
+            $(".manager-container").css("opacity", "0").css("z-index", "-1");
+          },
+          error: function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            toastr.error(response.message);
+            console.log(response.message);
+          },
+        };
+        $.ajax(settings);
+
+        // fetch("http://localhost:8080/auth/account", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify(userObject)
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         toastr.success(data.message);
+        //     })
+        //     .catch(error => {
+        //         toastr.error("Đã xảy ra lỗi khi gọi API: " + error.message);
+        //     });
+      }
+
+      function callApiGetAccountById(id) {
+        var settings = {
+          url: "http://localhost:8080/account/" + id,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+          success: function (response) {
+            console.log(response);
+            renderAccountDetail(response.data);
+          },
+          error: function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response.message);
+          },
+        };
+        $.ajax(settings);
+      }
+
+      function renderAccountDetail(account) {
+        $("#account-id-update").val(account.id);
+        $("#image-avatar-update").attr("src", account.avatarUrl);
+        $("#account-username-update").val(account.username);
+        $("#account-fullName-update").val(account.fullName);
+        $("#account-email-update").val(account.email);
+        $("#account-dob-update").val(account.dob);
+        $("#account-phone-update").val(account.phone);
+        $("#account-membershipLevel-update").val(account.membershipLevel);
+
+      }
+
+      function updateAccount() {
+        $(document).on("click", ".btn-update-account", function (e) {
+          e.preventDefault();
+          var form = new FormData();
+          form.append("id", parseInt($("#account-id-update").val(), 10));
+          form.append("username", $("#account-username-update").val());
+          form.append("fullName", $("#account-fullName-update").val());
+          form.append("email", $("#account-email-update").val());
+          form.append("phone", $("#account-phone-update").val());
+
+          var dob = new Date($("#account-dob-update").val());
+          var formattedDate = "";
+          if (!isNaN(dob.getTime())) {
+            formattedDate = dob.toISOString().split("T")[0];
+          }
+          form.append("dob", formattedDate);
+          form.append("roleId", $("#account-role-update").val());
+          // form.append("status", $("#account-status-update").val().toString());
+
+          callApiUpdateAccount(form);
+        });
+      }
+
+      function callApiUpdateAccount(formData) {
+        var settings = {
+          url: "http://localhost:8080/account",
+          type: "PUT",
+          data: formData,
+          contentType: false,
+          processData: false,
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+          success: function (data) {
+            toastr.success(data.message);
+            callApiGetAllAccount(
+              localStorage.getItem("numberPageAccount"),
+              localStorage.getItem("sizeElementAccount"),
+              "",
+              ""
+            );
+            $(".form-account-manager").css("opacity", "0").css("top", "150%");
+            $(".manager-container").css("opacity", "0").css("z-index", "-1");
+          },
+          error: function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            toastr.error(response.message);
+          },
+        };
+        $.ajax(settings);
+      }
+
+      function callApiUpdateIsEnable(id, isEnable) {
+        var settings = {
+          url:
+            "http://localhost:8080/account/isEnable?id=" +
+            id +
+            "&isEnable=" +
+            isEnable,
+          method: "POST",
+          contentType: "application/json",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+          success: function (response) {
+            updateAccountIsEnable(id, isEnable);
+            callApiGetAllAccount(
+              0,
+              localStorage.getItem("sizeElementAccount"),
+              "",
+              ""
+            );
+            console.log(localStorage.getItem("numberPageAccount"));
+            
+            toastr.success(response.message);
+          },
+          error: function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            toastr.error(response.message);
+          },
+        };
+        $.ajax(settings);
+      }
+
+      function updateAccountIsEnable(id, isEnable) {
+        var $row = $('button[data-id="' + id + '"]').closest("tr");
+        var $btnEnable = $row.find(".btn-enable");
+        var $btnDisable = $row.find(".btn-disable");
+
+        if (isEnable) {
+          $btnEnable.show();
+          $btnDisable.hide();
+        } else {
+          $btnEnable.hide();
+          $btnDisable.show();
+        }
+      }
+    </script>
+  </body>
+</html>

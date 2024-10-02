@@ -1,0 +1,413 @@
+.select-seat {
+    width: 100%;
+    height: auto;
+}
+.selected-seats {
+    width: 90%;
+    height: auto;
+    background-image: url("https://anhdepfree.com/wp-content/uploads/2020/11/hinh-anh-background-xanh-do-cuc-dep-1920x1067.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    display: flex;
+    position: relative;
+}
+
+.selected-seats .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Màu đen với độ mờ 50% */
+}
+
+.select-seat-room-container {
+    z-index: 1;
+    font-family: Montserrat;
+    height: auto;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(17, 36, 16, 0.5); /* Bóng đổ tối */
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    /* background: #011333; */
+    border: 1px solid #2c3e50;
+    position: relative;
+}
+
+.back-page-seat {
+    position: absolute !important;
+    left: 10px !important;
+    top: 10px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.room-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    color: white;
+    display: inline;
+    padding: 5px 5%;
+}
+
+.room-detail {
+    color: white;
+    font-size: 13px;
+    text-align: left;
+    padding: 0 5%;
+}
+
+.room-detail span {
+    color: aqua;
+    font-weight: bold;
+}
+
+.select-seats-container {
+    padding-top: 5%;
+    width: 90%;
+    margin: 0 auto;
+    background: radial-gradient(
+        circle at top center,
+        rgba(0, 0, 0, 0.8),
+        rgba(0, 0, 0, 0.2)
+    ); /* Gradient nền tối với hiệu ứng bóng đổ từ trên xuống dưới */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+}
+
+.row {
+    margin-left: -100px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.row .row-title {
+    color: white;
+    display: flex;
+    width: 100px;
+    align-items: center;
+    font-weight: bold;
+}
+
+.seat {
+    width: 5%;
+    font-size: 40px;
+    cursor: pointer;
+    margin: 5px 10px;
+    transition: transform 0.3s ease;
+}
+
+.seat i {
+    font-size: 30px;
+}
+
+.seat.normal i {
+    color: #ffffff; /* Ví dụ: màu xám cho ghế thường */
+}
+
+.seat.vip i {
+    color: #d8d806; /* Ví dụ: màu vàng cho ghế VIP */
+}
+
+.seat.unavailable i {
+    color: #ff0202; /* Ví dụ: màu đỏ cho ghế không có sẵn */
+}
+
+.seat.selected i {
+    color: #00ff00; /* Ví dụ: mau xanh cho ghế đang chọn */
+}
+
+.seat.bought i {
+    color: #067aa1; /* Ví dụ: màu xanh đậm cho ghế đã mua */
+}
+
+.seat.hidden i {
+    opacity: 0;
+}
+.seat.hidden,
+.seat.unavailable,
+.seat.bought {
+    pointer-events: none;
+}
+
+.seat:hover {
+    transform: scale(1.2);
+}
+
+.seat[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #ecf0f1;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5px;
+    opacity: 0.9;
+    text-shadow: none;
+}
+
+.screen {
+    width: 90%;
+    height: 20px;
+    background: linear-gradient(to bottom, #3a3a3a, #2c2c2c);
+    margin: 0 auto;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #444;
+    box-shadow: 0 15px 15px rgba(0, 0, 0, 0.6);
+}
+
+.seating-legend {
+    display: flex;
+    justify-content: right;
+}
+
+.seating-legend .legend-item {
+    color: rgb(164, 164, 164);
+    font-size: 10px;
+    padding: 1%;
+}
+
+.legend-item i {
+    font-size: 20px;
+}
+
+.info-seats-bought {
+    width: 100%;
+    height: 100px;
+    background-color: rgb(7, 7, 71);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    box-shadow:
+        0 4px 8px rgba(7, 7, 71, 0.8),
+        0 2px 4px rgba(7, 7, 71, 0.8);
+}
+
+.info-seats-selected,
+.count-money,
+.btn-submit {
+    font-size: 15px;
+    color: #bdc3c7;
+    width: calc(33.33% - 20px);
+}
+
+.info-seats-selected .list-seats {
+    font-weight: 500;
+    color: rgb(255, 255, 54);
+    font-size: 20px;
+}
+
+.info-seats-selected p {
+    margin: 0;
+}
+
+.count-money span {
+    font-weight: 500;
+    line-height: 50px;
+    font-size: 30px;
+    color: rgb(255, 255, 54);
+}
+
+.btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.btn-submit button {
+    color: white;
+    border-radius: 30px;
+    border: none;
+    background: linear-gradient(to right, rgb(10, 193, 202), rgb(128, 116, 205));
+    padding: 8px 30px;
+    margin-right: 5%;
+    transition:
+        transform 1s ease,
+        background 1s ease;
+}
+
+.btn-submit button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(to right, rgb(89, 72, 217), rgb(10, 193, 202));
+}
+
+/* Css xác nhận chọn ghế */
+.confirm-seat-bgr {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-seat {
+    padding: 20px;
+    width: 400px;
+    background-color: #010c82;
+    box-shadow: 0 4px 6px black;
+    border-radius: 5px;
+}
+.confirm-title {
+    text-align: center;
+    font-size: 20px;
+    padding: 10px;
+}
+.confirm-title span {
+    color: #ff0000;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.btn-seat {
+    display: flex;
+    justify-content: center;
+}
+.btn-seat button {
+    margin: 10px;
+    margin-top: 5px;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 3px 20px;
+}
+
+.choose-again {
+    border: 2px solid red;
+    color: red;
+    transition: background 0.5s ease;
+}
+.choose-again:hover {
+    background-color: red;
+    color: white;
+}
+.continue {
+    border: 2px solid green;
+    color: green;
+    transition: background 0.5s ease;
+}
+.continue:hover {
+    background-color: green;
+    color: white;
+}
+
+@media (max-width: 948px) {
+    .row .row-title {
+        width: 50px;
+        font-size: 15px;
+    }
+
+    .row {
+        margin-left: -50px;
+        margin-bottom: 5px;
+    }
+
+    .row .row-title strong {
+        display: none;
+    }
+
+    .seat i {
+        font-size: 25px;
+    }
+
+    .legend-item i {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 789px) {
+    .selected-seats {
+        width: 100%;
+    }
+    .row .row-title {
+        width: 30px;
+        font-size: 13px;
+    }
+
+    .row {
+        margin-left: -30px;
+        margin-bottom: 0;
+    }
+
+    .row .row-title strong {
+        display: none;
+    }
+
+    .seat i,
+    .count-money span {
+        font-size: 20px;
+    }
+
+    .legend-item i,
+    .info-seats-selected .list-seats {
+        font-size: 15px;
+    }
+
+    .info-seats-selected {
+        font-size: 12px;
+    }
+
+    .btn-submit button {
+        padding: 5px 20px;
+    }
+}
+
+@media (max-width: 598px) {
+    .row .row-title {
+        display: none;
+    }
+    .seat {
+        margin: 0 5px;
+    }
+
+    .info-seats-selected,
+    .count-money {
+        width: calc(50% - 20px);
+    }
+    .btn-submit {
+        justify-content: center;
+        margin: 0 auto;
+    }
+    .legend-item {
+        max-width: 50px;
+    }
+    .legend-item i {
+        margin-left: 7px;
+    }
+}
+
+@media (max-width: 489px) {
+    .seats-container,
+    .screen {
+        width: 100%;
+    }
+
+    .room-title {
+        font-size: 16px;
+    }
+    .room-detail {
+        font-size: 10px;
+    }
+    .btn-submit button {
+        padding: 5px 10px;
+    }
+}

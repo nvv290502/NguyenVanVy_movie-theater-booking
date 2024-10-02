@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/admin/index.css">
+    <link rel="stylesheet" href="/css/admin/movies-manager.css">
+    <link rel="stylesheet" href="/css/admin/rooms-manager.css">
+    <link rel="stylesheet" href="/css/client/select-seats.css">
+    <link rel="stylesheet" href="/css/admin/menu.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <title>Quản Lý Phòng</title>
+</head>
+
+<body>
+    <div class="admin-containers">
+        <div class="menu-admin"></div>
+        <div class="background">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="movie-management">
+                <div class="movie-management-title">
+                    <i class="fas fa-home"></i>Trang Quản Trị
+                    <i class="fas fa-chevron-right"></i>
+                    <span><span class="cinema-name-title">Tên rạp</span>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>Quản lý phòng</span></span>
+                </div>
+                <hr>
+                <div class="list-manager list-room">
+                    <div class="list-manager-head">
+                        <div style="display: flex">
+                            <div class="size-of-page">
+                                Show
+                                <select class="number-element-of-page-room">
+                                    <option value="3">3</option>
+                                    <option value="6">6</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <a href="">
+                                <div class="add-new add-room">
+                                    <i class="fas fa-plus"></i>
+                                    Thêm mới
+                                </div>
+                            </a>
+                        </div>
+                        <div class="search-movie">
+                            <input type="text" id="search-room" placeholder="Tìm kiếm phòng ...">
+                            <button class="btn-search" id="btn-search-room"><i class="fas fa-search"></i></button>
+                            <ul id="suggestions-list" class="suggestions-list"></ul>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="room-sort" data-value="id" data-id="asc">Tăng dần</li>
+                                            <li class="room-sort" data-value="id" data-id="desc">Giảm dần</li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Tên phòng
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="room-sort" data-value="name" data-id="asc">Tăng dần</li>
+                                            <li class="room-sort" data-value="name" data-id="desc">Giảm dần</li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Vị trí
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="room-sort" data-value="address" data-id="asc">Tăng dần</li>
+                                            <li class="room-sort" data-value="address" data-id="desc">Giảm dần</li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Loại phòng
+                                </th>
+                                <th>
+                                    Trạng thái
+                                </th>
+                                <th>
+                                    Enabled
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Phong 1</td>
+                                <td>Tang 2</td>
+                                <td>2D</td>
+                                <td>Đã khởi tạo</td>
+                                <td>
+                                    <button class="btn-update-isEnable btn-enable">
+                                        <i class="fas fa-eye"></i>
+                                        IsEnable
+                                    </button>
+                                    <button class="btn-update-isEnable btn-disable">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Disable
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn-detail btn-detail-room-manager">
+                                        <i class="fas fa-pen-square"></i>
+                                        Cập nhật
+                                    </button>
+                                    <button class="btn-layout">
+                                        <i class="far fa-eye"></i>
+                                        Layout
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Phong 1</td>
+                                <td>Tang 2</td>
+                                <td>2D</td>
+                                <td>Đã khởi tạo</td>
+                                <td>
+                                    <button class="btn-update-isEnable btn-enable">
+                                        <i class="fas fa-eye"></i>
+                                        IsEnable
+                                    </button>
+                                    <button class="btn-update-isEnable btn-disable">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Disable
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn-detail btn-detail-room-manager">
+                                        <i class="fas fa-pen-square"></i>
+                                        Cập nhật
+                                    </button>
+                                    <button class="btn-layout">
+                                        <i class="far fa-eye"></i>
+                                        Layout
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Phong 1</td>
+                                <td>Tang 2</td>
+                                <td>2D</td>
+                                <td>Đã khởi tạo</td>
+                                <td>
+                                    <button class="btn-update-isEnable btn-enable">
+                                        <i class="fas fa-eye"></i>
+                                        IsEnable
+                                    </button>
+                                    <button class="btn-update-isEnable btn-disable">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Disable
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn-detail btn-detail-room-manager">
+                                        <i class="fas fa-pen-square"></i>
+                                        Cập nhật
+                                    </button>
+                                    <button class="btn-layout">
+                                        <i class="far fa-eye"></i>
+                                        Layout
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--form thêm mới phong-->
+                <div class="manager-container-room">
+                    <div class="form-movie-manager form-room-add">
+                        <i class="fas fa-times-circle close-icon"></i>
+                        <div class="form-movie-manager-title form-movie-add-title">Thêm mới phòng</div>
+                        <hr>
+                        <div class="form-movie-manager-content form-room-add-content">
+                            <div class="content-movie content-room">
+                                <p><span class="content-form-title">Tên phòng:<span
+                                            class="required-star">*</span></span>
+                                    <input type="text" class="room-name" id="room-name-add"
+                                        placeholder="Nhập tên phòng">
+                                </p>
+                                <p><span class="content-form-title">Vị trí:<span class="required-star">*</span></span>
+                                    <input type="text" class="room-location" id="room-location-add"
+                                        placeholder="Nhập địa chỉ">
+                                <p><span class="content-form-title">Loại phòng: <span
+                                            class="required-star">*</span></span>
+                                    <select class="type-room" id="type-room-add">
+                                        <option value="STANDARD">2D</option>
+                                        <option value="THREE_D">3D</option>
+                                        <option value="IMAX">IMAX</option>
+                                    </select>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="button-manager">
+                            <button class="btn-manager-movie btn-add-room">Thêm mới phòng</button>
+                        </div>
+                    </div>
+
+                    <!--                Form xem chi tiết và cập nhật phong-->
+                    <div class="form-movie-manager form-room-detail">
+                        <i class="fas fa-times-circle close-icon"></i>
+                        <div class="form-movie-manager-title form-room-detail-title">Cập nhật phòng</div>
+                        <hr>
+                        <div class="form-movie-manager-content form-room-detail-content">
+                            <div class="content-movie content-room">
+                                <p><span class="content-form-title">Id:</span> <input
+                                        style="background-color: #d2d0d0; color: black" type="text" class="room-id"
+                                        id="room-id-update" readonly></p>
+                                <p><span class="content-form-title">Tên phòng:<span
+                                            class="required-star">*</span></span>
+                                    <input type="text" class="room-name" id="room-name-update"
+                                        placeholder="Nhập tên phòng">
+                                </p>
+                                <p><span class="content-form-title">Vị trí:<span class="required-star">*</span></span>
+                                    <input type="text" class="room-location" id="room-location-update"
+                                        placeholder="Nhập địa chỉ">
+                                <p><span class="content-form-title">Loại phòng: <span
+                                            class="required-star">*</span></span>
+                                    <select class="type-room" id="type-room-update">
+                                        <option value="STANDARD">2D</option>
+                                        <option value="THREE_D">3D</option>
+                                        <option value="IMAX">IMAX</option>
+                                    </select>
+                                </p>
+                            </div>
+                        </div>
+                        <button class="btn-manager-movie btn-update-room">Cập nhật rạp</button>
+                    </div>
+                </div>
+
+
+                <div class="paging paging-room">
+                    <a href="" class="paging-item previous">&laquo;</a>
+                    <div class="paging-number-room">
+                    </div>
+                    <a href="" class="paging-item next">&raquo;</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="room-layout"></div>
+
+    </div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/admin/movies-manager.js"></script>
+    <!--    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.menu-admin').load("/menu", function () {
+                $.getScript('/js/admin/menu.js');
+            });
+        });
+
+        $(document).on('click', '.add-room', function (e) {
+            e.preventDefault();
+            $('.form-room-add').css('opacity', '1').css('top', '50%');
+            $('.manager-container-room').css('opacity', '1').css('z-index', '1');
+        });
+
+        $(document).on('click', '.btn-detail-room-manager', function (e) {
+            e.preventDefault();
+            $('.form-room-detail').css('opacity', '1').css('top', '50%');
+            $('.manager-container-room').css('opacity', '1').css('z-index', '1');
+        });
+
+        $(document).on('click', '.close-icon', function (e) {
+            e.preventDefault();
+            $('.form-room-manager').css('opacity', '0').css('top', '150%');
+            $('.manager-container-room').css('opacity', '0').css('z-index', '-1');
+        });
+
+        $(document).on('click', '.update-seat', function () {
+            $('.modal-update-status').css('display', 'block');
+        });
+
+        let statusSeat = null;
+        $(document).on('click', '.seat-status', function () {
+            statusSeat = $(this).data('value');
+            $('.save-seat').css('display', 'block');
+            $('.modal-update-status').css('display', 'none');
+        });
+        let updateStatus = [];
+        $(document).on('click', '.seat', function () {
+            if (statusSeat) {
+                $(this).removeClass('normal vip hidden')
+                    .addClass(statusSeat);
+            }
+            let status = null;
+            if (statusSeat != null) {
+                status = statusSeat.toUpperCase();
+            }
+            const seatName = $(this).data('seat-name');
+            const row = seatName.replace(/\d+$/, '');
+            const column = seatName.replace(/^\D+/, '');
+            const existingSeat = updateStatus.find(seat => seat.rowName === row && seat.columnName === column);
+
+            if (existingSeat) {
+                existingSeat.typeSeat = status;
+            } else {
+                updateStatus.push({
+                    rowName: row,
+                    columnName: column,
+                    typeSeat: status
+                });
+            }
+            console.log(updateStatus);
+        });
+        $(document).on('click', '.save-seat', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const roomId = urlParams.get('room');
+            callApiUpdateStatusSeat(roomId, updateStatus);
+            $('.save-seat').css('display', 'none');
+        })
+
+    </script>
+    <script>
+        var listRoomName = [];
+        var total = 0;
+        const urlParams = new URLSearchParams(window.location.search);
+        var cinemaId = urlParams.get('cinema');
+        var seats = [];
+        $(document).ready(function () {
+
+            var sizeElementRoom = localStorage.getItem('sizeElementRoom') || 6;
+            var numberPageRoom = 0;
+            var columnSort = "";
+            var sortType = "";
+
+            $('.number-element-of-page-room').val(sizeElementRoom);
+
+            callApiGetCinemaById(cinemaId);
+            saveRoom();
+            updateRoom();
+            callApiGetAllRoom(cinemaId, numberPageRoom, sizeElementRoom, "", "");
+
+            $(document).on('change', '.number-element-of-page-room', function () {
+                sizeElementRoom = $(this).val();
+                localStorage.setItem('sizeElementRoom', sizeElementRoom);
+                callApiGetAllRoom(cinemaId, numberPageRoom, sizeElementRoom, columnSort, sortType);
+            })
+
+            $(document).on('click', '.paging-item-room', function (e) {
+                e.preventDefault();
+                numberPageRoom = $(this).data("value");
+                callApiGetAllRoom(cinemaId, numberPageRoom, sizeElementRoom, columnSort, sortType);
+            })
+
+            $(document).on('click', '.btn-detail-room-manager', function (e) {
+                e.preventDefault();
+                const roomId = $(this).data('id');
+                callApiGetRoomById(roomId);
+            })
+
+            $(document).on('click', '.btn-update-isEnable', function () {
+                const $isEnable = $(this).data("value");
+                const $idCinema = $(this).data("id");
+                callApiUpdateIsEnable($idCinema, !$isEnable);
+            });
+
+            $(document).on('click', '.room-sort', function () {
+                columnSort = $(this).data("value");
+                sortType = $(this).data("id");
+                callApiGetAllRoom(cinemaId, numberPageRoom, sizeElementRoom, columnSort, sortType);
+            });
+
+            $(document).on('click', '.next', function (e) {
+                e.preventDefault();
+                callApiGetAllRoom(total - 1, sizeElementRoom, columnSort, sortType);
+            })
+
+            $(document).on('click', '.previous', function (e) {
+                e.preventDefault();
+                callApiGetAllRoom(0, sizeElementRoom, columnSort, sortType);
+            })
+
+            $(document).on('click', '#btn-search-room', function (e) {
+                e.preventDefault();
+                const name = $('#search-room').val();
+                callApiSearchRoomByName(name, cinemaId);
+            })
+
+            $(document).on('click', '.btn-layout', function (e) {
+                e.preventDefault();
+                const $btn = $(this);
+                $('.room-layout').load("/room-layout", function () {
+                    $('html, body').animate({
+                        scrollTop: $('.room-layout').offset().top
+                    }, 0);
+                    const roomId = $btn.data('room-id');
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('room', roomId);
+                    window.history.replaceState({}, '', url);
+                    const roomName = $btn.data('room').toUpperCase();
+                    $('.name-room-layout').text(roomName);
+                    const initialization = $btn.data('initialization');
+                    if (initialization) {
+                        callApiGetSeats(roomId);
+                    } else {
+                        addLayoutRoom();
+                    }
+                });
+            });
+
+            $(document).on('click', '.btn-add-layout', function () {
+                $('.form-add-layout').css('display', 'block');
+            });
+            let rowNumber = 0;
+            let columnNumber = 0;
+            $(document).on('click', '.btn-submit-add-layout', function () {
+                rowNumber = parseInt($('#num-rows').val(), 10);
+                columnNumber = parseInt($('#num-columns').val(), 10);
+                createSeatsLayout(rowNumber, columnNumber);
+                $('.update-seat').css('display', 'none');
+                $('.save-layout').css('display', 'block');
+            });
+            $(document).on('click', '.btn-submit-close-form', function () {
+                $('.form-add-layout').css('display', 'none');
+            });
+            $(document).on('click', '.save-layout', function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const roomId = urlParams.get('room');
+                callApiSaveLayout(parseInt(roomId, 10), seats);
+                callApiUpdateInitialization(parseInt(roomId, 10), rowNumber, columnNumber);
+                $('.update-seat').css('display', 'block');
+                $('.save-layout').css('display', 'none');
+            });
+        });
+    </script>
+
+    <script>
+
+        function saveRoom() {
+            $(document).on('click', ".btn-add-room", function (e) {
+                e.preventDefault();
+                var form = new FormData();
+                form.append('name', $('#room-name-add').val());
+                form.append('location', $('#room-location-add').val());
+                form.append('roomType', $('#type-room-add').val());
+                form.append('cinemaId', parseInt(cinemaId, 10));
+                callApiSaveRoom(form);
+            })
+        }
+        function callApiSaveRoom(formData) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/room",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $('.background').hide();
+                    toastr.success(data.message);
+                    callApiGetAllRoom(cinemaId, 0, localStorage.getItem('sizeElementRoom'), "", "");
+                    $('.form-room-manager').css('opacity', '0').css('top', '150%');
+                    $('.manager-container-room').css('opacity', '0').css('z-index', '-1');
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiGetAllRoom(cinemaId, page, size, column, sortType) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/room/by-cinema?cinemaId=" + cinemaId + "&size=" + size + "&page=" + page + "&column=" + column + "&sortType=" + sortType,
+                method: "GET",
+                success: function (response) {
+                    $('.paging-number-room').empty();
+                    $('.list-room tbody').empty();
+                    total = response.data.totalPages;
+                    renderPagingNumberRoom(total, page);
+                    for (var room of response.data.content) {
+                        renderRoom(room);
+                    }
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function renderPagingNumberRoom(totalPages, currentPage) {
+            var pagingRoom = $('.paging-number-room');
+            pagingRoom.empty();
+
+            const maxPagesToShow = 3; // Số trang tối đa để hiển thị
+            const pageRange = Math.floor(maxPagesToShow / 2); // Số trang trước và sau trang hiện tại
+            let startPage, endPage;
+
+            if (totalPages <= maxPagesToShow) {
+                // Nếu số trang nhỏ hơn số trang tối đa để hiển thị, hiển thị tất cả
+                startPage = 0;
+                endPage = totalPages - 1;
+            } else {
+                // Nếu không, chỉ hiển thị một số trang quanh trang hiện tại
+                if (currentPage <= pageRange) {
+                    startPage = 0;
+                    endPage = maxPagesToShow - 1;
+                } else if (currentPage + pageRange >= totalPages) {
+                    startPage = totalPages - maxPagesToShow;
+                    endPage = totalPages - 1;
+                } else {
+                    startPage = currentPage - pageRange;
+                    endPage = currentPage + pageRange;
+                }
+            }
+
+            if (startPage > 0) {
+                pagingRoom.append('<a href="#" class="paging-item paging-item-room" data-value="0">1</a>');
+                if (startPage > 1) {
+                    pagingRoom.append('<span class="hidden-paging">...</span>');
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const isActive = i === currentPage ? 'active' : '';
+                pagingRoom.append(`<a href="#" class="paging-item paging-item-room ${isActive}" data-value="${i}">${i + 1}</a>`);
+            }
+
+            if (endPage < totalPages - 1) {
+                if (endPage < totalPages - 2) {
+                    pagingRoom.append('<span class="hidden-paging">...</span>');
+                }
+                pagingRoom.append(`<a href="#" class="paging-item paging-item-room" data-value="${totalPages - 1}">${totalPages}</a>`);
+            }
+
+        }
+        function renderRoom(room) {
+            const roomTypeNames = {
+                STANDARD: '2D',
+                THREE_D: '3D',
+                IMAX: 'IMAX'
+            };
+            let btnEnableDisplay = room.isEnabled ? 'inline' : 'none';
+            let btnDisableDisplay = room.isEnabled ? 'none' : 'inline';
+            let roomTypeName = roomTypeNames[room.roomType] || 'Không xác định';
+            let initializationStatus = (room.seatColumnNumbers && room.seatRowNumbers) ? 'Đã khởi tạo' : 'Chưa khởi tạo';
+            let initializationStatusValue = (room.seatColumnNumbers && room.seatRowNumbers) ? 'true' : 'false';
+            let statusClass = (room.seatColumnNumbers && room.seatRowNumbers) ? 'status-initialized' : 'status-not-initialized';
+            const roomTr = `<tr>
+                                <td>${room.id}</td>
+                                <td>${room.name}</td>
+                                <td>${room.location}</td>
+                                <td>${roomTypeName}</td>
+                                <td class="${statusClass}">${initializationStatus}</td>
+                                <td>
+                                    <button class = "btn-update-isEnable btn-enable room-enable" data-id = "${room.id}" data-value="${room.isEnabled}" style="display: ${btnEnableDisplay}">
+                                        <i class="fas fa-eye"></i>
+                                        Enabled
+                                    </button>
+                                    <button class = "btn-update-isEnable btn-disable room-disable" data-id = "${room.id}" data-value="${room.isEnabled}" style="display: ${btnDisableDisplay}">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Disabled
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn-detail btn-detail-room-manager" data-id="${room.id}">
+                                        <i class="fas fa-pen-square"></i>
+                                        Cập nhật
+                                    </button>
+                                    <button class="btn-layout" data-initialization="${initializationStatusValue}" data-room-id="${room.id}" data-room="${room.name}">
+                                        <i class="far fa-eye"></i>
+                                        Layout
+                                    </button>
+                                </td>`;
+            $('.list-room tbody').append(roomTr);
+        }
+
+        function callApiGetRoomById(id) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/room?roomId=" + id,
+                method: "GET",
+                success: function (response) {
+                    renderRoomDetail(response);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function renderRoomDetail(room) {
+            $('#room-id-update').val(room.id);
+            $('#room-name-update').val(room.name);
+            $('#room-location-update').val(room.location);
+            $('#type-room-update').val(room.roomType);
+        }
+
+        function updateRoom() {
+            $(document).on('click', ".btn-update-room", function (e) {
+                e.preventDefault();
+                var form = new FormData();
+                const roomId = parseInt($('#room-id-update').val(), 10);
+                form.append('id', roomId);
+                form.append('name', $('#room-name-update').val());
+                form.append('location', $('#room-location-update').val());
+                form.append('roomType', $('#type-room-update').val());
+                form.append('cinemaId', parseInt(cinemaId, 10));
+                callApiUpdateRoom(roomId, form);
+            })
+        }
+
+        function callApiUpdateRoom(roomId, formData) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/room/" + roomId,
+                type: "PUT",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $('.background').hide();
+                    toastr.success(data.message);
+                    callApiGetAllRoom(cinemaId, 0, localStorage.getItem('sizeElementRoom'), "", "");
+                    $('.form-room-manager').css('opacity', '0').css('top', '150%');
+                    $('.manager-container-room').css('opacity', '0').css('z-index', '-1');
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm gọi api update Enabled của phòng
+        function callApiUpdateIsEnable(id, isEnable) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/room/updateEnabled?id=" + id + "&isEnable=" + isEnable,
+                method: "POST",
+                contentType: "application/json",
+                success: function (response) {
+                    updateRoomIsEnable(id, isEnable);
+                    toastr.success(response.message);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm update enabled phòng
+        function updateRoomIsEnable(id, isEnable) {
+            var $row = $('button[data-id="' + id + '"]').closest('tr');
+            var $btnEnable = $row.find('.btn-enable');
+            var $btnDisable = $row.find('.btn-disable');
+
+            if (isEnable) {
+                $btnEnable.show();
+                $btnDisable.hide();
+            } else {
+                $btnEnable.hide();
+                $btnDisable.show();
+            }
+        }
+
+        //Xử lý việc gợi ý tìm kiếm theo tên
+        $(document).ready(function () {
+
+            var suggestionsList = $('#suggestions-list');
+
+            callApiGetNameRoom(cinemaId);
+
+            $('#search-room').on('input', function () {
+                var query = $(this).val().toLowerCase();
+                if (query.length >= 2) { // Chỉ hiển thị gợi ý khi người dùng gõ ít nhất 2 ký tự
+                    displaySuggestions(query);
+                } else {
+                    suggestionsList.empty();
+                }
+            });
+
+            function displaySuggestions(query) {
+                var filteredNames = listRoomName.filter(function (name) {
+                    return name.toLowerCase().includes(query);
+                });
+
+                suggestionsList.empty();
+
+                if (filteredNames.length === 0) {
+                    suggestionsList.append('<li>Không có gợi ý nào</li>');
+                } else {
+                    for (var name of filteredNames) {
+                        suggestionsList.append(`<li>${name}</li>`);
+                    }
+                }
+            }
+
+            suggestionsList.on('click', 'li', function () {
+                var selectedName = $(this).text();
+                $('#search-room').val(selectedName);
+                $('#suggestions-list').empty();
+            });
+
+            $(document).on('click', function (event) {
+                if (!$(event.target).closest('#search-room, #suggestions-list').length) {
+                    $('#suggestions-list').empty();
+                }
+            });
+        });
+
+        //Hàm gọi api lấy danh sách tên phòng
+        function callApiGetNameRoom(cinemaId) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/room/getName?cinemaId=" + cinemaId,
+                method: "GET",
+                success: function (response) {
+                    listRoomName = response.data;
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm gọi api tìm kiếm phòng theo tên
+        function callApiSearchRoomByName(name, cinemaId) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/room/search?name=" + name + "&cinemaId=" + cinemaId,
+                method: "GET",
+                success: function (response) {
+                    var idRoom = response.data.id;
+                    var numberPage = Math.ceil(idRoom / localStorage.getItem('sizeElementRoom'));
+                    callApiGetAllRoom(cinemaId, numberPage - 1, localStorage.getItem('sizeElementRoom'), "", "");
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm hiển thị form add layout nếu phòng chưa có ghế
+        function addLayoutRoom() {
+            $('.select-seats-container').empty();
+            const form = `<div class="add-layout">
+                <button class="btn-add-layout">Add Layout</button>
+                <div class="form-add-layout">
+                    <div class="form-add-layout-title">
+                        Tạo layout phòng
+                    </div>
+                    <div class="form-add-layout-content">
+                        <div class="form-group">
+                            <label for="num-rows">Số hàng ghế:</label>
+                            <input type="number" id="num-rows" name="num-rows" placeholder="Nhập số hàng ghế" min="1"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="num-columns">Số cột ghế:</label>
+                            <input type="number" id="num-columns" name="num-columns" placeholder="Nhập số cột ghế"
+                                min="1" required>
+                        </div>
+                        <button class="btn-submit-close-form">Đóng</button>
+                        <button class="btn-submit-add-layout">Tạo Layout</button>
+                    </div>
+                </div>
+            </div>`;
+            $('.select-seats-container').append(form);
+        }
+
+        // Hàm gọi API để tải danh sách ghế theo phòng
+        function callApiGetSeats(roomId) {
+            $.ajax({
+                url: `http://localhost:8080/api/pub/seats?roomId=${roomId}`,
+                method: "GET",
+                success: function (response) {
+                    if (response.status === 'OK') {
+                        const seatsByRow = groupSeatsByRow(response.data);
+                        updateSeatDisplay(seatsByRow);
+                    }
+                },
+                error: function () {
+                    console.error('Lỗi khi tải dữ liệu ghế.');
+                }
+            });
+        }
+
+        // Hàm nhóm các ghế theo hàng
+        function groupSeatsByRow(seats) {
+            return seats.reduce((acc, seat) => {
+                if (!acc[seat.rowName]) {
+                    acc[seat.rowName] = [];
+                }
+                acc[seat.rowName].push(seat);
+                return acc;
+            }, {});
+        }
+
+        // Hàm cập nhật trạng thái của ghế và hiển thị chúng
+        function updateSeatDisplay(seatsByRow) {
+            const container = $('.select-seats-container').empty(); // Làm sạch container trước khi thêm ghế mới
+
+            Object.keys(seatsByRow).forEach(row => {
+                const rowDiv = $('<div>').addClass('row');
+                const rowTitleDiv = $('<div>').addClass('row-title')
+                    .html(`<strong>Dãy</strong><span class="row-title-name-seat">${row}</span>`);
+
+                rowDiv.append(rowTitleDiv);
+
+                seatsByRow[row].forEach(seat => {
+                    const seatDiv = $(`<div data-seat-name="${seat.rowName}${seat.columnName}">`).addClass('seat');
+                    const seatClasses = [];
+                    seatClasses.push(seat.typeSeat.toLowerCase());
+                    seatDiv.addClass(seatClasses.join(' '));
+                    seatDiv.attr('title', `${seat.rowName}${seat.columnName}`);
+                    seatDiv.html('<i class="fas fa-couch"></i>');
+
+                    rowDiv.append(seatDiv);
+                });
+
+                container.append(rowDiv);
+            });
+        }
+        //Hàm gọi api lấy thông tin rạp theo id
+        function callApiGetCinemaById(id) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/cinema/" + id,
+                method: "GET",
+                success: function (response) {
+                    $('.cinema-name-title').text(response.name);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        // Hàm để tạo ghế theo số hàng và số cột
+        function createSeatsLayout(numRows, numColumns) {
+            if (isNaN(numRows) || isNaN(numColumns) || numRows < 1 || numColumns < 1) {
+                toastr.warning('Vui lòng nhập số hàng và số cột hợp lệ.');
+                return;
+            }
+
+            for (let row = 0; row < numRows; row++) {
+                const rowLetter = String.fromCharCode(65 + row);
+                for (let col = 1; col <= numColumns; col++) {
+                    seats.push({
+                        rowName: rowLetter,
+                        columnName: col,
+                        typeSeat: 'NORMAL'
+                    });
+                }
+            }
+
+            const seatsByRow = groupSeatsByRow(seats);
+            updateSeatDisplay(seatsByRow);
+
+            // Đóng form sau khi tạo layout
+            $('.form-add-layout').remove();
+        }
+
+        //Hàm gọi api tạo layout phòng
+        function callApiSaveLayout(roomId, seats) {
+            $.ajax({
+                url: 'http://localhost:8080/api/pub/room/save-layout/' + roomId,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(seats),
+                success: function (response) {
+                    toastr.success(response.message);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            });
+        }
+        //Hàm gọi api cập nhật trạng thái khởi tạo cho phòng
+        function callApiUpdateInitialization(roomId, rowNumber, columnNumber) {
+            $.ajax({
+                url: 'http://localhost:8080/api/pub/room/update-initialization?roomId=' + roomId + '&seatRowNumbers=' + rowNumber + '&seatColumnNumbers=' + columnNumber,
+                method: 'POST',
+                contentType: 'application/json',
+                success: function (response) {
+                    toastr.success(response.message);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            });
+        }
+        //Hàm gọi api cập nhật trạng thái ghế
+        function callApiUpdateStatusSeat(roomId, seats) {
+            $.ajax({
+                url: 'http://localhost:8080/api/pub/seat/update-status/' + roomId,
+                method: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(seats),
+                success: function (response) {
+                    toastr.success(response.message);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>

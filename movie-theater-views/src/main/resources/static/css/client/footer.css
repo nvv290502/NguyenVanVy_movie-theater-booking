@@ -1,0 +1,292 @@
+/* Đặt nền cho footer */
+.footer {
+    color: #f4f4f4; /* Màu chữ sáng để dễ đọc */
+    font-size: 14px;
+    position: relative;
+    border-top: 3px solid rgb(142, 142, 142);
+    font-family: Arial, sans-serif;
+}
+
+/* Định dạng biểu tượng footer */
+.footer-icon {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    z-index: 2;
+    transform: translateX(-50%);
+}
+
+.footer-icon img {
+    width: 70px;
+}
+
+/* Định dạng container của footer */
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Căn chỉnh nội dung về bên trái */
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    background-image: url("https://www.filmmakersacademy.com/wp-content/uploads/2020/01/EOQ_tMzWAAIWpoV.jpg");
+    background-size: repeat;
+    background-repeat: repeat-x; /* Lặp lại hình nền theo chiều ngang */
+    animation: moveBackground 15s linear infinite;
+    box-sizing: border-box;
+}
+
+/* Định dạng lớp nền gradient cho footer */
+.footer-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0.4) 100%);
+    z-index: 1;
+}
+
+/* Định dạng nội dung footer */
+.footer-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left; /* Căn chỉnh văn bản về bên trái */
+    width: 60%; /* Chiếm 60% chiều rộng của container */
+    padding: 20px 5%;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 70%;
+    justify-content: space-around;
+    font-size: 12px;
+}
+
+.footer-section {
+    margin-bottom: 20px;
+}
+
+.footer-section h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    color: #ff5e14;
+}
+
+.social-icons {
+    display: flex;
+    align-items: center;
+}
+
+.social-icons a {
+    color: white;
+    margin: 5px;
+}
+
+.social-icons .fa-facebook-f {
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(6, 80, 200);
+    border-radius: 50%;
+}
+.social-icons .fa-twitter {
+    color: rgb(9, 61, 143);
+    font-size: 20px;
+}
+
+.social-icons .fa-instagram {
+    color: rgb(209, 85, 8);
+    font-size: 22px;
+}
+
+.social-icons .fa-youtube {
+    color: red;
+    font-size: 22px;
+}
+
+/* Định dạng phần chân trang */
+.footer-bottom {
+    background: #202020;
+    padding: 15px 0;
+    text-align: center;
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 14px;
+    color: #878787;
+}
+
+.footer-bottom p a {
+    color: #ff5e14;
+    text-decoration: none;
+}
+
+.footer-bottom p a:hover {
+    text-decoration: underline;
+}
+
+.footer-content .footer-cta {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.footer-cta .single-cta {
+    display: flex;
+    align-items: center;
+}
+.single-cta .fa-envelope-open,
+.single-cta .fa-phone,
+.single-cta .fa-map-marker-alt {
+    color: #ff5e14;
+    font-size: 30px;
+    margin-right: 15px;
+}
+
+.cta-text h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.cta-text span {
+    color: #757575;
+    font-size: 12px;
+}
+
+.footer-between {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-logo {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+.footer-logo img {
+    width: 100px;
+}
+
+.footer hr {
+    border: 1px solid rgb(210, 81, 7);
+    width: 100%;
+}
+
+.footer-contact {
+    margin-top: 10px;
+}
+
+.footer-contact h4 {
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.email-form {
+    display: flex;
+    gap: 10px;
+}
+
+.email-form input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #333;
+}
+
+.email-form button {
+    background-color: #ff5e14;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.email-form button i {
+    margin-right: 8px;
+}
+
+.email-form input:focus,
+.email-form button:hover {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.email-form input::placeholder {
+    color: #777;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+@media (max-width: 789px) {
+    .footer-content {
+        width: 80%;
+    }
+    .single-cta .fa-envelope-open,
+    .single-cta .fa-phone,
+    .single-cta .fa-map-marker-alt {
+        font-size: 22px;
+    }
+
+    .cta-text h4 {
+        font-size: 14px;
+    }
+
+    .cta-text span {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 489px) {
+    .footer-content {
+        width: 100%;
+    }
+}

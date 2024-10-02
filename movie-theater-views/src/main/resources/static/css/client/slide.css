@@ -1,0 +1,344 @@
+.movie-container-background {
+    width: 100%;
+    max-width: 1200px;
+    padding-top: 60px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: left;
+}
+.hero {
+    width: 92%;
+    aspect-ratio: 7 / 3;
+    position: relative;
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+}
+
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+.swiper-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+    display: block;
+}
+
+/* Add overlay styling */
+.swiper-slide::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    z-index: 5;
+}
+
+/* Swiper pagination bullets styling */
+.swiper-pagination-bullet {
+    background: #fff;
+}
+
+/* Swiper navigation buttons styling */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #fff;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 20px;
+}
+
+.swiper-container-thumbs {
+    position: absolute;
+    top: 50%;
+    transform: translate(50%, -50%);
+    right: 0;
+    width: 16%;
+    aspect-ratio: 2/3;
+    z-index: 10;
+    overflow: hidden;
+    border: 1px solid rgb(160, 68, 6);
+}
+
+.swiper-container-thumbs .swiper-slide {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.swiper-container-thumbs .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-text-info {
+    display: flex;
+    align-items: start;
+    justify-content: left;
+}
+
+.hero-text {
+    padding: 10px;
+    bottom: 5%;
+    right: 5%;
+    min-width: 30%;
+    position: absolute;
+    z-index: 8;
+}
+
+.hero-text-info p {
+    color: white;
+    margin-bottom: 0;
+}
+.hero-text-info .hero-movie-name {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.hero-movie-trailer img {
+    width: 60px;
+    box-shadow: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.hero-movie-trailer img:hover {
+    transform: scale(1.05);
+}
+
+.hero-movie-info {
+    margin-left: 10px;
+}
+
+.hero-btn-movie-detail {
+    font-size: 14px;
+    border: none;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.hero-btn-movie-detail span {
+    margin-right: 5px;
+}
+.hero-movie-releasedDate {
+    font-size: 12px;
+}
+
+.hero-btn-movie-detail img {
+    width: 15px;
+}
+
+.btn-banner {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.hero-btn-buy-ticket {
+    font-size: 14px;
+    padding: 5px 30px;
+    border-radius: 5px;
+    background-color: rgb(132, 0, 255);
+    border: none;
+    margin-right: 10px;
+    transition: background 0.3s ease;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.hero-btn-buy-ticket:hover {
+    background-color: rgb(214, 14, 64);
+}
+.hero-btn-movie-detail:hover {
+    color: rgb(2, 83, 189);
+}
+
+.banner-movie-trailer {
+    position: fixed;
+    display: none;
+    z-index: 1000;
+    top: 50%; /* Đặt phần tử ở giữa theo chiều dọc */
+    left: 50%; /* Đặt phần tử ở giữa theo chiều ngang */
+    transform: translate(-50%, -50%); /* Điều chỉnh vị trí phần tử để căn giữa chính xác */
+}
+
+.banner-movie-trailer iframe {
+    width: 100vw;
+    max-width: 1068px;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px black;
+}
+
+.banner-close-trailer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+.slide-movie {
+    width: 200px;
+    height: 300px;
+    background-color: aqua;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(50%);
+    z-index: 1000;
+}
+
+.thums-content .thums-trailer {
+    cursor: pointer;
+}
+
+.thums-trailer:hover span {
+    border-bottom: 1px solid rgb(126, 126, 126);
+}
+
+.thums-content .thums-trailer img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.swiper-slide .thums-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 13px;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.swiper-slide:hover .thums-content {
+    opacity: 1;
+}
+
+.thums-content .thums-trailer {
+    display: flex;
+    align-items: center;
+}
+
+.thums-btn .hero-btn-buy-ticket {
+    padding: 4px 8px;
+}
+.thums-btn {
+    margin-top: 0;
+    margin-left: 0;
+}
+.thums-btn img {
+    width: 15px !important;
+}
+
+@media (max-width: 1068px) {
+    .hero-text-title {
+        font-size: 30px;
+        padding-bottom: 10px;
+    }
+    .hero-text-release-date {
+        font-size: 15px;
+    }
+
+    .hero-text-release-date span {
+        font-size: 25px;
+    }
+    .hero {
+        width: 100%;
+    }
+
+    .movie-trailer iframe {
+        max-width: 90vw;
+        margin: 0 auto;
+    }
+
+    .swiper-container-thumbs {
+        transform: translateY(-50%);
+        right: 5%;
+    }
+}
+
+@media (max-width: 769px) {
+    .hero-text-title {
+        font-size: 20px;
+        padding-bottom: 5px;
+        margin-bottom: 0;
+    }
+    .hero-text-release-date {
+        font-size: 10px;
+    }
+
+    .hero-text-release-date span {
+        font-size: 14px;
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text-title {
+        font-size: 15px;
+        padding-bottom: 3px;
+    }
+    .hero-text-release-date {
+        font-size: 7px;
+        margin-bottom: 0;
+    }
+
+    .hero-text-release-date span {
+        font-size: 10px;
+    }
+
+    .hero-text-info .hero-movie-name {
+        font-size: 16px;
+    }
+    .hero-movie-trailer img {
+        width: 30px;
+    }
+
+    .btn-banner {
+        margin-top: 5px;
+    }
+    .hero-movie-releasedDate {
+        font-size: 10px;
+    }
+}

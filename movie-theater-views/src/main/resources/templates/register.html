@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/header.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/client/buy-ticket.css">
+    <link rel="stylesheet" href="/css/client/slide.css">
+    <link rel="stylesheet" href="/css/client/count-down.css" />
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+
+<body>
+    <div class="background">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <div id="header"></div>
+    <div class="register-container">
+        <h2>Đăng Ký</h2>
+        <form id="register-form">
+            <div class="input-group">
+                <label for="username">Tên Đăng Nhập</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Mật Khẩu</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="input-group">
+                <label for="confirm-password">Xác Nhận Mật Khẩu</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+
+            <div id="error-message"></div>
+
+            <button type="submit" id="register">Đăng Ký</button>
+
+            <p>Đã có tài khoản? <a href="/login">Đăng Nhập</a></p>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="/js/client/login.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#header').load("/header", function () {
+                checkAccessToken();
+                $.getScript("/js/client/header.js");
+            });
+
+            $(document).on('click', '#register', function (e) {
+                e.preventDefault();
+                var user = {
+                    username: $('#username').val(),
+                    password: $('#password').val(),
+                    email: $('#email').val(),
+                    rePassword: $('#confirm-password').val(),
+                };
+                register(user);
+            });
+
+            function register(user) {
+                $('.background').show();
+                var settings = {
+                    url: "http://localhost:8080/user/register",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(user),
+                    success: function (response) {
+                        $('.background').hide();
+                        toastr.warning(response.message);
+                        setTimeout(function () {
+                            window.location.href = "/login";
+                        }, 5000);
+                        $('#error-message').empty();
+                    },
+                    error: function (xhr) {
+                        $('.background').hide();
+                        var response = JSON.parse(xhr.responseText);
+                        $('#error-message').text(response.message || 'Đăng kí thất bại');
+                    }
+                };
+
+                $.ajax(settings);
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,248 @@
+.cinema-details {
+    width: 100%;
+    height: auto;
+    margin-top: 60px;
+    color: rgb(200, 195, 188);
+    font-size: 16px;
+    padding-bottom: 5%;
+}
+
+.cinema-details p {
+    margin: 0;
+}
+.cinema-detail-container {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    margin: 0 auto;
+}
+
+.info-detail-cinema-left {
+    width: 50%;
+    padding: 20px;
+    height: 100%;
+}
+
+.info-cinema-name {
+    font-size: 25px;
+    display: inline-block;
+}
+.count-rating-parent {
+    margin-bottom: 20px;
+    font-size: 12px;
+}
+.count-rating {
+    color: rgb(13, 76, 202);
+    font-weight: bold;
+}
+
+.rating-cinema-parent {
+    font-size: 20px;
+    color: yellow;
+    border: 1px solid yellow;
+    padding: 0 20px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+.info-cinema-image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.info-cinema-image img {
+    width: 100%;
+    height: auto;
+}
+
+.info-cinema-introduction {
+    font-size: 14px;
+    font-family: "Source Sans Pro", sans-serif !important;
+    margin-top: 20px;
+    line-height: 1.5;
+    text-align: justify;
+    text-indent: 20px;
+}
+
+.info-cinema-address {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.info-cinema-address span {
+    font-weight: normal;
+    color: rgb(11, 148, 198);
+}
+
+.info-cinema-hotline span {
+    color: brown;
+}
+
+.my-rating {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.my-rating .star {
+    cursor: pointer; /* Con trỏ thay đổi khi di chuột qua ngôi sao */
+    color: gray; /* Màu mặc định của ngôi sao */
+}
+
+.my-rating .star:hover,
+.my-rating .star:hover ~ .star {
+    color: gold; /* Màu của ngôi sao khi di chuột qua */
+}
+
+.my-rating .star.selected {
+    color: gold; /* Màu của ngôi sao khi được chọn */
+}
+
+.my-rating .btn-rating {
+    border: none;
+    padding: 0 20px;
+    margin-left: 10px;
+    background-color: rgb(11, 148, 198);
+    color: white;
+    transition:
+            opacity 0.3s ease,
+            transform 0.3s ease;
+}
+.my-rating .btn-rating:hover {
+    transform: scale(1.05);
+    opacity: 0.6;
+}
+
+.info-detail-cinema-right {
+    width: 50%;
+    height: auto;
+}
+
+.info-movie-hot {
+    margin-top: 20px;
+    width: 100%;
+    max-height: 800px;
+    padding: 20px;
+}
+
+.info-movie-hot-title {
+    font-size: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgb(179, 15, 15);
+    font-weight: bold;
+}
+.info-detail-cinema-right .map-container {
+    margin-top: 20px;
+    width: 100%;
+    height: 300px;
+    background-color: aqua;
+    border: 2px solid black;
+}
+
+.info-movie-hot-card {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-hot {
+    width: 200px;
+    height: 280px;
+}
+
+@media (max-width: 1065px) {
+    .cinema-detail-container {
+        width: 90%;
+    }
+    .info-movie-hot {
+        padding: 0;
+    }
+    .info-detail-cinema-right {
+        width: 60%;
+    }
+
+    .card-hot {
+        width: 175px;
+        height: 270px;
+    }
+}
+
+@media (max-width: 789px) {
+    .cinema-detail-container {
+        width: 98%;
+    }
+    .info-cinema-name,
+    .info-movie-hot-title {
+        font-size: 17px;
+    }
+
+    .info-movie-hot-card {
+        gap: 5px;
+    }
+    .rating-cinema-parent {
+        font-size: 13px;
+        padding: 0 5px;
+        margin-left: 5px;
+    }
+    .info-cinema-introduction,
+    .count-rating-parent {
+        font-size: 10px;
+    }
+
+    .info-cinema-address,
+    .info-cinema-hotline,
+    .my-rating {
+        font-size: 13px;
+    }
+
+    .info-detail-cinema-right .map-container {
+        height: 200px;
+    }
+
+    .card-hot {
+        width: 120px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 489px) {
+    .cinema-detail-container {
+        display: block;
+    }
+    .info-detail-cinema-left,
+    .info-detail-cinema-right {
+        width: 100%;
+    }
+    .info-cinema-name,
+    .info-movie-hot-title {
+        font-size: 15px;
+    }
+    .rating-cinema-parent {
+        font-size: 12px;
+        padding: 0 5px;
+        margin-left: 5px;
+    }
+    .info-cinema-introduction,
+    .count-rating-parent {
+        font-size: 10px;
+    }
+
+    .info-cinema-address,
+    .info-cinema-hotline,
+    .my-rating {
+        font-size: 12px;
+    }
+
+    .info-detail-cinema-right .map-container {
+        height: 200px;
+    }
+    .card-hot {
+        width: 150px;
+        height: 240px;
+    }
+}

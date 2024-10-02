@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <link rel="stylesheet" href="/css/libraries.css" />
+    <link rel="stylesheet" href="/css/admin/schedule-style.css" />
+    <link rel="stylesheet" href="/css/admin/menu.css" />
+    <link rel="stylesheet" href="/css/loading.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <title>Quản Lý Suất Chiếu - Đặt Lịch Chiếu Phim</title>
+</head>
+
+<body class="bg-yeah">
+    <div class="menu-admin z-3 position-absolute"></div>
+    <div class="background">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row py-3">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div>
+                    <h3 class="text-white" id="title">
+                        Quản Lý Suất Chiếu - Đặt Lịch Chiếu Phim
+                    </h3>
+                </div>
+                <hr style="color: white" />
+                <div class="row py-5">
+                    <div class="col-md-12">
+                        <div class="row mb-5">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <label for="cinema" class="form-label text-white">Rạp Chiếu Phim</label>
+                                <select id="cinema" class="form-select" aria-describedby="cinema-validation">
+                                    <option selected>Chọn Rạp Chiếu Phim</option>
+                                </select>
+                                <div id="cinema-validation" class="form-text text-danger"></div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="room" class="form-label text-white">Phòng Chiếu</label>
+                                <select id="room" class="form-select" aria-describedby="room-validation">
+                                    <option selected>Chọn Phòng Chiếu Phim</option>
+                                </select>
+                                <div id="room-validation" class="form-text text-danger"></div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                        <div id="external-events">
+                            <div id="move-events" style="pointer-events: all;">
+                                <p class="text-light" style="display: flex; justify-content: center; margin-bottom: 0;">
+                                    <strong>DANH SÁCH PHIM</strong>
+                                    <button id="toggle-btn" style="margin-left: 10px; background: none; border: none;">
+                                        <i class="fas fa-chevron-up" id="toggle-icon"></i>
+                                    </button>
+                                </p>
+                            </div>
+                            <input type="text" id="movie-search" placeholder="Tìm kiếm phim...">
+                            <div class="col-12" id="movie-block"></div>
+                        </div>
+                    </div>
+                    <div id="calendar" class="text-white"></div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap5@6.1.15/index.global.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+<script src="/js/admin/schedule-script.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(function () {
+        let isDragging = false;
+        let offset = { x: 0 };
+        const externalEvents = document.getElementById("external-events");
+
+        document.getElementById("move-events").addEventListener("mousedown", function (e) {
+            isDragging = true;
+            offset.x = e.clientX - externalEvents.getBoundingClientRect().left;
+            e.preventDefault();
+        });
+
+        document.addEventListener("mousemove", function (e) {
+            if (isDragging) {
+                externalEvents.style.position = "fixed";
+                externalEvents.style.left = `${e.clientX - offset.x} px`;
+            }
+        });
+
+        document.addEventListener("mouseup", function () {
+            isDragging = false;
+        });
+
+        document.getElementById('toggle-btn').addEventListener('click', function () {
+            const movieBlock = document.getElementById('movie-block');
+            const movieSearch = document.getElementById('movie-search');
+            const icon = document.getElementById('toggle-icon');
+            const isVisible = movieBlock.style.display !== 'none';
+
+            movieBlock.style.display = isVisible ? 'none' : 'block';
+            movieSearch.style.display = isVisible ? 'none' : 'block';
+            icon.classList.toggle('fa-chevron-down', !isVisible);
+            icon.classList.toggle('fa-chevron-up', isVisible);
+        });
+    });
+
+</script>
+
+</html>

@@ -1,0 +1,737 @@
+/*/ custom lại template dùng sẵn*/
+.select2-container--default .select2-results__option--selected {
+    background-color: #656667 !important;
+}
+.toast-success {
+    background-color: #28a745 !important;
+}
+.toast-warning {
+    background-color: #ffc107 !important;
+    color: black;
+}
+.toast-error {
+    background-color: #dc3545 !important;
+}
+/*/ custom lại template dùng sẵn*/
+
+textarea::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: #0e53d5;
+    border-radius: 10px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+textarea::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+}
+
+.account-management {
+    max-width: 1200px;
+    height: 100%;
+    min-height: 100vh;
+    font-size: 13px;
+    position: relative;
+    padding: 0 10px;
+    font-family: "Roboto", sans-serif;
+}
+
+.account-management hr {
+    border: 1px solid #f1efef;
+    margin-bottom: 5px;
+}
+
+.account-management-title {
+    font-size: 13px;
+    color: #e3e3e3;
+    margin-bottom: 20px;
+}
+.account-management-title span {
+    color: #007bff;
+}
+.account-management-title .fa-home,
+.account-management-title .fa-chevron-right {
+    padding: 5px;
+}
+
+.list-manager-head {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-manager-head .search-account input,
+.list-manager-head .search-account button,
+.list-manager-head .size-of-page select {
+    height: 75%;
+}
+
+.list-manager-head .search-account input {
+    width: 200px;
+    padding-left: 10px;
+    background-color: black;
+    border-radius: 5px;
+    border: 1px solid white;
+}
+
+.list-manager-head .size-of-page select {
+    border-radius: 6px;
+    border: none;
+    color: white;
+    margin-right: 5px;
+    background-color: rgba(72, 71, 71, 0.44);
+    box-shadow: 0 2px 4px black;
+}
+
+.btn-search {
+    padding: 5px 10px !important;
+    background-color: #232222;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    transition:
+        transform 0.3s ease,
+        background 0.4s ease;
+}
+.btn-search:hover {
+    background-color: #505052;
+}
+
+hr {
+    border: 1px solid rgb(43, 42, 42);
+    margin: 0;
+}
+
+.list-manager {
+    margin: 20px auto;
+    width: 100%;
+    max-width: 1200px;
+    color: #fff;
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #e7e4e4;
+    border-radius: 0.6rem;
+    overflow: hidden;
+}
+
+.table thead {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.table th,
+.table td {
+    padding: 15px;
+    color: #ddd;
+    text-align: left;
+    border-bottom: 1px solid #555;
+    vertical-align: middle;
+}
+.table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+}
+.table tr td .user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+.table tr td a {
+    color: #007bff;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table th {
+    font-weight: bold;
+    color: #ddd;
+    position: relative;
+    transition: background 0.5s ease;
+}
+
+.table th:hover {
+    background-color: rgb(30, 29, 29);
+}
+
+.table th:hover .box-sort {
+    height: auto;
+}
+
+.table th .fa-caret-down {
+    color: #ddd;
+    transition: transfrom 0.3s ease;
+}
+
+.box-sort {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    cursor: pointer;
+    height: 0;
+    font-size: 10px;
+    color: black;
+    font-weight: normal;
+    background-color: #ffffff;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+
+.box-sort ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.box-sort ul li {
+    padding: 5px 10px;
+}
+
+.box-sort ul li:hover {
+    color: white;
+    background-color: #000000;
+    font-weight: 600;
+}
+
+.add-new {
+    width: 100px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.44);
+    border-radius: 5px;
+    overflow: hidden;
+    color: rgb(206, 206, 206);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    box-shadow: 0 2px 4px black;
+    transition: transform 0.3s ease;
+}
+
+.add-new:hover {
+    background-color: #2c3e50;
+    color: white;
+    transform: scale(1.03);
+}
+
+.add-new .fa-plus {
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.btn-detail {
+    padding: 3px 6px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px black;
+    background: #0a58ca;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+.btn-enable,
+.btn-disable {
+    padding: 3px 6px;
+    border: 1px solid #cdb501;
+    box-shadow: 0 2px 4px #000000;
+    background: rgba(190, 187, 7, 0.5);
+    cursor: pointer;
+    border-radius: 5px;
+    color: #cdb501;
+    margin-left: 10px;
+    transition: opacity 0.3s ease;
+    display: none;
+}
+.btn-disable {
+    border: 1px solid #4c4a4a;
+    background: rgba(113, 113, 113, 0.5);
+    color: #4c4a4a;
+    display: none;
+}
+
+.fa-info-circle,
+.fa-eye,
+.fa-eye-slash {
+    font-size: 12px;
+}
+.btn-account-manager:hover,
+.btn-detail-account-manager:hover {
+    opacity: 0.7;
+}
+
+.form-content {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 20px;
+}
+
+.form-content .child-content {
+    display: flex;
+    width: calc(50% - 20px);
+}
+
+.child-content label {
+    width: 30%;
+}
+.child-content input,
+.child-content select,
+.child-content textarea {
+    width: 70%;
+}
+
+.form-actions {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.form-actions button {
+    padding: 5px 20px;
+    margin-left: 10px;
+    border: none;
+    transition: transform 0.3s ease;
+    color: rgb(219, 216, 216);
+}
+
+.form-actions button:hover {
+    font-weight: bold;
+    transform: scale(1.02);
+}
+
+.form-actions .btn-submit {
+    background-color: #09a1e8;
+    transition: background 0.3s ease;
+}
+
+.form-actions .btn-cancel {
+    background-color: rgb(189, 67, 10);
+    transition: background 0.3s ease;
+}
+
+.form-actions .btn-submit:hover {
+    background-color: #1809e8;
+}
+
+.form-actions .btn-cancel:hover {
+    background-color: red;
+}
+
+.paging {
+    display: flex;
+    justify-content: center; /* Canh giữa phân trang */
+    margin: 20px 0; /* Khoảng cách trên và dưới */
+}
+
+.paging-item {
+    display: inline-block;
+    padding: 5px 8px;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #333; /* Màu văn bản */
+    background-color: #f8f8f8; /* Màu nền */
+    border: 1px solid #ddd; /* Đường viền */
+    border-radius: 5px; /* Bo góc */
+    transition:
+        background-color 0.3s,
+        color 0.3s; /* Hiệu ứng chuyển tiếp */
+}
+
+.paging-item:hover,
+.paging-item.active {
+    background-color: #007bff; /* Màu nền khi hover hoặc đang chọn */
+    color: #fff; /* Màu văn bản khi hover hoặc đang chọn */
+    border-color: #007bff; /* Đường viền khi hover hoặc đang chọn */
+}
+
+.paging-item.previous,
+.paging-item.next {
+    font-weight: bold; /* Đậm chữ cho Previous và Next */
+}
+
+.info-schedule {
+    margin-left: 10px;
+}
+
+.info-schedule:hover {
+    font-weight: bold;
+}
+
+/* Css box xem thông tin suất chiếu khi click vào xem ở trang schedule-manager */
+
+.box-info-schedule {
+    width: 0;
+    background-color: rgb(221, 221, 221);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    padding: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease;
+    box-shadow: 0 10px 20px black;
+    z-index: 100;
+}
+
+.box-info-schedule table {
+    font-size: 12px !important;
+}
+
+.box-info-schedule .paging {
+    font-size: 10px !important;
+}
+
+.box-info-schedule .paging .paging-item {
+    padding: 5px 10px;
+}
+
+.manager-container,
+.manager-container-category {
+    opacity: 0;
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.form-account-manager {
+    /*display: none;*/
+    min-width: 800px;
+    min-height: 600px;
+    background: radial-gradient(circle, rgb(52, 53, 97) 30%, rgba(25, 26, 61, 1) 70%);
+    border-radius: 20px;
+    position: fixed;
+    top: 150%;
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.8),
+        0 0 25px rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    left: 50%;
+    transition: top 0.5s ease;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+.form-account-manager .required-star {
+    color: red;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.form-account-manager .form-account-manager-title {
+    text-align: center;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #0a53be;
+}
+
+.form-account-manager hr {
+    border: 1px solid white;
+}
+
+.form-account-manager .close-icon {
+    color: red;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: transfom 0.3s ease;
+}
+
+.form-account-manager .close-icon:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+.form-account-manager-image {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    width: 100%;
+    height: 12rem;
+    display: flex;
+    justify-content: space-around;
+}
+.form-account-manager-image .image-avatar {
+    border-radius: 50%;
+    width: 150px;
+    width: 12rem;
+    height: 12rem;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 6px black;
+}
+.image-avatar-upload {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 10;
+}
+
+.change-image-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-avatar:hover .change-image-button {
+    opacity: 1;
+}
+
+.form-account-manager-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+.form-account-manager-content {
+    margin-top: 1.5rem;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    display: flex;
+}
+
+.form-account-manager .content-account {
+    width: 50%;
+}
+
+.content-account p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #259ab0;
+    display: flex;
+    padding: 5px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+.content-account .account-summary {
+    height: 145px;
+}
+
+.content-account .select2-container {
+    padding: 0 !important;
+}
+.content-account input,
+.content-account .select2-container,
+.content-account .account-summary,
+.content-account select {
+    width: 60% !important;
+    color: #d0cccc;
+    font-weight: normal;
+    font-size: 13px;
+    padding: 5px;
+    box-shadow: 0 2px 4px #343434;
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    background: black;
+}
+.content-account .select2-container--default .select2-selection--multiple {
+    background: black !important;
+    border: none;
+}
+.content-account .select2-selection__choice {
+    background: #0a58ca !important;
+}
+.content-account .content-form-title {
+    display: inline-block;
+    width: 120px;
+}
+
+.form-account-manager .btn-manager-account {
+    padding: 8px 16px;
+    border: none;
+    background: #0a58ca;
+    border-radius: 5px;
+    color: #d5d2d2;
+    font-size: 16px;
+    margin-left: 10px;
+    box-shadow: 0 2px 4px blue;
+    transition: transform 0.3s ease;
+}
+
+.form-account-detail .btn-update-account:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+#lock {
+    display: none;
+}
+.lock-label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(80, 80, 80);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.lock-wrapper {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-10deg);
+}
+.shackle {
+    background-color: transparent;
+    height: 9px;
+    width: 14px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top: 3px solid white;
+    border-left: 3px solid white;
+    border-right: 3px solid white;
+    transition: all 0.3s;
+}
+.lock-body {
+    width: 15px;
+}
+#lock:checked + .lock-label .lock-wrapper .shackle {
+    transform: rotateY(150deg) translateX(3px);
+    transform-origin: right;
+}
+#lock:checked + .lock-label {
+    background-color: rgb(167, 71, 245);
+}
+.lock-label:active {
+    transform: scale(0.9);
+}
+/* CSS cho các cấp bậc thành viên (rank) */
+.rank-basic {
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid brown;
+    color: brown;
+}
+
+.rank-silver {
+    padding: 1px 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    color: #ddd;
+}
+
+.rank-gold {
+    padding: 1px 5px;
+    border: 1px solid #c4d504;
+    border-radius: 3px;
+    color: #c4d504;
+}
+
+.rank-diamond {
+    padding: 1px 5px;
+    border: 1px solid #29e0dd;
+    border-radius: 3px;
+    color: #29e0dd;
+}
+
+.rank-platinum {
+    padding: 1px 5px;
+    border: 1px solid #606565;
+    border-radius: 3px;
+    color: #606565;
+}
+
+/* CSS cho các trạng thái */
+.status-active {
+    padding: 1px 5px;
+    border: 1px solid #06aa21;
+    border-radius: 3px;
+    color: #06aa21;
+}
+
+.status-inactive {
+    padding: 1px 5px;
+    border: 1px solid #dc3545;
+    border-radius: 3px;
+    color: #dc3545;
+}
+
+.status-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.th-search {
+    position: relative;
+}
+
+.label,
+.search-icon {
+    transition: opacity 0.3s ease;
+}
+
+.search-input {
+    width: 0;
+    opacity: 0;
+    padding: 5px;
+    transition:
+        width 0.4s ease,
+        opacity 0.4s ease;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    background-color: rgb(19, 19, 19);
+    border: 1px solid white;
+    border-bottom: none;
+    color: white;
+}
+
+.th-search:hover .label,
+.th-search:hover .search-icon {
+    opacity: 0;
+}
+
+.th-search:hover .search-input {
+    width: 100%;
+    opacity: 1;
+}

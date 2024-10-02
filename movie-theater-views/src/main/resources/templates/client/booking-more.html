@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cụm rạp
+    </title>
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/header.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/client/booking-more.css">
+    <link rel="stylesheet" href="/css/client/slide.css">
+    <link rel="stylesheet" href="/css/client/select-room.css">
+    <link rel="stylesheet" href="/css/client/select-seats.css">
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+
+<body>
+    <div class="background">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <div id="header"></div>
+    <div class="booking">
+        <div id="check-point" style="display: none;">2</div>
+        <div class="booking-more">
+            <div class="booking-more-movie">
+                <div class="booking-more-movie-image">
+                    <img id="movie-image" src="" alt="">
+                </div>
+                <div class="booking-more-movie-info">
+                    <p class="info-name"></p>
+                    <div class="info-date-time">
+                        <p class="info-date"></p>
+                        <p class="info-time"></p>
+                    </div>
+                    <div class="info-cinema-room">
+                        <p class="info-cinema"></p>
+                        <p class="info-room"></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="booking-more-food-shop">
+                <div class="shop-cinema"></div>
+                <div class="info-count-money">
+                    <div class="circle"></div>
+                    <div class="circle1"></div>
+
+                    <div class="info-count-money-title">
+                        THANH TOÁN
+                    </div>
+                    <div class="info-count-money-info">
+                        <div class="info-count-money-info-movie">
+                            <p class="info-count-money-info-movie-name" id="movie-name-ticket"></p>
+                            <div class="info-count-money-info-time-cinema">
+                                <div class="info-count-money-info-time">
+                                    <p class="info-count-money-info-movie-date" id="show-date-ticket"></p>
+                                    <p class="info-count-money-info-movie-time" id="show-time-ticket"></p>
+                                </div>
+                                <div class="info-count-money-info-cinema">
+                                    <p class="info-count-money-info-cinema-name" id="cinema-name-ticket"></p>
+                                    <p class="info-count-money-info-cinema-room" id="room-name-ticket"></p>
+                                    <p class="info-count-money-info-cinema-seats">A1, A2, A3</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="count-money-ticket">
+                            <p>TIỀN VÉ: <span style="font-weight: bold; color: yellow;" id="money-ticket">0</span> VNĐ
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="count-money-food">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng Tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody class="order-food">
+                                <!--                                <tr>-->
+                                <!--                                    <td>Coca</td>-->
+                                <!--                                    <td>3</td>-->
+                                <!--                                    <td>30.000</td>-->
+                                <!--                                    <td><a class="delete-food">Xóa</a></td>-->
+                                <!--                                </tr>-->
+                            </tbody>
+                        </table>
+                        <p>TỔNG DỊCH VỤ: <span style="font-weight: bold; color: yellow;" id="sum-money">0</span> VNĐ</p>
+                    </div>
+
+                    <div class="count-money-more">
+                        <p>TỔNG TIỀN: <span style="font-weight: bold; color: yellow;" id="total-money"></span>
+                            <span style="font-weight: bold; color: yellow;" id="total-money-new"></span> VNĐ
+                        </p>
+                    </div>
+
+                    <div class="voucher" style="padding: 20px;border-bottom: 2px solid #0d2c62;">
+                        <p id="discount-info"></p>
+                        Voucher
+                    </div>
+
+                    <div class="payment">
+                        <button id="payment">Thanh toán</button>
+                    </div>
+
+                </div>
+
+                <a href="" class="back-link back-page-seat">
+                    <i class="fas fa-angle-double-left">
+                    </i>
+                    <span style="font-size: 13px;">QUAY LẠI</span>
+                </a>
+
+            </div>
+        </div>
+
+        <div id="countdown" class="countdown">
+            <div id="countdown-message">Đặt vé thành công, bạn có 15 phút để chọn đồ ăn và thanh toán</div>
+            <div id="countdown-timer">15:00</div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="/js/client/booking-more.js"></script>
+    <script src="/js/client/shop.js"></script>
+    <script src="/js/client/login.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.count-down-info').hide();
+            const countdownElem = $('#countdown-timer');
+            const messageElem = $('#countdown-message');
+
+            let endTime = localStorage.getItem('endTime');
+            if (!endTime) {
+                const now = new Date().getTime();
+                endTime = now + 15 * 60 * 1000;
+                localStorage.setItem('endTime', endTime);
+            }
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = endTime - now;
+
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    countdownElem.text('00:00');
+                    messageElem.text('Thời gian đã hết!');
+                    $('#countdown').hide();
+                    localStorage.removeItem('movie');
+                    localStorage.removeItem('room');
+                    localStorage.removeItem('showDate');
+                    localStorage.removeItem('showTime');
+                    localStorage.removeItem('cinema');
+                    localStorage.removeItem('selectedSeats');
+                    localStorage.removeItem('totalMoney');
+                    localStorage.removeItem('endTime');
+                    localStorage.removeItem('city');
+                    localStorage.removeItem('billCode');
+                    localStorage.removeItem('order');
+                    localStorage.removeItem('ticketMoney');
+                    localStorage.removeItem('finalAmount');
+                    window.location.href = "/home";
+                    return;
+                }
+
+                const minutes = Math.floor((distance % (1000 * 3600)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownElem.text(`${pad(minutes)}:${pad(seconds)}`);
+            }
+
+            function pad(number) {
+                return number < 10 ? '0' + number : number;
+            }
+
+            const countdownInterval = setInterval(updateCountdown, 1000);
+            updateCountdown();
+        });
+    </script>
+
+    <script>
+        var showDate = localStorage.getItem('showDate') || "";
+        var showTime = localStorage.getItem('showTime') || "";
+        var cinemaId = localStorage.getItem('cinema') || "";
+        var movieId = localStorage.getItem('movie') || "";
+        var roomId = localStorage.getItem('room') || "";
+        var seats = JSON.parse(localStorage.getItem('selectedSeats')) || [];
+        var ticketMoney = localStorage.getItem('ticketMoney') || "";
+        var accessTokenLocal = localStorage.getItem("accessToken");
+        var accessTokenGoogle = localStorage.getItem("access_token");
+
+        $(document).ready(function () {
+            $('#header').load("/header", function () {
+                checkAccessToken();
+                $.getScript("/js/client/header.js");
+            });
+
+            //hiển thị lại đồ ăn đã chọn khi load lại trang
+            var orderFood = localStorage.getItem('order');
+            if (orderFood) {
+                let sumFood = 0;
+                const order = JSON.parse(orderFood);
+                for (let o of order) {
+                    renderOrder(o);
+                    sumFood = sumFood + o.money;
+                }
+                $('#sum-money').text(formatCurrency(sumFood));
+            }
+
+            $('.info-count-money-info-cinema-seats').text(seats);
+            $('#money-ticket').text(formatCurrency(ticketMoney));
+            if (!localStorage.getItem('totalMoney')) {
+                localStorage.setItem('totalMoney', ticketMoney);
+            }
+            getUser(parseFloat(localStorage.getItem('totalMoney')));
+            $('#total-money').text(formatCurrency(localStorage.getItem('totalMoney')));
+            callApiGetALlFood();
+            callApiGetMovieById(movieId);
+            callApiGetCinemaById(cinemaId);
+            callApiGetRoomById(roomId);
+            $('.info-date').text(showDate);
+            $('.info-time').text(formatTime(showTime));
+            $('#show-time-ticket').text(formatTime(showTime));
+            $('#show-date-ticket').text(showDate);
+            let order = JSON.parse(localStorage.getItem('order')) || [];
+            let totalMoney = localStorage.getItem('totalMoney') || 0;
+            $(document).on('click', '.btn-buy', function (e) {
+                e.preventDefault();
+                const button = $(this);
+                const productName = button.data('name');
+                const price = parseFloat(button.data('price'));
+                const productId = button.data('id');
+                const quantityInput = button.closest('.product').find('.number-product').val();
+                const stock = parseInt(button.closest('.product').find('.stock').data('value'), 10);
+                if (isNaN(quantityInput) || !Number.isInteger(Number(quantityInput))) {
+                    toastr.error("Đầu vào không hợp lệ. Vui lòng thử lại!");
+                    button.closest('.product').find('.number-product').val(0);
+                    return;
+                }
+                const quantity = parseInt(quantityInput, 10);
+
+                if (quantity <= 0) {
+                    toastr.error("Số lượng phải lớn hớn 0");
+                    button.closest('.product').find('.number-product').val(0);
+                    return;
+                }
+                if (quantity > stock) {
+                    toastr.warning("Số lượng tồn kho chỉ còn " + `${stock}` + " sản phẩm!");
+                    button.closest('.product').find('.number-product').val(0);
+                    return;
+                }
+
+                const existingProduct = order.find(item => item.name === productName);
+                if (existingProduct) {
+                    // Nếu sản phẩm đã tồn tại, cập nhật số lượng và tiền
+                    existingProduct.quantity += quantity;
+                    existingProduct.money = existingProduct.quantity * price;
+                } else {
+                    // Nếu sản phẩm chưa tồn tại, thêm sản phẩm mới vào danh sách
+                    order.push({
+                        id: productId,
+                        name: productName,
+                        quantity: quantity,
+                        money: quantity * price
+                    });
+                }
+                localStorage.setItem('order', JSON.stringify(order));
+                let sumMoney = 0;
+                $('.order-food').empty();
+                //Hiển thị danh sách order
+                for (let o of order) {
+                    renderOrder(o);
+                    sumMoney = sumMoney + o.money;
+                }
+                $('#sum-money').text(formatCurrency(sumMoney));
+                totalMoney = parseFloat(ticketMoney) + parseFloat(sumMoney);
+                localStorage.setItem('totalMoney', totalMoney);
+                $('#total-money').text(formatCurrency(totalMoney));
+                button.closest('.product').find('.number-product').val(0);
+                getUser(parseFloat(localStorage.getItem('totalMoney')));
+            });
+
+            $(document).on('click', '.delete-food', function () {
+                const idFood = $(this).data('id');
+                order = order.filter(item => item.id !== idFood);
+                localStorage.setItem('order', JSON.stringify(order));
+                let sumMoney = 0;
+                $('.order-food').empty();
+                //Hiển thị danh sách order
+                for (let o of order) {
+                    renderOrder(o);
+                    sumMoney = sumMoney + o.money;
+                }
+                $('#sum-money').text(sumMoney);
+                totalMoney = parseFloat(ticketMoney) + parseFloat(sumMoney);
+                localStorage.setItem('totalMoney', totalMoney);
+                $('#total-money').text(formatCurrency(totalMoney));
+                getUser(parseFloat(localStorage.getItem('totalMoney')));
+            })
+
+            $(document).on('click', '#payment', function () {
+                // const billCode = localStorage.getItem('billCode'); // Lấy billCode từ nơi bạn lưu trữ hoặc từ người dùng
+                // const orderData = order.map(item => ({
+                //     foodId: item.id,
+                //     quantity: item.quantity
+                // }));
+                //
+                // const billFood = {
+                //     billCode: billCode,
+                //     foods: orderData
+                // }
+                // callApiSaveBillFood(billFood);
+                // callApiUpdateStatusBill(billCode);
+                // callApiGetUserInfoById(billCode, userId, localStorage.getItem('accessToken'));
+                const finalAmount = localStorage.getItem('finalAmount');
+                callApiPayment(parseFloat(finalAmount), "Thanh Toán Vé Phim")
+            })
+        });
+        //Ham format money
+        function formatCurrency(amount) {
+            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        // hàm format giờ chiếu về dạng hh:mm
+        function formatTime(time) {
+            if (typeof time === 'string' && time.match(/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/)) {
+                const [hours, minutes] = time.split(':');
+                return `${hours}:${minutes}`;
+            }
+            return time;
+        }
+        function renderOrder(o) {
+            const tbody = `<tr>
+                                    <td>${o.name}</td>
+                                    <td>${o.quantity}</td>
+                                    <td>${o.money}</td>
+                                    <td><a class="delete-food" data-id="${o.id}">Xóa</a></td>
+                                </tr>`
+            $('.order-food').append(tbody);
+        }
+
+        function callApiGetMovieById(id) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/movie/" + id,
+                method: "GET",
+                success: function (response) {
+                    const movieImage = $('#movie-image');
+                    movieImage.attr('src', response.data.imageLargeUrl);
+                    movieImage.attr('alt', response.data.name);
+                    $('.info-name').text(response.data.name);
+                    $('#movie-name-ticket').text(response.data.name);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiGetCinemaById(id) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/cinema/" + id,
+                method: "GET",
+                success: function (response) {
+                    $('.background').hide();
+                    $('.info-cinema').text(response.name);
+                    $('#cinema-name-ticket').text(response.name);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+        function callApiGetRoomById(id) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/room/" + id,
+                method: "GET",
+                success: function (response) {
+                    $('.background').hide();
+                    $('.info-room').text(response.name);
+                    $('#room-name-ticket').text(response.name);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiPayment(amount, orderInfo) {
+            const settings = {
+                url: "http://localhost:8080/api/pub/payment/submitOrder?amount=" + amount + "&orderInfo=" + orderInfo,
+                method: "POST",
+                contentType: "application/json",
+                success: function (res) {
+                    window.location.href = res.paymentUrl;
+                },
+                error: function (xhr) {
+                    const res = JSON.parse(xhr.responseText);
+                    toastr.error("Thanh toán thất bại!");
+                    console.error("Có lỗi khi thanh toán!");
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //hàm xử lý hiển thị thông tin
+        function getUser(totalMoney) {
+            if (accessTokenLocal != null) {
+                callApiGetUserInfo(accessTokenLocal, "http://localhost:8080/user/info", totalMoney);
+            }
+            if (accessTokenGoogle != null) {
+                callApiGetUserInfo(accessTokenGoogle, "http://localhost:8080/oauth2/getUser", totalMoney);
+            }
+        }
+
+        //Hàm gọi api lấy thông tin khách hàng theo token
+        function callApiGetUserInfo(accessToken, url, totalMoney) {
+            $.ajax({
+                url: url,
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                success: function (response) {
+                    applyDiscount(response.membershipLevel, totalMoney);
+                },
+                error: function (xhr) {
+                    console.log("Có lỗi khi tải dữ liệu!");
+                }
+            });
+        }
+
+        function applyDiscount(membershipLevel, totalMoney) {
+            let discount = 0;
+            switch (membershipLevel) {
+                case 'SILVER':
+                    discount = 0.05; // 5%
+                    break;
+                case 'GOLD':
+                    discount = 0.80; // 10%
+                    break;
+                case 'PLATINUM':
+                    discount = 0.15; // 15%
+                    break;
+                case 'DIAMOND':
+                    discount = 0.30; // 20%
+                    break;
+                default:
+                    discount = 0; // Không có khuyến mãi
+            }
+            const discountAmount = totalMoney * discount;
+            const finalAmount = totalMoney - discountAmount;
+            if (discount > 0) {
+                $('#total-money').css('text-decoration', 'line-through');
+                $('#total-money-new').css('display', 'inline');
+                $('#total-money-new').text(formatCurrency(finalAmount));
+            }
+            localStorage.setItem('finalAmount', finalAmount);
+            $('#discount-info').html(`Khuyến mãi (<span style="color: red;">${discount * 100}%</span>): <span style="font-weight: bold; color: yellow;">${formatCurrency(discountAmount)} </span> VND`);
+        }
+
+    </script>
+</body>
+
+</html>

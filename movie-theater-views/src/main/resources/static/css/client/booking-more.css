@@ -1,0 +1,661 @@
+.booking {
+    width: 100%;
+    height: auto;
+    background-color: #011333;
+}
+
+.booking-more {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.booking-more-movie {
+    position: relative;
+    width: 100%;
+    height: 250px;
+}
+
+.booking-more-movie-image {
+    width: 100%;
+    height: 100%;
+}
+
+.booking-more-movie-image img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.booking-more-movie-info {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(1, 19, 51, 0.6);
+    z-index: 100;
+    text-align: center;
+}
+
+.info-name {
+    padding-top: 5%;
+    margin: 0 auto;
+    max-width: 70%;
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.info-date,
+.info-cinema {
+    display: inline-block;
+    font-size: 15px;
+    color: whitesmoke;
+    padding: 0 15px;
+    border-right: 2px solid blue;
+}
+
+.info-time,
+.info-room {
+    margin-left: 15px;
+    font-size: 13px;
+    color: #ccc;
+    background: linear-gradient(to right, rgb(180, 63, 63), rgb(26, 11, 141));
+    display: inline;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+.info-cinema {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgb(8, 255, 16);
+}
+.info-room {
+    padding: 5px 30px;
+}
+
+.booking-more-food-shop {
+    position: relative;
+    width: 90%;
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 10%;
+}
+
+.shop-cinema {
+    width: 70%;
+    height: auto;
+}
+
+.swiper-slide::before {
+    background: rgba(0, 0, 0, 0) !important;
+}
+
+.hero {
+    padding: 0 !important;
+    max-width: 100% !important;
+}
+.swiper-slide img {
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+.info-food-shop {
+    margin-top: 50px;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.info-food-shop .banner-shop {
+    width: 100%;
+    height: 200px;
+}
+
+.info-food-shop img {
+    width: 100%;
+    height: auto;
+}
+
+.food-shop-title {
+    margin-top: 50px;
+    text-align: center;
+}
+.food-shop-title p {
+    margin-bottom: 0;
+}
+
+.food-shop-title .p1 {
+    color: aqua;
+    font-size: 18px;
+}
+
+.food-shop-title .p2 {
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(226, 220, 220);
+}
+
+.food-shop-title .p3,
+.food-shop-title .p4 {
+    font-size: 15px;
+    color: rgb(185, 185, 74);
+}
+.info-count-money {
+    color: beige;
+    margin-top: 70px;
+    width: 30%;
+    height: 100%;
+    background-color: #082159;
+    position: relative;
+}
+
+.info-count-money .circle,
+.info-count-money .circle1 {
+    position: absolute;
+    width: 40px; /* Chiều rộng của hình tròn */
+    height: 40px; /* Chiều cao của hình tròn (bằng với chiều rộng) */
+    background-color: #011333; /* Màu nền */
+    border-radius: 50%; /* Làm tròn các góc để tạo hình tròn */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+.info-count-money .circle {
+    top: 50%;
+    left: -20px;
+}
+.info-count-money .circle1 {
+    top: 50%;
+    right: -20px;
+}
+
+.info-count-money-title {
+    color: rgb(211, 211, 78);
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    border-bottom: 2px solid #0d2c62;
+}
+.info-count-money-info-movie {
+    padding: 20px;
+    font-size: 15px;
+}
+.info-count-money-info-movie p {
+    margin-bottom: 3px;
+}
+.info-count-money-info-movie-name {
+    padding-bottom: 8px;
+    font-weight: 600;
+}
+
+.info-count-money-info-time-cinema {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.info-count-money-info-time,
+.info-count-money-info-cinema {
+    width: 50%;
+}
+
+.info-count-money-info-movie-date,
+.info-count-money-info-movie-time,
+.info-count-money-info-cinema-name,
+.info-count-money-info-cinema-room,
+.info-count-money-info-cinema-seats {
+    font-size: 12px;
+}
+
+.count-money-ticket,
+.count-money-food,
+.count-money {
+    width: 100%;
+    text-align: left;
+}
+.count-money-ticket {
+    margin-left: 20px;
+}
+
+.info-count-money-info {
+    padding-bottom: 10px;
+    border-bottom: 2px solid #0d2c62;
+}
+
+.count-money-food p,
+.count-money-more p {
+    margin-bottom: 0;
+}
+.count-money-food,
+.count-money-more {
+    padding: 20px 20px;
+    border-bottom: 2px solid #0d2c62;
+}
+
+.count-money-food p {
+    margin-top: 10px;
+}
+
+.custom-table {
+    text-align: left;
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse; /* Loại bỏ khoảng cách giữa các ô */
+    font-size: 13px;
+    color: #837b7b;
+}
+.custom-table .delete-food {
+    font-size: 12px;
+    color: red;
+}
+.delete-food:hover {
+    opacity: 0.9;
+}
+
+.payment {
+    padding: 20px;
+    border-bottom: 2px solid #0d2c62;
+    display: flex;
+    justify-content: center;
+}
+
+.payment button {
+    color: white;
+    border-radius: 30px;
+    border: none;
+    background: linear-gradient(to right, rgb(10, 193, 202), rgb(128, 116, 205));
+    padding: 8px 30px;
+    margin-right: 5%;
+    transition:
+        transform 1s ease,
+        background 1s ease;
+}
+
+.payment button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(to right, rgb(89, 72, 217), rgb(10, 193, 202));
+}
+
+/* Tổng thể */
+.list-product {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Khoảng cách giữa các sản phẩm */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Sản phẩm */
+.product {
+    position: relative;
+    margin-top: 50px;
+    width: 160px;
+    height: calc(160px * 3 / 2);
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.8);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.product .product-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    position: relative;
+}
+
+.product img {
+    width: 100%;
+    height: 100%; /* Chiều cao của hình ảnh sản phẩm */
+    object-fit: cover; /* Đảm bảo hình ảnh được căn chỉnh hợp lý */
+    object-position: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.out-of-stock {
+    position: absolute;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(204, 204, 204, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.out-of-stock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5); /* Màu nền mờ để che chắn */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: not-allowed; /* Con trỏ khi hover là không được phép */
+    z-index: 10; /* Đảm bảo overlay nằm trên các nội dung khác */
+}
+
+.out-of-stock span {
+    color: #5c5c5c;
+    font-size: 15px;
+    padding: 5px 10px;
+    border: 2px solid #5c5c5c;
+}
+
+.product-name {
+    background-color: #071d4d;
+    height: 50%;
+    padding: 10px;
+    text-align: center;
+}
+
+.product-name p {
+    margin: 0;
+    height: 70%;
+    font-size: 15px;
+    color: rgb(162, 162, 162);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hiệu ứng hover */
+.product:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.number-buy {
+    height: 30%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.choose-number {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.choose-number input {
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    background-color: #071d4d;
+    border: none;
+    color: white;
+    border-top: 1px solid rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.choose-number i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #071d4d;
+    width: 25%;
+    height: 100%;
+    font-size: 10px;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+.choose-number i:hover {
+    opacity: 0.6;
+}
+.btn-buy {
+    width: 50%;
+    height: 100%;
+}
+
+.btn-buy button {
+    width: 100%;
+    height: 100%;
+    color: white;
+    border: none;
+    background: linear-gradient(to right, rgb(202, 10, 61), rgb(216, 174, 6));
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+.btn-buy button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(to right, rgb(216, 174, 6), rgb(202, 10, 61));
+}
+
+.custom-shape {
+    position: absolute;
+    top: 0;
+    right: -15%;
+    z-index: 1000;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 30px;
+    color: white;
+    background-color: #f84d0f;
+    clip-path: polygon(
+        0% 0%,
+        /* Điểm A: Góc trên bên trái */ 80% 0%,
+        /* Điểm B: Phần trên bên phải của thân mũi tên */ 100% 50%,
+        /* Điểm C: Đỉnh mũi tên nhọn */ 80% 100%,
+        /* Điểm D: Phần dưới bên phải của thân mũi tên */ 0% 100%,
+        /* Điểm E: Góc dưới bên trái */ 20% 50% /* Điểm F: Điểm lõm ở giữa cạnh bên trái */
+    );
+}
+.hot-label {
+    display: none;
+    position: absolute;
+    top: 10px; /* Điều chỉnh vị trí của thẻ */
+    left: 10px; /* Điều chỉnh vị trí của thẻ */
+    color: rgb(255, 0, 0); /* Màu chữ */
+    font-size: 12px; /* Kích thước chữ */
+    font-weight: bold; /* Chữ đậm */
+    text-transform: uppercase; /* Viết hoa chữ */
+    z-index: 10; /* Đảm bảo thẻ nằm trên các phần tử khác */
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1); /* Kích thước ban đầu */
+    }
+    50% {
+        transform: scale(1.2); /* Kích thước lớn hơn ở giữa */
+    }
+    100% {
+        transform: scale(1); /* Quay lại kích thước ban đầu */
+    }
+}
+
+/* Add to your existing CSS file */
+#countdown {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 20px;
+    background-color: rgba(3, 18, 112, 0.8);
+    color: #e8b50c;
+    text-align: center;
+    padding: 10px;
+    z-index: 100000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#countdown-timer {
+    font-size: 25px;
+    padding: 20px 40px;
+    background-color: #e8b50c;
+    color: #ffffff;
+    border-radius: 5px;
+}
+#total-money-new {
+    display: none;
+    margin-left: 10px;
+}
+
+@media (max-width: 789px) {
+    .booking-more-movie {
+        height: 180px;
+    }
+    .info-name {
+        font-size: 24px;
+    }
+    .shop-cinema {
+        width: 60%;
+    }
+
+    .info-date-time p {
+        margin-bottom: 10px;
+    }
+
+    .info-food-shop .banner-shop {
+        height: 150px;
+    }
+
+    .food-shop-title .p1 {
+        font-size: 14px;
+    }
+
+    .food-shop-title .p2 {
+        font-size: 25px;
+    }
+
+    .food-shop-title .p3,
+    .food-shop-title .p4 {
+        font-size: 12px;
+    }
+    .info-count-money {
+        width: 40%;
+    }
+
+    .count-money-ticket,
+    .count-money-food,
+    .count-money {
+        font-size: 14px;
+    }
+
+    .info-count-money-info-movie {
+        font-size: 13px;
+    }
+    .info-count-money-info-movie-date,
+    .info-count-money-info-movie-time,
+    .info-count-money-info-cinema-name,
+    .info-count-money-info-cinema-room,
+    .info-count-money-info-cinema-seats {
+        font-size: 10px;
+    }
+    .custom-table {
+        font-size: 10px;
+    }
+    .payment button {
+        padding: 5px 20px;
+    }
+    .product {
+        width: 130px;
+        height: calc(130px * 3 / 2);
+        margin-top: 20px;
+    }
+    .product-name p {
+        font-size: 12px;
+    }
+
+    .custom-shape {
+        font-size: 12px;
+        width: 80px;
+        height: 25px;
+        right: -10%;
+    }
+
+    #countdown-timer {
+        padding: 15px 30px;
+        font-size: 20px;
+    }
+
+    #countdown {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 489px) {
+    .booking-more-movie {
+        height: 150px;
+    }
+    .shop-cinema,
+    .info-count-money {
+        width: 100%;
+    }
+    .info-name {
+        font-size: 18px;
+    }
+    .info-date,
+    .info-cinema {
+        font-size: 12px;
+        padding: 3px 6px;
+    }
+    .info-date-time p {
+        margin-bottom: 0;
+    }
+    .info-time,
+    .info-room {
+        font-size: 10px;
+        padding: 2px 10px;
+    }
+    .product {
+        margin-top: 30px;
+        width: 120px;
+        height: calc(120px * 3 / 2);
+    }
+    .product-name p {
+        font-size: 10px;
+    }
+
+    .choose-number input {
+        font-size: 10px;
+    }
+    .btn-buy {
+        font-size: 12px;
+    }
+
+    #countdown-timer {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    #countdown {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .product {
+        margin-top: 30px;
+        width: 100px;
+        height: calc(100px * 3 / 2);
+    }
+}

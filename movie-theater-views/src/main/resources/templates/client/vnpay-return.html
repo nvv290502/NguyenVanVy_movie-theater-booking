@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Kết quả thanh toán</title>
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/header.css">
+    <link rel="stylesheet" href="/css/client/payment.css">
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <div class="payment-container">
+        <p class="payment-title">Thông tin đơn hàng</p>
+        <hr>
+        <div class="payment-status">
+            <img id="payment-status" src="/img/icons8-success-48.png" alt="success">
+            <p id="payment-status-title">Thanh toán thành công</p>
+        </div>
+
+        <p class="payment-notification">Bạn đã thanh toán! Vui lòng kiếm tra email để xem chi tiết hóa đơn!</p>
+
+        <div class="payment-info">
+            <table class="payment-info-table">
+                <tr>
+                    <td>Tổng tiền</td>
+                    <td class="td-right"><span class="sum-money">50000</span> VNĐ</td>
+                </tr>
+                <tr>
+                    <td>Thời gian</td>
+                    <td class="td-right"><span class="payment-time">6-9-2024 9:10</span></td>
+                </tr>
+                <tr>
+                    <td>Mã giao dịch</td>
+                    <td class="td-right"><span class="payment-transactions">fhr97thgfd</span></td>
+                </tr>
+                <tr>
+                    <td>Ngân hàng</td>
+                    <td class="td-right"><span class="payment-bank">
+                            <img src="/img/ncb_bank.jpg" alt="ncb">
+                        </span></td>
+                </tr>
+            </table>
+        </div>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="/css/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/client/login.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#header').load("/header", function () {
+                checkAccessToken();
+                $.getScript("/js/client/header.js");
+            });
+
+            let urlParams = new URLSearchParams(window.location.search);
+            let vnpAmount = urlParams.get('vnp_Amount');
+            let vnpBankCode = urlParams.get('vnp_BankCode');
+            let vnpPayDate = urlParams.get('vnp_PayDate');
+            let vnpTransactionNo = urlParams.get('vnp_TransactionNo');
+            let vnpTransactionStatus = urlParams.get('vnp_TransactionStatus');
+
+            if (vnpTransactionStatus === "00") {
+                renderSuccess(parseFloat(vnpAmount) / 100, vnpPayDate, vnpTransactionNo);
+
+                let order = JSON.parse(localStorage.getItem('order') || '[]');
+
+                const billCode = localStorage.getItem('billCode');
+                const orderData = order.map(item => ({
+                    foodId: item.id,
+                    quantity: item.quantity
+                }));
+
+                const billFood = {
+                    billCode: billCode,
+                    foods: orderData
+                }
+                callApiSaveBillFood(billFood);
+                callApiUpdateStatusBill(billCode, parseFloat(localStorage.getItem('finalAmount')));
+                callApiGetUserInfoById(billCode, localStorage.getItem('userId'), localStorage.getItem('accessToken'));
+            } else {
+                renderFail(parseFloat(vnpAmount) / 100, vnpPayDate, vnpTransactionNo);
+            }
+        });
+
+        function renderSuccess(vnpAmount, vnpPayDate, vnpTransactionNo) {
+            $('.sum-money').text(formatCurrency(vnpAmount));
+            $('.payment-time').text(formatDateTime(vnpPayDate));
+            $('.payment-transactions').text(vnpTransactionNo);
+        }
+
+        function renderFail(vnpAmount, vnpPayDate, vnpTransactionNo) {
+            $('.sum-money').text(formatCurrency(vnpAmount));
+            $('.payment-time').text(formatDateTime(vnpPayDate));
+            $('.payment-transactions').text(vnpTransactionNo);
+
+            const paymentStatus = $('#payment-status');
+            paymentStatus.attr('src', '/img/icons8-fail-48.png');
+            paymentStatus.attr('alt', 'Fail');
+            $('#payment-status-title').text("Bạn đã hủy đơn hàng");
+            $('.payment-notification').css('display', 'none');
+        }
+
+        //Ham format money
+        function formatCurrency(amount) {
+            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        // hàm format giờ chiếu về dạng hh:mm
+        function formatDateTime(dateTimeString) {
+            let year = dateTimeString.substring(0, 4);
+            let month = dateTimeString.substring(4, 6);
+            let day = dateTimeString.substring(6, 8);
+            let hour = dateTimeString.substring(8, 10);
+            let minute = dateTimeString.substring(10, 12);
+            let second = dateTimeString.substring(12, 14);
+
+            let date = new Date(year, month - 1, day, hour, minute, second);
+
+            let options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+            };
+
+            return date.toLocaleString('vi-VN', options);
+        }
+
+        function callApiSaveBillFood(billFood) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/bill-food",
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(billFood),
+                success: function (response) {
+                    $('.background').hide();
+                    localStorage.removeItem('movie');
+                    localStorage.removeItem('room');
+                    localStorage.removeItem('showDate');
+                    localStorage.removeItem('showTime');
+                    localStorage.removeItem('cinema');
+                    localStorage.removeItem('selectedSeats');
+                    localStorage.removeItem('finalAmount');
+                    localStorage.removeItem('endTime');
+                    localStorage.removeItem('city');
+                    localStorage.removeItem('billCode');
+                    localStorage.removeItem('order');
+                    localStorage.removeItem('totalMoney');
+                    localStorage.removeItem('ticketMoney');
+                    setTimeout(function () {
+                        window.location.href = "/home";
+                    }, 5000);
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    const res = JSON.parse(xhr.responseText);
+                    toastr.error(res.message);
+                    console.error("Có lỗi khi tải dữ liệu!");
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiUpdateStatusBill(billCode, amountMoney) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/bill/update-status?billCode=" + billCode + "&amountMoney=" + amountMoney,
+                method: "POST",
+                contentType: "application/json",
+                success: function (response) {
+                    $('.background').hide();
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    const res = JSON.parse(xhr.responseText);
+                    toastr.error(res.message);
+                    console.error("Có lỗi khi tải dữ liệu!");
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiSendBillToMail(billCode, email) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/bill/sendEmail?billCode=" + billCode + "&email=" + email,
+                method: "GET",
+                contentType: "application/json",
+                success: function (response) {
+                    console.log(response.data);
+                },
+                error: function (xhr) {
+                    const res = JSON.parse(xhr.responseText);
+                    toastr.error(res.message);
+                    console.error("Có lỗi khi tải dữ liệu!");
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiGetUserInfoById(billCode, userId, accessToken) {
+            var settings = {
+                url: "http://localhost:8080/user/" + userId,
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                success: function (response) {
+                    callApiSendBillToMail(billCode, response.email);
+                },
+                error: function (xhr) {
+                    const res = JSON.parse(xhr.responseText);
+                    toastr.error(res.message);
+                    console.error("Có lỗi khi tải dữ liệu!");
+                }
+            }
+            $.ajax(settings);
+        }
+    </script>
+</body>
+
+</html>

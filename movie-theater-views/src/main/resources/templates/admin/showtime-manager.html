@@ -1,0 +1,157 @@
+<div class="list-manager list-schedule">
+    <div class="list-manager-head">
+        <div style="display: flex">
+            <div class="size-of-page">
+                Show
+                <select class="number-element-of-page-schedule">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                    <a href="">
+                        <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="box-sort">
+                        <ul>
+                            <li class="schedule-sort" data-value="id" data-id="asc">Tăng dần</li>
+                            <li class="schedule-sort" data-value="id" data-id="desc">Giảm dần</li>
+                        </ul>
+                    </div>
+                </th>
+                <th>Tên phim
+                </th>
+                <th>Tên phòng
+                </th>
+                <th>Tên rạp
+                </th>
+                <th>Ngày chiếu
+                    <a href="">
+                        <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="box-sort">
+                        <ul>
+                            <li class="schedule-sort" data-value="date" data-id="asc">Tăng dần</li>
+                            <li class="schedule-sort" data-value="date" data-id="desc">Giảm dần</li>
+                        </ul>
+                    </div>
+                </th>
+                <th>Giờ bắt đầu
+                </th>
+                <th>
+                    Giờ kết thúc
+                </th>
+                <th>
+                    Giá vé
+                    <a href="">
+                        <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="box-sort">
+                        <ul>
+                            <li class="schedule-sort" data-value="price" data-id="asc">Tăng dần</li>
+                            <li class="schedule-sort" data-value="price" data-id="desc">Giảm dần</li>
+                        </ul>
+                    </div>
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Phim A</td>
+                <td>Phòng 1</td>
+                <td>Rạp 1</td>
+                <td>2024-09-21</td>
+                <td>14:00</td>
+                <td>16:00</td>
+                <td class="price-ticket">
+                    <div class="input-group">
+                        <input type="number" class="form-control" value="120000" />
+                        <button class="btn btn-primary btn-save" type="button">Lưu</button>
+                    </div>
+                </td>
+                <td><button class="btn btn-danger btn-cancel">Hủy lịch</button></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Phim B</td>
+                <td>Phòng 2</td>
+                <td>Rạp 2</td>
+                <td>2024-09-22</td>
+                <td>15:00</td>
+                <td>17:00</td>
+                <td class="price-ticket">
+                    <div class="input-group">
+                        <input type="number" class="form-control" value="120000" />
+                        <button class="btn btn-primary btn-save" type="button">Lưu</button>
+                    </div>
+                </td>
+                <td><button class="btn btn-danger btn-cancel">Hủy lịch</button></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Phim C</td>
+                <td>Phòng 3</td>
+                <td>Rạp 3</td>
+                <td>2024-09-23</td>
+                <td>16:00</td>
+                <td>18:00</td>
+                <td class="price-ticket">
+                    <div class="input-group">
+                        <input type="number" class="form-control" value="120000" />
+                        <button class="btn btn-primary btn-save" type="button">Lưu</button>
+                    </div>
+                </td>
+                <td><button class="btn btn-danger btn-cancel">Hủy lịch</button></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Phim D</td>
+                <td>Phòng 4</td>
+                <td>Rạp 4</td>
+                <td>2024-09-24</td>
+                <td>17:00</td>
+                <td>19:00</td>
+                <td class="price-ticket">
+                    <div class="input-group">
+                        <input type="number" class="form-control" value="120000" />
+                        <button class="btn btn-primary btn-save" type="button">Lưu</button>
+                    </div>
+                </td>
+                <td><button class="btn btn-danger btn-cancel">Hủy lịch</button></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Phim E</td>
+                <td>Phòng 5</td>
+                <td>Rạp 5</td>
+                <td>2024-09-25</td>
+                <td>18:00</td>
+                <td>20:00</td>
+                <td class="price-ticket">
+                    <div class="input-group">
+                        <input type="number" class="form-control" value="120000" />
+                        <button class="btn btn-primary btn-save" type="button">Lưu</button>
+                    </div>
+                </td>
+                <td><button class="btn btn-danger btn-cancel">Hủy lịch</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="paging paging-schedule">
+        <a href="" class="paging-item previous">&laquo;</a>
+        <div class="paging-number-schedule">
+        </div>
+        <a href="" class="paging-item next">&raquo;</a>
+    </div>
+</div>

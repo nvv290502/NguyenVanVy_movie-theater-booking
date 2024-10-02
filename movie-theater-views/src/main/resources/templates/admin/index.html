@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/admin/index.css">
+    <link rel="stylesheet" href="/css/admin/movies-manager.css">
+    <link rel="stylesheet" href="/css/admin/menu.css">
+
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="admin-containers">
+        <div class="menu-admin">
+        </div>
+        <div class="content">
+            <h1>
+                <i class="far fa-chart-bar"></i> Trang thống kê
+            </h1>
+            <hr>
+
+            <div class="dashboard-summary">
+                <div class="summary-box">
+                    <h3>Doanh thu trong ngày</h3>
+                    <p class="summary-value revenue-daily">0</p>
+                </div>
+                <div class="summary-box">
+                    <h3>Khách hàng mới</h3>
+                    <p class="summary-value new-customer">0</p>
+                </div>
+                <div class="summary-box">
+                    <h3>Tổng vé bán ra</h3>
+                    <p class="summary-value total-ticket">0</p>
+                </div>
+                <div class="summary-box">
+                    <h3>Tổng doanh thu</h3>
+                    <p class="summary-value total-revenue">0</p>
+                </div>
+            </div>
+
+            <div class="dashboard-charts">
+                <div class="ranking-container">
+                    <h2 class="ranking-title">Bảng Xếp Hạng Phim</h2>
+                    <ul class="ranking-list">
+                    </ul>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Doanh thu</h3>
+                        <div class="chart-controls">
+                            <input type="date" id="dateSelect" class="chart-select" style="display: none;">
+                            <select id="yearSelect" class="chart-select" style="display: none;">
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                            </select>
+                            <select id="monthSelect" class="chart-select" style="display: none;">
+                                <option value="1">Tháng 1</option>
+                                <option value="2">Tháng 2</option>
+                                <option value="3">Tháng 3</option>
+                                <option value="4">Tháng 4</option>
+                                <option value="5">Tháng 5</option>
+                                <option value="6">Tháng 6</option>
+                                <option value="7">Tháng 7</option>
+                                <option value="8">Tháng 8</option>
+                                <option value="9">Tháng 9</option>
+                                <option value="10">Tháng 10</option>
+                                <option value="11">Tháng 11</option>
+                                <option value="12">Tháng 12</option>
+                            </select>
+                            <div class="chart-toggle">
+                                <button class="toggle-btn" data-view="year">Theo năm</button>
+                                <button class="toggle-btn active" data-view="month">Theo tháng</button>
+                                <button class="toggle-btn" data-view="day">Theo ngày</button>
+                                <button class="toggle-btn" data-view="hour">Theo giờ</button>
+                            </div>
+                        </div>
+                    </div>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+                <!-- <div class="reset-zoom-container">
+                    <button id="resetZoomBtn" class="reset-zoom-btn">Reset Zoom</button>
+                </div> -->
+            </div>
+
+            <div class="dashboard-tables">
+                <div class="table-container revenue-movie">
+                    <h3>Doanh thu theo phim <a href="#" class="view-all-movie">Xem chi tiết</a></h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tên phim</th>
+                                <th>Tổng vé bán ra</th>
+                                <th>Tổng doanh thu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div class="pagination"></div>
+                </div>
+                <div class="table-container revenue-cinema">
+                    <h3>Doanh thu theo rạp <a href="#" class="view-all-cinema">Xem chi tiết</a></h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rạp chiếu</th>
+                                <th>Tổng vé bán ra</th>
+                                <th>Tổng doanh thu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div class="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.2.1/chartjs-plugin-zoom.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const ctx = $('#revenueChart')[0].getContext('2d');
+            let revenueChart;
+            let currentView = 'month';
+            const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth() + 1;
+            let currentDate = getCurrentDateInVietnam();
+
+            function generateRandomData(length, min, max) {
+                return Array.from({ length }, () => Math.floor(Math.random() * (max - min + 1)) + min);
+            }
+
+            let availableYears = [];
+
+            async function updateYearlyData() {
+                try {
+                    const response = await callApiGetYearlyRevenue();
+                    console.log("Dữ liệu từ API theo năm:", response);
+
+                    if (!response.revenues || !response.years || response.revenues.length !== response.years.length) {
+                        throw new Error("Dữ liệu không hợp lệ");
+                    }
+
+                    availableYears = response.years;
+                    updateYearSelect(availableYears);
+
+                    const labels = response.years;
+                    const revenues = response.revenues.map(revenue => parseInt(revenue, 10));
+
+                    return {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Doanh thu',
+                            data: revenues,
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        }]
+                    };
+                } catch (error) {
+                    console.error("Lỗi khi lấy dữ liệu doanh thu theo năm:", error);
+                    return {
+                        labels: [],
+                        datasets: [{
+                            label: 'Doanh thu',
+                            data: [],
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        }]
+                    };
+                }
+            }
+
+            async function updateMonthlyData(year) {
+                try {
+                    const response = await callApiMonthlyRevenue(year);
+                    console.log("Dữ liệu từ API theo tháng:", response);
+
+                    if (!response.month || !response.revenues || response.month.length !== response.revenues.length) {
+                        throw new Error("Dữ liệu không hợp lệ");
+                    }
+
+                    const labels = response.month.map(month => `${month}/${year}`);
+                    const revenues = response.revenues.map(revenue => parseInt(revenue, 10));
+
+                    return {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Doanh thu',
+                            data: revenues,
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        }]
+                    };
+                } catch (error) {
+                    console.error("Lỗi khi lấy dữ liệu doanh thu theo tháng:", error);
+                    return {
+                        labels: [],
+                        datasets: [{
+                            label: 'Doanh thu',
+                            data: [],
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        }]
+                    };
+                }
+            }
+
+            async function updateDailyData(year, month) {
+                try {
+                    const response = await callApiDailyRevenue(year, month);
+                    console.log("Dữ liệu từ API theo ngày:", response);
+
+                    if (!response.days || !response.revenues || response.days.length !== response.revenues.length) {
+                        throw new Error("Dữ liệu không hợp lệ");
+                    }
+
+                    const labels = response.days.map(day => `${day}/${month}`);
+                    const revenues = response.revenues.map(revenue => parseInt(revenue, 10));
+
+                    return {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Doanh thu',
+                            data: revenues,
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        }]
+                    };
+                } catch (error) {
+                    console.error("Lỗi khi lấy dữ liệu doanh thu theo ngày:", error);
+                    return {
+                        labels: [],
+                        datasets: [{
+                            label: 'Doanh thu',
+                            data: [],
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        }]
+                    };
+                }
+            }
+
+            async function updateHourlyData(year, month, day) {
+                try {
+                    const response = await callApiHourlyRevenue(year, month, day);
+                    console.log("Dữ liệu từ API theo giờ:", response);
+
+                    if (!response.hours || !response.revenues || response.hours.length !== response.revenues.length) {
+                        throw new Error("Dữ liệu không hợp lệ");
+                    }
+
+                    const labels = response.hours.map(hour => `${hour}:00`);
+                    const revenues = response.revenues.map(revenue => parseInt(revenue, 10));
+
+                    return {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Doanh thu',
+                            data: revenues,
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        }]
+                    };
+                } catch (error) {
+                    console.error("Lỗi khi lấy dữ liệu doanh thu theo giờ:", error);
+                    return {
+                        labels: [],
+                        datasets: [{
+                            label: 'Doanh thu',
+                            data: [],
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        }]
+                    };
+                }
+            }
+
+            function createChart(data, isZoomable) {
+                if (revenueChart) {
+                    revenueChart.destroy();
+                }
+
+                const chartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            ticks: {
+                                autoSkip: false,
+                                maxRotation: 0,
+                                minRotation: 0
+                            },
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Doanh thu (VNĐ)'
+                            },
+                            ticks: {
+                                callback: function (value, index, values) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        zoom: {
+                            pan: {
+                                enabled: isZoomable,
+                                mode: 'x',
+                            },
+                            zoom: {
+                                wheel: {
+                                    enabled: isZoomable,
+                                },
+                                pinch: {
+                                    enabled: isZoomable
+                                },
+                                mode: 'x',
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            borderWidth: 1,
+                            padding: 10,
+                            displayColors: false,
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += formatCurrency(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: false
+                    }
+                };
+
+                if (isZoomable) {
+                    chartOptions.scales.x.min = 0;
+                    chartOptions.scales.x.max = 10;
+                }
+
+                revenueChart = new Chart(ctx, {
+                    type: 'line',
+                    data: data,
+                    options: chartOptions
+                });
+
+                if (isZoomable) {
+                    revenueChart.zoom(1);
+                }
+            }
+
+            async function updateChart() {
+                const year = $('#yearSelect').val() || currentYear;
+                const month = $('#monthSelect').val() || (new Date().getMonth() + 1);
+                const date = $('#dateSelect').val() || new Date().toISOString().split('T')[0];
+                const day = date.split('-')[2]; // Lấy ngày từ date
+
+                switch (currentView) {
+                    case 'year':
+                        createChart(await updateYearlyData(), false);
+                        break;
+                    case 'month':
+                        createChart(await updateMonthlyData(year), false);
+                        break;
+                    case 'day':
+                        createChart(await updateDailyData(year, month), true);
+                        break;
+                    case 'hour':
+                        createChart(await updateHourlyData(year, month, day), true);
+                        break;
+                }
+            }
+
+            function updateControlsVisibility() {
+                $('#yearSelect, #monthSelect, #dateSelect').hide();
+                const currentMonth = new Date().getMonth() + 1;
+                const today = currentDate.toISOString().split('T')[0];
+                console.log(today);
+                switch (currentView) {
+                    case 'year':
+                        break;
+                    case 'month':
+                        $('#yearSelect').show().val(currentYear);
+                        break;
+                    case 'day':
+                        $('#yearSelect, #monthSelect').show();
+                        $('#yearSelect').val(currentYear);
+                        $('#monthSelect').val(currentMonth);
+                        break;
+                    case 'hour':
+                        $('#dateSelect').show();
+                        $('#dateSelect').val(today);
+                        break;
+                }
+            }
+
+            function updateYearSelect(years) {
+                const yearSelect = $('#yearSelect');
+                yearSelect.empty();
+                years.forEach(year => {
+                    const option = $('<option>', {
+                        value: year,
+                        text: year
+                    });
+                    if (year == currentYear) {
+                        option.prop('selected', true);
+                    }
+                    yearSelect.append(option);
+                });
+            }
+
+            $('#yearSelect, #monthSelect, #dateSelect').on('change', async function () {
+                await updateChart();
+            });
+
+            $('.toggle-btn').on('click', async function () {
+                $('.toggle-btn').removeClass('active');
+                $(this).addClass('active');
+                currentView = $(this).data('view');
+                updateControlsVisibility();
+                await updateChart();
+            });
+
+            const today = new Date().toISOString().split('T')[0];
+            $('#dateSelect').val(today);
+
+            updateControlsVisibility();
+            updateYearlyData().then(() => {
+                $('#yearSelect').val(currentDate.getFullYear());
+                $('#monthSelect').val(currentDate.getMonth() + 1);
+                $('#dateSelect').val(formatDateToYYYYMMDD(currentDate));
+                updateChart().catch(error => console.error("Lỗi khi cập nhật biểu đồ:", error));
+
+                getTodayRevenue().then(updateTodayRevenue);
+                getTotalRevenue().then(updateTotalRevenue);
+                getTotalTickets().then(updateTotalTickets);
+
+                callApiRevenueMovie().then(data => {
+                    movieData = data;
+                    updateMovieRevenueTable();
+                }).catch(error => console.error("Lỗi khi lấy dữ liệu doanh thu phim:", error));
+
+                callApiRevenueCinema().then(data => {
+                    cinemaData = data;
+                    updateCinemaRevenueTable();
+                }).catch(error => console.error("Lỗi khi lấy dữ liệu năm:", error));
+
+                doLogin();
+                $('.menu-admin').load("/menu", function () {
+                    $.getScript('/js/admin/menu.js');
+                });
+
+                $(document).on('click', '.view-all-movie', function (e) {
+                    e.preventDefault();
+                    window.location.href = "/admin/movie-revenue";
+                });
+
+                $(document).on('click', '.view-all-cinema', function (e) {
+                    e.preventDefault();
+                    window.location.href = "/admin/cinema-revenue";
+                });
+
+                $(document).on('click', '.revenue-movie .page-btn:not(.disabled)', function () {
+                    const page = $(this).data('page');
+                    updateMovieRevenueTable(page);
+                });
+
+                $(document).on('click', '.revenue-cinema .page-btn:not(.disabled)', function () {
+                    const page = $(this).data('page');
+                    updateCinemaRevenueTable(page);
+                });
+            });
+
+            function doLogin() {
+                if (!sessionStorage.getItem("accessCheck")) {
+                    $.ajax({
+                        url: 'http://localhost:8080/auth/admin',
+                        method: 'GET',
+                        headers: {
+                            'Authorization': localStorage.getItem('accessToken')
+                        },
+                        success: function (response, status, xhr) {
+                            if (xhr.status === 200) {
+                                sessionStorage.setItem("accessCheck", "true");
+                                window.location.href = "/admin";
+                            } else {
+                                alert("Bạn không có quyền truy cập");
+                                window.location.href = '/login';
+                            }
+                        },
+                        error: function (xhr) {
+                            if (xhr.status === 403 || xhr.status === 401) {
+                                window.location.href = '/login';
+                            } else {
+                                console.error('Đã xảy ra lỗi khi gọi API:', xhr.statusText);
+                                window.location.href = '/login';
+                            }
+                        }
+                    });
+                }
+            }
+
+            function callApiGetYearlyRevenue() {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: "http://localhost:8080/api/pub/revenue/yearly",
+                        method: "GET",
+                        success: function (data) {
+                            resolve(data);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Lỗi API:", status, error);
+                            reject(new Error("Lỗi khi gọi API"));
+                        }
+                    });
+                });
+            }
+            function callApiMonthlyRevenue(year) {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: `http://localhost:8080/api/pub/revenue/monthly?year=${year}`,
+                        method: "GET",
+                        success: function (data) {
+                            resolve(data);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Lỗi API:", status, error);
+                            reject(new Error("Lỗi khi gọi API"));
+                        }
+                    });
+                });
+            }
+
+            function callApiDailyRevenue(year, month) {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: `http://localhost:8080/api/pub/revenue/daily?year=${year}&month=${month}`,
+                        method: "GET",
+                        success: function (data) {
+                            resolve(data);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Lỗi API:", status, error);
+                            reject(new Error("Lỗi khi gọi API"));
+                        }
+                    });
+                });
+            }
+
+            function callApiHourlyRevenue(year, month, day) {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: `http://localhost:8080/api/pub/revenue/hours?year=${year}&month=${month}&day=${day}`,
+                        method: "GET",
+                        success: function (data) {
+                            resolve(data);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Lỗi API:", status, error);
+                            reject(new Error("Lỗi khi gọi API"));
+                        }
+                    });
+                });
+            }
+
+            function callApiRevenueMovie() {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: `http://localhost:8080/api/pub/revenue/movie`,
+                        method: "GET",
+                        success: function (data) {
+                            resolve(data);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Lỗi API:", status, error);
+                            reject(new Error("Lỗi khi gọi API"));
+                        }
+                    });
+                });
+            }
+
+            function callApiRevenueCinema() {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: `http://localhost:8080/api/pub/revenue/cinema`,
+                        method: "GET",
+                        success: function (data) {
+                            resolve(data);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Lỗi API:", status, error);
+                            reject(new Error("Lỗi khi gọi API"));
+                        }
+                    });
+                });
+            }
+
+            function formatCurrency(amount) {
+                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+            }
+            function getCurrentDateInVietnam() {
+                return new Date();
+            }
+            function formatDateToYYYYMMDD(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            async function getTodayRevenue() {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = today.getMonth() + 1;
+                const day = today.getDate();
+
+                try {
+                    const response = await callApiDailyRevenue(year, month);
+                    const todayRevenue = response.revenues[day - 1] || 0;
+                    return parseInt(todayRevenue, 10);
+                } catch (error) {
+                    console.error("Lỗi khi lấy doanh thu ngày hôm nay:", error);
+                    return 0;
+                }
+            }
+            function updateTodayRevenue(revenue) {
+                $('.revenue-daily').text(formatCurrency(revenue));
+            }
+            async function getTotalRevenue() {
+                try {
+                    const response = await callApiGetYearlyRevenue();
+                    if (!response.revenues || response.revenues.length === 0) {
+                        throw new Error("Dữ liệu không hợp lệ");
+                    }
+                    const totalRevenue = response.revenues.reduce((sum, revenue) => sum + parseInt(revenue, 10), 0);
+                    return totalRevenue;
+                } catch (error) {
+                    console.error("Lỗi khi tính tổng doanh thu:", error);
+                    return 0;
+                }
+            }
+            function updateTotalRevenue(revenue) {
+                $('.total-revenue').text(formatCurrency(revenue));
+            }
+            let movieData = [];
+            let cinemaData = [];
+
+            function updateMovieRevenueTable(page = 1, pageSize = 5) {
+                const paginatedData = paginateData(movieData, page, pageSize);
+                const tableBody = $('.revenue-movie table tbody');
+                tableBody.empty();
+
+                paginatedData.content.forEach(movie => {
+                    const row = `
+        <tr>
+            <td>${movie.movieName}</td>
+            <td>${movie.numberTicket}</td>
+            <td>${formatCurrency(movie.amountMoney)}</td>
+        </tr>
+    `;
+                    tableBody.append(row);
+                });
+
+                updateMoviePagination(paginatedData);
+            }
+
+            function updateCinemaRevenueTable(page = 1, pageSize = 5) {
+                const paginatedData = paginateData(cinemaData, page, pageSize);
+                const tableBody = $('.revenue-cinema table tbody');
+                tableBody.empty();
+
+                paginatedData.content.forEach(cinema => {
+                    const row = `
+        <tr>
+            <td>${cinema.cinemaName}</td>
+            <td>${cinema.numberTicket}</td>
+            <td>${formatCurrency(cinema.amountMoney)}</td>
+        </tr>
+    `;
+                    tableBody.append(row);
+                });
+
+                updateCinemaPagination(paginatedData);
+            }
+
+            function updateMoviePagination(data) {
+                const paginationContainer = $('.revenue-movie .pagination');
+                paginationContainer.empty();
+
+                if (data.totalPages > 1) {
+                    const currentPage = data.number + 1;
+                    const totalPages = data.totalPages;
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === 1 ? 'disabled' : ''}" data-page="1">&laquo;</button>`);
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === 1 ? 'disabled' : ''}" data-page="${currentPage - 1}">&lt;</button>`);
+
+                    let startPage = Math.max(1, currentPage - 1);
+                    let endPage = Math.min(totalPages, startPage + 2);
+
+                    if (startPage > 1) {
+                        paginationContainer.append('<span class="ellipsis">...</span>');
+                    }
+
+                    for (let i = startPage; i <= endPage; i++) {
+                        const pageButton = $(`<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`);
+                        paginationContainer.append(pageButton);
+                    }
+
+                    if (endPage < totalPages) {
+                        paginationContainer.append('<span class="ellipsis">...</span>');
+                    }
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === totalPages ? 'disabled' : ''}" data-page="${currentPage + 1}">&gt;</button>`);
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === totalPages ? 'disabled' : ''}" data-page="${totalPages}">&raquo;</button>`);
+                }
+            }
+
+            function updateCinemaPagination(data) {
+                const paginationContainer = $('.revenue-cinema .pagination');
+                paginationContainer.empty();
+
+                if (data.totalPages > 1) {
+                    const currentPage = data.number + 1;
+                    const totalPages = data.totalPages;
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === 1 ? 'disabled' : ''}" data-page="1">&laquo;</button>`);
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === 1 ? 'disabled' : ''}" data-page="${currentPage - 1}">&lt;</button>`);
+
+                    let startPage = Math.max(1, currentPage - 1);
+                    let endPage = Math.min(totalPages, startPage + 2);
+
+                    if (startPage > 1) {
+                        paginationContainer.append('<span class="ellipsis">...</span>');
+                    }
+
+                    for (let i = startPage; i <= endPage; i++) {
+                        const pageButton = $(`<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`);
+                        paginationContainer.append(pageButton);
+                    }
+
+                    if (endPage < totalPages) {
+                        paginationContainer.append('<span class="ellipsis">...</span>');
+                    }
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === totalPages ? 'disabled' : ''}" data-page="${currentPage + 1}">&gt;</button>`);
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === totalPages ? 'disabled' : ''}" data-page="${totalPages}">&raquo;</button>`);
+                }
+            }
+            function paginateData(data, page, pageSize) {
+                const startIndex = (page - 1) * pageSize;
+                const endIndex = startIndex + pageSize;
+                return {
+                    content: data.slice(startIndex, endIndex),
+                    totalPages: Math.ceil(data.length / pageSize),
+                    number: page - 1
+                };
+            }
+            async function getTotalTickets() {
+                try {
+                    const response = await callApiRevenueMovie();
+                    if (!response || !Array.isArray(response)) {
+                        throw new Error("Dữ liệu không hợp lệ");
+                    }
+                    const totalTickets = response.reduce((sum, movie) => sum + (movie.numberTicket || 0), 0);
+                    return totalTickets;
+                } catch (error) {
+                    console.error("Lỗi khi tính tổng số vé bán ra:", error);
+                    return 0;
+                }
+            }
+            function updateTotalTickets(tickets) {
+                $('.total-ticket').text(tickets.toLocaleString());
+            }
+            fetchAndDisplayMovieRanking();
+            callApiGetNewCustomer();
+        });
+
+        function fetchAndDisplayMovieRanking() {
+            $.ajax({
+                url: "http://localhost:8080/api/pub/movie/top-movie",
+                method: "GET",
+                success: function (response) {
+                    const moviePromises = Object.entries(response).map(([id, score]) => {
+                        return fetchMovieDetails(id).then(movie => ({ ...movie, score }));
+                    });
+
+                    Promise.all(moviePromises)
+                        .then(movies => {
+                            // Sắp xếp phim theo điểm số giảm dần
+                            movies.sort((a, b) => b.score - a.score);
+                            displayMovieRanking(movies);
+                        })
+                        .catch(error => console.error("Error fetching movie details:", error));
+                },
+                error: function (xhr) {
+                    console.error("Error fetching top movies:", xhr.responseText);
+                }
+            });
+        }
+        function fetchMovieDetails(id) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: `http://localhost:8080/api/pub/movie/${id}`,
+                    method: "GET",
+                    success: function (response) {
+                        resolve(response.data);
+                    },
+                    error: function (xhr) {
+                        reject(xhr.responseText);
+                    }
+                });
+            });
+        }
+        function displayMovieRanking(movies) {
+            const rankingList = $('.ranking-list');
+            rankingList.empty();
+
+            movies.forEach((movie, index) => {
+                const listItem = `
+                <li class="ranking-item">
+                    <span class="rank">${index + 1}</span>
+                    <img src="${movie.imageSmallUrl}" alt="${movie.name}" class="movie-thumbnail">
+                    <div class="movie-info">
+                        <h3 class="movie-title">${movie.name}</h3>
+                        <p class="movie-release-date">Ngày phát hành: ${movie.releasedDate}</p>
+                    </div>
+                    <div class="movie-score-container">
+                        <div class="movie-score">${movie.score.toFixed(1)}</div>
+                    </div>
+                </li>
+            `;
+                rankingList.append(listItem);
+            });
+        }
+        function callApiGetNewCustomer() {
+            $.ajax({
+                url: 'http://localhost:8080/api/pub/revenue/new-customer',
+                method: "GET",
+                success: function (response) {
+                    const number = response.data.length;
+                    $('.new-customer').text(number);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.error(response.message);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

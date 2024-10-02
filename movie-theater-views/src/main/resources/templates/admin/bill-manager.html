@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/admin/index.css">
+    <link rel="stylesheet" href="/css/admin/movies-manager.css">
+    <link rel="stylesheet" href="/css/admin/bill-manager.css">
+    <link rel="stylesheet" href="/css/admin/menu.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <title>Quản Lý Đơn hàng</title>
+</head>
+
+<body>
+    <div class="admin-containers">
+        <div class="menu-admin"></div>
+        <div class="background">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="movie-management">
+                <div class="movie-management-title">
+                    <i class="fas fa-home"></i>Trang Quản Trị
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Quản Lý Đơn Hàng</span>
+                </div>
+                <hr>
+                <div class="list-manager list-movie">
+                    <div class="list-manager-head">
+                        <p style="font-weight: bold;">Đơn hàng hôm nay:</p>
+                        <div style="display: flex">
+                            <div class="size-of-page">
+                                Show
+                                <select class="number-element-of-page-bill-daily">
+                                    <option value="3">3</option>
+                                    <option value="6">6</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="th-search">
+                                    <span>Mã đơn hàng</span>
+                                    <i class="fas fa-search search-icon" data-column="billCode"></i>
+                                    <input type="text" class="search-input search-input-daily" data-column="billCode"
+                                        placeholder="Nhập mã đơn hàng...">
+                                </th>
+                                <th>Tên phim
+                                </th>
+                                <th class="th-search">
+                                    <span>Suất chiếu</span>
+                                    <i class="fas fa-search search-icon" data-column="scheduleDate"></i>
+                                    <input type="text" class="search-input search-input-daily"
+                                        data-column="scheduleDate" placeholder="Nhập ngày...">
+                                </th>
+                                <th>Phòng chiếu
+                                </th>
+                                <th>
+                                    Đã giao vé
+                                </th>
+                                <th>
+                                    Tổng tiền
+                                </th>
+                                <th>
+                                    Ngày tạo
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bill-daily">
+                            <tr>
+                                <td>
+                                    <a href="#">2020563487Abdcg</a>
+                                </td>
+                                <td>
+                                    Monkey man áo thù
+                                </td>
+                                <td>
+                                    <span class="schedule">
+                                        <span class="time-start">22:00</span> -
+                                        <span class="time-end">23:00</span>
+                                    </span>
+                                    <span class="date-schedule">
+                                        26-09-2024
+                                    </span>
+                                </td>
+                                <td>
+                                    IMAX HA DONG
+                                </td>
+                                <td>
+                                    <input type="checkbox" checked>
+                                </td>
+                                <td>
+                                    1.000.000
+                                </td>
+                                <td>
+                                    23:23:23 09-12-2024
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="paging paging-daily">
+                        <a href="" class="paging-item item-daily previous-daily">&laquo;</a>
+                        <div class="paging-number-bill-daily">
+                        </div>
+                        <a href="" class="paging-item item-daily next-daily">&raquo;</a>
+                    </div>
+                </div>
+
+                <div class="list-manager list-movie">
+                    <div class="list-manager-head">
+                        <p style="font-weight: bold;">Tất cả đơn hàng:</p>
+                        <div style="display: flex">
+                            <div class="size-of-page">
+                                Show
+                                <select class="number-element-of-page-bill-all">
+                                    <option value="3">3</option>
+                                    <option value="6">6</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="th-search">
+                                    <span>Mã đơn hàng</span>
+                                    <i class="fas fa-search search-icon" data-column="billCode"></i>
+                                    <input type="text" class="search-input search-input-all" data-column="billCode"
+                                        placeholder="Nhập mã đơn hàng...">
+                                </th>
+                                <th>Tên phim
+                                </th>
+                                <th class="th-search">
+                                    <span>Suất chiếu</span>
+                                    <i class="fas fa-search search-icon" data-column="scheduleDate"></i>
+                                    <input type="text" class="search-input search-input-all" data-column="scheduleDate"
+                                        placeholder="Nhập ngày...">
+                                </th>
+                                <th>Phòng chiếu
+                                </th>
+                                <th>
+                                    Đã giao vé
+                                </th>
+                                <th>
+                                    Tổng tiền
+                                </th>
+                                <th>
+                                    Ngày tạo
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bill-all">
+                            <tr>
+                                <td>
+                                    <a href="#">2020563487Abdcg</a>
+                                </td>
+                                <td>
+                                    Monkey man áo thù
+                                </td>
+                                <td>
+                                    <span class="schedule">
+                                        <span class="time-start">22:00</span> -
+                                        <span class="time-end">23:00</span>
+                                    </span>
+                                    <span class="date-schedule">
+                                        26-09-2024
+                                    </span>
+                                </td>
+                                <td>
+                                    IMAX HA DONG
+                                </td>
+                                <td>
+                                    <input type="checkbox" checked>
+                                </td>
+                                <td>
+                                    1.000.000
+                                </td>
+                                <td>
+                                    23:23:23 09-12-2024
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="paging paging-bill-all">
+                        <a href="" class="paging-item item-all previous previous-all">&laquo;</a>
+                        <div class="paging-number-bill-all">
+                        </div>
+                        <a href="" class="paging-item item-all next next-all">&raquo;</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.menu-admin').load("/menu", function () {
+                $.getScript('/js/admin/menu.js');
+            });
+        });
+    </script>
+    <script>
+        var totalPageDaily = 0;
+        var totalPageAll = 0;
+        var numberPageBillDaily = 0;
+        var numberPageBillAll = 0;
+        var sizeElementBillDaily;
+        var sizeElementBillAll;
+        var allBillsDaily = [];
+        var allBillsAll = [];
+        var searchTermsDaily = {};
+        var searchTermsAll = {};
+        var filteredBillsDaily = [];
+        var filteredBillsAll = [];
+
+        $(document).ready(function () {
+            sizeElementBillDaily = parseInt(localStorage.getItem('sizeElementBillDaily') || 6);
+            sizeElementBillAll = parseInt(localStorage.getItem('sizeElementBillAll') || 6);
+
+            $('.number-element-of-page-bill-daily').val(sizeElementBillDaily);
+            $('.number-element-of-page-bill-all').val(sizeElementBillAll);
+
+            loadAllBillsDaily();
+            loadAllBillsAll();
+
+            $(document).on("input", ".search-input-daily", function () {
+                const column = $(this).data('column');
+                const value = $(this).val().toLowerCase();
+                if (value) {
+                    searchTermsDaily[column] = value;
+                } else {
+                    delete searchTermsDaily[column];
+                }
+                numberPageBillDaily = 0;
+                filterAndDisplayBills(allBillsDaily, searchTermsDaily, '.bill-daily');
+            });
+
+            $(document).on("input", ".search-input-all", function () {
+                const column = $(this).data('column');
+                const value = $(this).val().toLowerCase();
+                if (value) {
+                    searchTermsAll[column] = value;
+                } else {
+                    delete searchTermsAll[column];
+                }
+                numberPageBillAll = 0;
+                filterAndDisplayBills(allBillsAll, searchTermsAll, '.bill-all');
+            });
+
+            $(document).on('change', '.number-element-of-page-bill-all', function () {
+                sizeElementBillAll = parseInt($(this).val());
+                localStorage.setItem('sizeElementBillAll', sizeElementBillAll);
+                numberPageBillAll = 0;
+                renderBills(filteredBillsAll, '.bill-all');
+            })
+
+            $(document).on('change', '.number-element-of-page-bill-daily', function () {
+                sizeElementBillDaily = parseInt($(this).val());
+                localStorage.setItem('sizeElementBillDaily', sizeElementBillDaily);
+                numberPageBillDaily = 0;
+                renderBills(filteredBillsDaily, '.bill-daily');
+            })
+
+            $(document).on('click', '.item-all, .item-daily', function (e) {
+                e.preventDefault();
+                const type = $(this).hasClass('item-all') ? 'all' : 'daily';
+                if (type === 'all') {
+                    numberPageBillAll = $(this).data("value");
+                    renderBills(filteredBillsAll, '.bill-all');
+                } else {
+                    numberPageBillDaily = $(this).data("value");
+                    renderBills(filteredBillsDaily, '.bill-daily');
+                }
+            })
+
+            $(document).on('click', '.next-all', function (e) {
+                e.preventDefault();
+                numberPageBillAll = totalPageAll - 1;
+                renderBills(filteredBillsAll, '.bill-all');
+            })
+
+            $(document).on('click', '.previous-all', function (e) {
+                e.preventDefault();
+                numberPageBillAll = 0;
+                renderBills(filteredBillsAll, '.bill-all');
+            })
+
+            $(document).on('click', '.next-daily', function (e) {
+                e.preventDefault();
+                numberPageBillDaily = totalPageDaily - 1;
+                renderBills(filteredBillsDaily, '.bill-daily');
+            })
+
+            $(document).on('click', '.previous-daily', function (e) {
+                e.preventDefault();
+                numberPageBillDaily = 0;
+                renderBills(filteredBillsDaily, '.bill-daily');
+            })
+
+            $(document).on('click', '.bill-detail', function (e) {
+                e.preventDefault();
+                const billCode = $(this).data('bill-id');
+                window.location.href = "/bill-detail?bill=" + billCode;
+            })
+        });
+
+        function loadAllBillsDaily() {
+            const date = formatDate(new Date());
+            var settings = {
+                url: `http://localhost:8080/user/api/pub/history-order?date=${date}&size=1000000&page=0`,
+                method: "GET",
+                contentType: "application/json",
+                success: function (res) {
+                    allBillsDaily = res.data.content;
+                    filteredBillsDaily = allBillsDaily;
+                    if (res.data.totalElements === 0) {
+                        $(".bill-daily tbody").append('<tr><td colspan="8" style="text-align: center;">Hiện tại chưa có hóa đơn nào!</td></tr>');
+                    }
+                    renderBills(filteredBillsDaily, '.bill-daily');
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function loadAllBillsAll() {
+            var settings = {
+                url: `http://localhost:8080/user/api/pub/history-order?size=1000000&page=0`,
+                method: "GET",
+                contentType: "application/json",
+                success: function (res) {
+                    allBillsAll = res.data.content;
+                    filteredBillsAll = allBillsAll;
+                    if (res.data.totalElements === 0) {
+                        $(".bill-all tbody").append('<tr><td colspan="8" style="text-align: center;">Hiện tại chưa có hóa đơn nào!</td></tr>');
+                    }
+                    renderBills(filteredBillsAll, '.bill-all');
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function filterAndDisplayBills(bills, searchTerms, targetSelector) {
+            const filteredBills = bills.filter(bill => {
+                return Object.entries(searchTerms).every(([column, term]) => {
+                    switch (column) {
+                        case 'billCode':
+                            return bill.billCode.toLowerCase().includes(term);
+                        case 'movieName':
+                            return bill.movieName.toLowerCase().includes(term);
+                        case 'scheduleDate':
+                            return bill.scheduleDate.includes(term);
+                        case 'roomName':
+                            return bill.roomName.toLowerCase().includes(term);
+                        default:
+                            return true;
+                    }
+                });
+            });
+
+            if (targetSelector === '.bill-daily') {
+                filteredBillsDaily = filteredBills;
+            } else {
+                filteredBillsAll = filteredBills;
+            }
+            renderBills(filteredBills, targetSelector);
+        }
+
+        function renderBills(bills, targetSelector) {
+            let $tbody = $(targetSelector);
+            $tbody.empty();
+            if (bills.length === 0) {
+                $tbody.append('<tr><td colspan="7" style="text-align: center;">Không tìm thấy đơn hàng nào!</td></tr>');
+            } else {
+                const pageSize = targetSelector === '.bill-daily' ? sizeElementBillDaily : sizeElementBillAll;
+                const currentPage = targetSelector === '.bill-daily' ? numberPageBillDaily : numberPageBillAll;
+                const startIndex = currentPage * pageSize;
+                const endIndex = startIndex + parseInt(pageSize);
+                const billsToShow = bills.slice(startIndex, endIndex);
+                for (var bill of billsToShow) {
+                    renderBillInfo($tbody, bill);
+                }
+            }
+            updatePagination(bills.length, targetSelector === '.bill-daily' ? 'daily' : 'all');
+        }
+
+        function updatePagination(totalItems, type) {
+            const pageSize = type === 'daily' ? sizeElementBillDaily : sizeElementBillAll;
+            const totalPages = Math.ceil(totalItems / pageSize);
+            const currentPage = type === 'daily' ? numberPageBillDaily : numberPageBillAll;
+            if (type === 'daily') {
+                totalPageDaily = totalPages;
+            } else {
+                totalPageAll = totalPages;
+            }
+            renderPagingNumberBill(
+                type === 'daily' ? $('.paging-number-bill-daily') : $('.paging-number-bill-all'),
+                type === 'daily' ? 'item-daily' : 'item-all',
+                totalPages,
+                currentPage
+            );
+        }
+
+        //Hàm phân trang
+        function renderPagingNumberBill(pagingNumber, pagingClass, totalPages, currentPage) {
+            pagingNumber.empty();
+            const maxPagesToShow = 3; // Số trang tối đa để hiển thị
+            const pageRange = Math.floor(maxPagesToShow / 2); // Số trang trước và sau trang hiện tại
+            let startPage, endPage;
+
+            if (totalPages <= maxPagesToShow) {
+                // Nếu số trang nhỏ hơn số trang tối đa để hiển thị, hiển thị tất cả
+                startPage = 0;
+                endPage = totalPages - 1;
+            } else {
+                // Nếu không, chỉ hiển thị một số trang quanh trang hiện tại
+                if (currentPage <= pageRange) {
+                    startPage = 0;
+                    endPage = maxPagesToShow - 1;
+                } else if (currentPage + pageRange >= totalPages) {
+                    startPage = totalPages - maxPagesToShow;
+                    endPage = totalPages - 1;
+                } else {
+                    startPage = currentPage - pageRange;
+                    endPage = currentPage + pageRange;
+                }
+            }
+
+            if (startPage > 0) {
+                pagingNumber.append(`<a href="#" class="paging-item ${pagingClass}" data-value="0">1</a>`);
+                if (startPage > 1) {
+                    pagingNumber.append('<span class="hidden-paging">...</span>');
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const isActive = i === currentPage ? 'active' : '';
+                pagingNumber.append(`<a href="#" class="paging-item ${pagingClass} ${isActive}" data-value="${i}">${i + 1}</a>`);
+            }
+
+            if (endPage < totalPages - 1) {
+                if (endPage < totalPages - 2) {
+                    pagingNumber.append('<span class="hidden-paging">...</span>');
+                }
+                pagingNumber.append(`<a href="#" class="paging-item ${pagingClass}" data-value="${totalPages - 1}">${totalPages}</a>`);
+            }
+        }
+        function renderBillInfo(tbody, bill) {
+            const amountMoney = bill.amountMoney.toLocaleString('vi-VN');
+            const isTicketIssued = bill.isTicketIssued;
+            const timeStart = formatTimeWithoutSeconds(`${bill.scheduleDate}T${bill.scheduleTime}`);
+            const duration = bill.duration;
+            const timeEnd = new Date(new Date(`${bill.scheduleDate}T${bill.scheduleTime}`).getTime() + duration * 60000);
+            const timeEndFormatted = formatTimeWithoutSeconds(timeEnd);
+            const createdDate = formatDateTime(bill.createdDate);
+
+            const billTr = `<tr>
+                            <td>
+                                <a class="bill-detail" href="#" data-bill-id="${bill.billCode}">${bill.billCode}</a>
+                            </td>
+                            <td>
+                                ${bill.movieName}
+                            </td>
+                            <td>
+                                <span class="schedule-time">
+                                    <span class="time-start">${timeStart}</span> -
+                                    <span class="time-end">${timeEndFormatted}</span>
+                                </span>
+                                <span class="date-schedule">
+                                    ${bill.scheduleDate}
+                                </span>
+                            </td>
+                            <td>
+                                ${bill.roomName}
+                            </td>
+                            <td>
+                                <input type="checkbox" class="checkbox" ${isTicketIssued ? 'checked' : ''}>
+                            </td>
+                            <td>
+                                ${amountMoney}
+                            </td>
+                            <td>
+                                ${createdDate}
+                            </td>
+                        </tr>`;
+            tbody.append(billTr);
+        }
+
+        //Hàm format date trả về kiểu 'yyyy-mm-dd'
+        function formatDate(date) {
+            return date.getFullYear() + '-' +
+                ('0' + (date.getMonth() + 1)).slice(-2) + '-' +
+                ('0' + date.getDate()).slice(-2);
+        }
+        //Hàm định dạng kiểu localDateTime
+        function formatDateTime(dateTimeString) {
+            const date = new Date(dateTimeString);
+
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+
+            return date.toLocaleString('vi-VN', options);
+        }
+        //Hàm format giờ
+        function formatTimeWithoutSeconds(dateTimeString) {
+            const date = new Date(dateTimeString);
+
+            const hours = ('0' + date.getHours()).slice(-2);
+            const minutes = ('0' + date.getMinutes()).slice(-2);
+
+            return `${hours}:${minutes}`;
+        }
+    </script>
+
+</body>
+
+</html>

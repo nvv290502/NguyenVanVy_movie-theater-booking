@@ -1,0 +1,741 @@
+.user-info {
+    width: 100%;
+    background-image: url("https://wallpapers.com/images/hd/movie-theater-background-5500-x-5500-c02ch5zs2vi24vv9.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    font-family: "Nunito sans", sans-serif;
+}
+.user-info-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(1, 1, 22, 0.9);
+}
+
+.user-info-container {
+    width: 1200px;
+    margin-top: 100px;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+}
+.user-info-rank {
+    width: 40%;
+    max-height: 500px;
+    height: auto;
+    background-color: rgb(17, 18, 18);
+    z-index: 1;
+    border-radius: 5px;
+    padding: 20px;
+}
+.user-info-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    position: relative;
+    border-bottom: 1px solid #424242;
+}
+.user-info-image .user-info-avatar {
+    width: 60px;
+    height: 60px;
+    border: 2px solid rgb(210, 209, 209);
+    border-radius: 50%;
+}
+
+.user-info-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.avatar-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.avatar-overlay .change-avatar {
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.user-info-image:hover .avatar-overlay {
+    opacity: 1;
+}
+
+.user-info-level img {
+    width: 20px;
+}
+.user-info-name-level p {
+    line-height: 1.8;
+    margin-bottom: 0;
+    color: rgb(179, 177, 177);
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+.user-info-name-level .user-info-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.user-info-name-level .user-info-level {
+    display: flex;
+    align-items: center;
+}
+
+.expenditure {
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    color: #ccc;
+    font-weight: bold;
+}
+
+.user-info-expenditure {
+    width: 100%;
+    border-bottom: 1px solid #424242;
+    color: #989797;
+}
+
+.expenditure .mouney-expense {
+    color: rgb(209, 89, 4);
+}
+
+.progress-container {
+    position: relative;
+    width: 100%;
+    padding: 80px 0;
+}
+
+.progress-bar {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: 8px; /* Chiều cao của thanh tiến độ */
+    background-color: #29292a;
+    border: 1px solid rgb(7, 133, 178);
+    overflow: visible;
+}
+
+.current-expense {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgb(7, 133, 178);
+    z-index: 1;
+    display: flex;
+}
+
+.rank {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    height: 80px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transform: translate(-50%, 47%);
+    bottom: 0;
+}
+
+.rank span {
+    color: rgb(7, 133, 178);
+    font-size: 14px;
+}
+
+.rank .circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgb(7, 133, 178);
+    background-color: #29292a;
+}
+
+.circle.completed {
+    background-color: rgb(7, 133, 178);
+}
+
+.amount.completed {
+    font-weight: bold;
+    color: rgb(209, 89, 4);
+}
+
+.rank img {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+}
+
+.rank[data-rank="Basic"] {
+    left: 0%;
+}
+
+.rank[data-rank="Silver"] {
+    left: 10%;
+}
+
+.rank[data-rank="Gold"] {
+    left: 20%;
+}
+
+.rank[data-rank="Platinum"] {
+    left: 50%;
+}
+
+.rank[data-rank="Diamond"] {
+    left: 100%;
+}
+
+.user-info-logout {
+    padding: 20px 0;
+    color: #ccc;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.user-info-logout:hover {
+    color: rgb(5, 82, 123);
+    transform: scale(1.02);
+    font-weight: 600;
+}
+.user-info-content-parent {
+    width: 60%;
+    margin-left: 50px;
+    z-index: 1;
+}
+
+.user-info-content-parent .user-info-content-menu {
+    width: 100%;
+}
+.user-info-content-menu ul {
+    width: 100%;
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+    color: #858484;
+    font-size: 16px;
+    padding-left: 0;
+    font-weight: 600;
+    border-bottom: 1px solid #504f4f;
+}
+.user-info-content-menu ul li {
+    padding: 5px 0;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.user-info-content-menu ul li:hover,
+.user-info-content-menu ul li.active {
+    transform: scale(1.02);
+    color: rgb(5, 115, 175);
+    border-bottom: 2px solid rgb(6, 109, 164);
+}
+
+.user-info-content,
+.user-info-history,
+.user-info-regulations {
+    background-color: rgb(17, 18, 18);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+.user-info-detail {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    justify-content: space-between;
+}
+
+.form-group {
+    width: 45%;
+    font-size: 15px;
+    color: #989797;
+}
+.form-group label {
+    display: block;
+}
+.form-group input {
+    width: 100%;
+    padding: 5px 10px;
+    margin-top: 3px;
+    border-radius: 5px;
+    color: #7a7a7a;
+    border: 1px solid #474747;
+    background-color: rgb(25, 24, 24);
+}
+.user-info-button {
+    display: flex;
+    justify-content: right;
+}
+.user-info button {
+    padding: 8px 25px;
+    margin-top: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #cacaca;
+}
+.user-info-update,
+.btn-reset-password {
+    background-color: rgb(211, 89, 2);
+    transition: transform 0.3s ease;
+}
+.user-info-update:hover,
+.btn-reset-password:hover {
+    transform: scale(1.05);
+}
+.user-info-title {
+    color: #038fcb;
+    font-weight: 600;
+    text-align: center;
+}
+.user-reset-password {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 20px;
+    margin-top: 20px;
+}
+
+.user-info-history table .invoice-code {
+    font-weight: bold;
+    color: #007bff;
+    cursor: pointer;
+}
+.user-info-history table .invoice-code:hover {
+    color: #038fcb;
+}
+
+.user-info-history table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ccc;
+}
+
+th,
+td {
+    border: 1px solid #5f5d5d;
+    padding: 8px;
+    text-align: left;
+    font-size: 13px;
+}
+td {
+    max-width: 200px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.movie-review {
+    font-size: 12px !important;
+    padding: 5px !important;
+    font-weight: 600;
+    background: rgb(215, 98, 2);
+    margin-top: 0 !important;
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease;
+}
+
+.td-movie-review {
+    text-align: center;
+}
+
+.movie-review:hover {
+    transform: scale(1.02);
+    color: rgb(215, 98, 2);
+    background-color: #ccc;
+}
+
+th {
+    font-weight: bold;
+}
+.info-count-money-background {
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+}
+.info-count-money {
+    width: 500px !important;
+    position: fixed !important;
+    top: 50%;
+    left: 50%;
+    height: auto !important;
+    margin-top: 0 !important;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.info-invoice {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    font-size: 15px;
+}
+
+.info-invoice p {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.info-invoice span {
+    font-weight: normal;
+    color: rgb(230, 230, 27);
+}
+
+.info-count-money .close-btn {
+    background: none;
+    font-size: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 0;
+    padding: 0 10px;
+}
+
+.info-count-money .close-btn:hover {
+    color: red;
+}
+
+.info-review-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 4;
+}
+
+.info-review {
+    width: 500px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background-color: #29292a;
+    border-radius: 10px;
+    box-shadow: 0 0 5px black;
+    overflow: hidden;
+    color: #ccc;
+}
+.info-review .info-review-movie-img {
+    position: relative;
+}
+
+.info-review-content {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.review-statistics p {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.review-statistics span {
+    font-weight: bold;
+    color: #038fcb;
+}
+
+.btn-info-review-detail {
+    margin-top: 5px !important;
+    padding: 5px 20px !important;
+    font-size: 12px !important;
+    background-color: #038fcb;
+    font-weight: 600;
+    transition: transform 0.3s ease;
+}
+
+.btn-info-review-detail:hover {
+    transform: scale(1.02);
+}
+
+.close-btn-review {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 0 !important;
+    font-size: 30px !important;
+    padding: 0 10px !important;
+    background: none;
+}
+
+.close-btn-review:hover {
+    color: red;
+}
+
+.info-review-rating {
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: rgba(161, 161, 0, 0.3);
+    border: 2px solid rgb(230, 105, 9);
+    color: rgb(255, 98, 0);
+    font-weight: bold;
+}
+
+.info-review .info-review-movie-img img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.info-my-review {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.info-my-review .fa-star {
+    margin-left: 5px;
+}
+
+.star {
+    color: gray;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.star.selected {
+    color: gold;
+}
+
+.info-my-comment {
+    width: 100%;
+    padding: 0 20px;
+}
+
+.info-my-comment span {
+    display: block;
+}
+
+.info-my-comment textarea {
+    width: 100%;
+    height: 200px;
+    font-size: 13px;
+    padding: 10px;
+}
+
+.btn-review {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-review button {
+    padding: 8px 20px;
+    margin: 10px 0;
+    color: #e3e3e3;
+    background-color: rgb(255, 98, 0);
+    font-weight: bold;
+    transition:
+        color 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+.btn-review button:hover {
+    background-color: #e3e3e3;
+    color: rgb(255, 98, 0);
+    transform: scale(1.05);
+}
+
+.user-info-regulations {
+    color: #a2a0a0;
+    font-size: 14px;
+    text-align: justify;
+}
+
+.user-info-regulations p {
+    margin-bottom: 0 !important;
+}
+
+.user-info-regulations img {
+    width: 20px;
+}
+.user-info-regulations .regulations-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+.regulations-title {
+    padding-top: 10px !important;
+    padding-bottom: 20px !important;
+}
+.user-info-regulations span {
+    font-weight: bold;
+}
+
+.count-money-promotion {
+    width: 100%;
+    display: none;
+    justify-content: space-between;
+    padding: 20px;
+}
+.count-money-promotion p {
+    margin-bottom: 0 !important;
+}
+.promotion-info {
+    font-size: 12px;
+    color: rgb(212, 76, 3);
+    font-weight: bold;
+}
+
+.paging {
+    display: flex;
+    justify-content: center; /* Canh giữa phân trang */
+    margin: 20px 0; /* Khoảng cách trên và dưới */
+}
+
+.paging-item {
+    display: inline-block;
+    padding: 5px 8px;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #333; /* Màu văn bản */
+    background-color: #f8f8f8; /* Màu nền */
+    border: 1px solid #ddd; /* Đường viền */
+    border-radius: 5px; /* Bo góc */
+    transition:
+        background-color 0.3s,
+        color 0.3s; /* Hiệu ứng chuyển tiếp */
+}
+
+.paging-item:hover,
+.paging-item.active {
+    background-color: #007bff; /* Màu nền khi hover hoặc đang chọn */
+    color: #fff; /* Màu văn bản khi hover hoặc đang chọn */
+    border-color: #007bff; /* Đường viền khi hover hoặc đang chọn */
+}
+
+.paging-item.previous,
+.paging-item.next {
+    font-weight: bold; /* Đậm chữ cho Previous và Next */
+}
+
+@media (max-width: 1200px) {
+    .user-info-container {
+        width: 95%;
+    }
+}
+
+@media (max-width: 1068px) {
+    .user-info-container {
+        display: block;
+    }
+    .user-info-rank,
+    .user-info-content-parent {
+        width: 90%;
+        margin: 0 auto;
+    }
+    .progress-container {
+        padding: 40px 0;
+    }
+    .user-info-expenditure {
+        padding-bottom: 20px;
+    }
+}
+
+@media (max-width: 789px) {
+    .user-info-image .user-info-avatar {
+        width: 50px;
+        height: 50px;
+    }
+    .user-info-name-level .user-info-name,
+    .user-info-name-level p,
+    .expenditure span,
+    .user-info-content-menu ul li {
+        transform: scale(1.02);
+    }
+
+    .form-group,
+    .user-info button {
+        font-size: 12px;
+    }
+
+    .info-count-money {
+        width: 80% !important;
+    }
+
+    .info-review {
+        width: 80% !important;
+    }
+
+    .history-date,
+    .history-time {
+        display: none;
+    }
+    td {
+        max-width: 120px;
+    }
+    .td-movie-review span {
+        display: none;
+    }
+    .user-info-content-menu ul li {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 489px) {
+    .info-invoice {
+        font-size: 13px;
+        display: block;
+    }
+
+    .info-my-review,
+    .info-my-comment {
+        font-size: 14px;
+    }
+    .user-info-regulations .regulations-title,
+    .paging-item {
+        font-size: 13px;
+    }
+    .user-info-regulations,
+    .user-info-content-menu ul li {
+        font-size: 12px;
+    }
+    td {
+        max-width: 100px;
+    }
+    .user-info-history {
+        padding: 5px;
+    }
+}

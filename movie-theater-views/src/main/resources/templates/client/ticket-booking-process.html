@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chọn Phòng</title>
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/header.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/client/select-room.css">
+    <link rel="stylesheet" href="/css/client/progress.css">
+    <link rel="stylesheet" href="/css/client/select-seats.css">
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="/css/client/count-down.css" />
+</head>
+
+<body>
+    <div class="background">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <div id="header"></div>
+    <div class="progress-buy-ticket"></div>
+    <div id="ticket-progress"></div>
+
+    <div class="count-down-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="/js/client/login.js"></script>
+    <script src="/js/client/progress.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        var step = 0;
+        var showDate = localStorage.getItem('showDate') || "";
+        var showTime = localStorage.getItem('showTime') || "";
+        var cinemaId = localStorage.getItem('cinema') || "";
+        var movieId = localStorage.getItem('movie') || "";
+        var roomId = localStorage.getItem('room') || "";
+        var userId = localStorage.getItem('userId') || "";
+        var cinemaName;
+        var roomName;
+        var movieName;
+
+        $(document).ready(function () {
+
+            //  <!-- Tải header -->
+            $('#header').load("/header", function () {
+                checkAccessToken();
+                $.getScript("/js/client/header.js");
+            });
+
+            $('.count-down-container').load("/count-down", function () {
+                $.getScript("/js/client/count-down.js");
+            })
+
+            //Tải tiến trình mua vé
+            $('.progress-buy-ticket').load("/booking/progress");
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const stepSelectSeat = parseInt(urlParams.get('step'), 10);
+
+            if (stepSelectSeat === 1) {
+                $('#ticket-progress').load("/booking/select-seat", function () {
+                    var checkPoint = parseInt($('#check-point').text().trim(), 10);
+                    updateProgress(checkPoint);
+                    step = checkPoint;
+                    callApiGetRoomById(roomId);
+                    $('.room-detail-name').text(roomName);
+                    $('.room-detail-date').text(showDate);
+                    $('.room-detail-time').text(formatTime(showTime));
+                    callApiGetSeats(roomId, movieId, showDate, showTime, userId);
+                    callApiGetPriceTicket(movieId, showDate, showTime, function (res) {
+                        restoreSelectedSeats();
+                    });
+                    const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
+                    const confirmSeat = $('.confirm-seat-bgr');
+                    if (!selectedSeats) {
+                        confirmSeat.css('display', 'none');
+                    } else {
+                        confirmSeat.css('display', 'flex');
+                        $('.selected-seat').text(selectedSeats.join(", "));
+                    }
+                });
+            } else {
+                //Xử lý sự kiện load trang chọn phòng
+                $('#ticket-progress').load("/booking/select-room", function () {
+                    var checkPoint = parseInt($('#check-point').text().trim(), 10);
+                    updateProgress(checkPoint);
+                    step = checkPoint;
+                    callApiGetMovieById(movieId);
+                    callApiGetCinemaById(cinemaId);
+                    $('.movie-choosed-date').text(showDate);
+                    $('.movie-choosed-time').text(formatTime(showTime));
+                    callApiGetRoomShowTime(movieId, showTime, showDate, cinemaId);
+                });
+            }
+
+
+            //load trang chọn ghế
+            $(document).on('click', '.room-item', function () {
+                const $roomId = $(this).data("id");
+                localStorage.setItem('room', $roomId);
+                updateUrlParameter('room', $roomId);
+                $('#ticket-progress').load("/booking/select-seat", function () {
+                    var checkPoint = parseInt($('#check-point').text().trim(), 10);
+                    updateProgress(checkPoint);
+                    step = checkPoint;
+                    callApiGetRoomById($roomId);
+                    $('.room-detail-name').text(roomName);
+                    $('.room-detail-date').text(showDate);
+                    $('.room-detail-time').text(formatTime(showTime));
+                    callApiGetSeats($roomId, movieId, showDate, showTime, userId);
+                    callApiGetPriceTicket(movieId, showDate, showTime, function (res) {
+                        restoreSelectedSeats();
+                    });
+                    const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
+                    const confirmSeat = $('.confirm-seat-bgr');
+                    if (!selectedSeats) {
+                        confirmSeat.css('display', 'none');
+                    } else {
+                        confirmSeat.css('display', 'flex');
+                        $('.selected-seat').text(selectedSeats.join(", "));
+                    }
+                });
+            });
+
+            //load trang mua đồ ăn
+            $(document).on('click', '#confirm', function (e) {
+                $('.count-down-info').hide();
+                e.preventDefault();
+                const code = generateRandomCode(3);
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                const day = now.getDate().toString().padStart(2, '0');
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                const formattedDateTime = `${year}${month}${day}${hours}${minutes}${seconds}`
+                const billCode = `${formattedDateTime}${code}`;
+                localStorage.setItem('billCode', billCode);
+                const bill = {
+                    billCode: billCode,
+                    userId: userId,
+                    movieId: movieId,
+                    roomId: localStorage.getItem('room'),
+                    showDate: showDate,
+                    showTime: showTime,
+                    seats: selectedSeats.toString(),
+                    amountMoney: parseFloat(localStorage.getItem('ticketMoney'))
+                }
+                callApiSaveBill(bill);
+            });
+        });
+
+        //quay lại trang trước trong tiến trình
+        $(document).on('click', '.back-link', function (e) {
+            e.preventDefault();
+            if (step === 0) {
+                $('.back-link').css('pointer-events', 'none').css('color', '#ccc');
+            }
+            step--;
+            backPage(step);
+        });
+
+        //Xử lý sự kiện khi chọn nút "Chọn lại"
+        $(document).on('click', '.choose-again', function (e) {
+            e.preventDefault();
+            callApiDeleteBillByBillCode(localStorage.getItem('billCode'));
+            localStorage.removeItem('selectedSeats');
+            localStorage.removeItem('totalMoney');
+            $('#ticket-progress').load("/booking/select-seat", function () {
+                updateProgress(step);
+                $('.room-detail-name').text(roomName);
+                $('.room-detail-date').text(showDate);
+                $('.room-detail-time').text(formatTime(showTime));
+                callApiGetSeats(roomId, movieId, showDate, showTime, userId);
+                callApiGetPriceTicket(movieId, showDate, showTime, function (res) {
+                    restoreSelectedSeats();
+                });
+                const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
+                const confirmSeat = $('.confirm-seat-bgr');
+                if (!selectedSeats) {
+                    confirmSeat.css('display', 'none');
+                } else {
+                    confirmSeat.css('display', 'flex');
+                    $('.selected-seat').text(selectedSeats.join(", "));
+                }
+            });
+        });
+
+        //Xử lý sự kiện khi chọn "Tiếp tục"
+        $(document).on('click', '.continue', function (e) {
+            e.preventDefault();
+            $('#ticket-progress').load("/booking/food", function () {
+                var checkPoint = parseInt($('#check-point').text().trim(), 10);
+                updateProgress(checkPoint);
+                step = checkPoint;
+            });
+        })
+
+        //Hàm load trang chọn ghế
+        function loadPageSelectSeat(roomId) {
+            $('#ticket-progress').load("/booking/select-seat", function () {
+                var checkPoint = parseInt($('#check-point').text().trim(), 10);
+                updateProgress(checkPoint);
+                step = checkPoint;
+                callApiGetRoomById(roomId);
+                $('.room-detail-name').text(roomName);
+                $('.room-detail-date').text(showDate);
+                $('.room-detail-time').text(formatTime(showTime));
+                callApiGetSeats(roomId, movieId, showDate, showTime, userId);
+                callApiGetPriceTicket(movieId, showDate, showTime, function (res) {
+                    restoreSelectedSeats();
+                });
+                const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
+                const confirmSeat = $('.confirm-seat-bgr');
+                if (!selectedSeats) {
+                    confirmSeat.css('display', 'none');
+                } else {
+                    confirmSeat.css('display', 'flex');
+                    $('.selected-seat').text(selectedSeats.join(", "));
+                }
+            });
+        }
+
+        // Hàm tạo mã hóa đơn ngẫu nhiên n ký tự
+        function generateRandomCode(length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                result += characters[randomIndex];
+            }
+            return result;
+        }
+
+
+        //hàm load trang theo breakpoint (bước)
+        function backPage(step) {
+            if (step === 0) {
+                $('#ticket-progress').load("/booking/select-room", function () {
+                    callApiGetMovieById(movieId);
+                    callApiGetCinemaById(cinemaId);
+                    $('.movie-choosed-cinema').text(cinemaName);
+                    $('.movie-choosed-name').text(movieName);
+                    $('.movie-choosed-date').text(showDate);
+                    $('.movie-choosed-time').text(formatTime(showTime));
+                    callApiGetRoomShowTime(movieId, showTime, showDate, cinemaId);
+                    updateProgress(step);
+                });
+            } else if (step === 1) {
+                $('#ticket-progress').load("/booking/select-seat", function () {
+                    updateProgress(step);
+                    $('.room-detail-name').text(roomName);
+                    $('.room-detail-date').text(showDate);
+                    $('.room-detail-time').text(formatTime(showTime));
+                    callApiGetSeats(roomId, movieId, showDate, showTime, userId);
+                    callApiGetPriceTicket(movieId, showDate, showTime, function (res) {
+                        restoreSelectedSeats();
+                    });
+                    const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
+                    const confirmSeat = $('.confirm-seat-bgr');
+                    if (!selectedSeats) {
+                        confirmSeat.css('display', 'none');
+                    } else {
+                        confirmSeat.css('display', 'flex');
+                        $('.selected-seat').text(selectedSeats.join(", "));
+                    }
+                });
+            }
+        }
+
+        // Danh sách lưu ghế đã chọn
+        let selectedSeats = [];
+        let price = 0;
+        let money = 0;
+        const MAX_SEATS = 5;
+        const VIP_MULTIPLIER = 0.30;
+        //Call back api lấy thông tin giá vé và xử lý khi chọn 1 ghế
+        callApiGetPriceTicket(movieId, showDate, showTime, function (res) {
+            price = res.data.price;
+            // Xử lý sự kiện khi người dùng chọn hoặc bỏ chọn ghế
+            $(document).on('click', '.seat', function () {
+                const $seat = $(this);
+                const seatName = $seat.data("seat-name");
+                const isVip = $seat.hasClass('vip');
+
+                let seatPrice = price;
+                if (isVip) {
+                    seatPrice += price * VIP_MULTIPLIER; // Tính giá cho ghế VIP
+                }
+
+                if ($seat.hasClass('selected')) {
+                    // Nếu ghế đã được chọn, gỡ bỏ lớp 'selected' và khôi phục lại lớp gốc
+                    $seat.removeClass('selected');
+
+                    // Xóa ghế khỏi danh sách ghế đã chọn
+                    selectedSeats = selectedSeats.filter(seat => seat !== seatName);
+                    money = money - seatPrice;
+                } else {
+                    if (selectedSeats.length >= MAX_SEATS) {
+                        // Nếu đã chọn đủ số ghế tối đa, hiển thị thông báo
+                        toastr.warning('Bạn chỉ có thể chọn tối đa ' + MAX_SEATS + ' ghế 1 lần!');
+                        return; // Ngừng thực hiện nếu đã đạt giới hạn
+                    }
+                    // Nếu ghế chưa được chọn, thêm lớp 'selected'
+                    $seat.addClass('selected');
+
+                    // Thêm ghế vào danh sách ghế đã chọn
+                    selectedSeats.push(seatName);
+                    money = money + seatPrice;
+                }
+
+                // Cập nhật danh sách ghế đã chọn trên giao diện
+                updateSelectedSeatsList();
+
+                localStorage.setItem('selectedSeats', JSON.stringify(selectedSeats));
+                localStorage.setItem('ticketMoney', money);
+            });
+
+        });
+        // Cập nhật danh sách ghế đã chọn
+        function updateSelectedSeatsList() {
+            const seatsListHtml = selectedSeats.join(', '); // Ghế được phân cách bằng dấu phẩy
+            $('.list-seats').text(seatsListHtml);
+            $('.money').text(formatCurrency(money));
+        }
+        // Hàm định dạng tiền tệ
+        function formatCurrency(amount) {
+            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        // Phục hồi trạng thái ghế khi trang được tải lại
+        function restoreSelectedSeats() {
+            const storedSeats = JSON.parse(localStorage.getItem('selectedSeats')) || [];
+            selectedSeats = storedSeats;
+            money = parseInt(localStorage.getItem('totalMoney'), 10) || 0;
+
+            // Đánh dấu ghế đã chọn
+            storedSeats.forEach(seatName => {
+                $(`.seat[data-seat-name="${seatName}"]`).addClass('selected');
+            });
+            // Cập nhật danh sách ghế đã chọn và tổng tiền
+            updateSelectedSeatsList();
+        }
+
+        // hàm format giờ chiếu về dạng hh:mm
+        function formatTime(time) {
+            if (typeof time === 'string' && time.match(/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/)) {
+                const [hours, minutes] = time.split(':');
+                return `${hours}:${minutes}`;
+            }
+            return time;
+        }
+
+        function callApiGetMovieById(id) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/movie/" + id,
+                method: "GET",
+                success: function (response) {
+                    movieName = response.data.name;
+                    $('.movie-choosed-name').text(movieName);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        // Hàm gọi API lấy danh sách phòng có suất chiếu
+        function callApiGetRoomShowTime(movieId, time, date, cinemaId) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/room/showtime?movieId=" + movieId + "&showDate=" + date + "&showTime=" + time + "&cinemaId=" + cinemaId,
+                method: "GET",
+                contentType: "application/json",
+                success: function (response) {
+                    let roomList = $('.room-list');
+                    roomList.empty();
+                    if (response.data.length === 0) {
+                        roomList.append('<p>Không có phòng nào có suất chiếu!</p>');
+                    } else {
+                        for (let room of response.data) {
+                            renderRoomShowTime(room);
+                        }
+                    }
+                    $('.background').hide();
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        // Hàm map data lên giao diện danh sách phòng
+        function renderRoomShowTime(room) {
+            const roomItem = `<div class="room-item" data-id="${room.id}">
+                <img src="https://anhduyenaudio.vn/files/files/xem%20phim/man-hinh-chieu-co-dinh.jpg" alt="${room.name}"
+                    class="room-image">
+                <div class="room-info">
+                    <h2 class="room-name">${room.name}</h2>
+                    <p class="room-location">${room.location}</p>
+                    <p class="room-seats">Số ghế: ${room.seatNumbers}</p>
+                </div>
+            </div>`;
+            $('.room-list').append(roomItem);
+        }
+
+        // Hàm gọi API lấy info rạp theo ID
+        function callApiGetCinemaById(id) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/cinema/" + id,
+                method: "GET",
+                success: function (response) {
+                    cinemaName = response.name;
+                    $('.movie-choosed-cinema').text(cinemaName);
+                    $('.background').hide();
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function updateUrlParameter(param, value) {
+            var url = new URL(window.location.href); // Lấy URL hiện tại
+            var params = new URLSearchParams(url.search); // Lấy các tham số hiện tại
+
+            if (value) {
+                params.set(param, value); // Cập nhật hoặc thêm tham số
+            } else {
+                params.delete(param); // Xóa tham số nếu giá trị rỗng
+            }
+            // Cập nhật URL trong thanh địa chỉ của trình duyệt
+            history.pushState({}, '', `${url.pathname}?${params.toString()}`);
+        }
+
+        //Hàm call api lấy thông tin phòng theo id
+        function callApiGetRoomById(id) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/room/" + id,
+                method: "GET",
+                success: function (response) {
+                    roomName = response.name;
+                    $('.room-detail-name').text(roomName);
+                    $('.background').hide();
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        // Hàm gọi API để tải danh sách ghế theo phòng
+        function callApiGetSeats(roomId, movieId, showDate, showTime, userId) {
+            $.ajax({
+                url: `http://localhost:8080/api/pub/seats?roomId=${roomId}`,
+                method: "GET",
+                success: function (response) {
+                    if (response.status === 'OK') {
+                        const seatsByRow = groupSeatsByRow(response.data);
+
+                        // Gọi API để lấy danh sách ghế đã bị đặt
+                        callApiGetSeatsByBill(movieId, roomId, showDate, showTime, "", function (bookedSeatsRes) {
+                            const bookedSeatIds = (bookedSeatsRes.status === 'OK' && bookedSeatsRes.data) || [];
+
+                            // Gọi API để lấy danh sách ghế của người dùng (nếu có userId)
+                            if (userId) {
+                                callApiGetSeatsByBill(movieId, roomId, showDate, showTime, userId, function (userSeatsRes) {
+                                    const userBookedSeatIds = (userSeatsRes.status === 'OK' && userSeatsRes.data) || [];
+                                    updateSeatDisplay(seatsByRow, bookedSeatIds, userBookedSeatIds);
+                                });
+                            } else {
+                                updateSeatDisplay(seatsByRow, bookedSeatIds, []);
+                            }
+                        });
+                    }
+                },
+                error: function () {
+                    console.error('Lỗi khi tải dữ liệu ghế.');
+                }
+            });
+        }
+
+        // Hàm gọi API để lấy danh sách ghế đã bị đặt
+        function callApiGetSeatsByBill(movieId, roomId, showDate, showTime, userId, callback) {
+            $.ajax({
+                url: `http://localhost:8080/api/pub/seatByBillDetail?movieId=${movieId}&roomId=${roomId}&showDate=${showDate}&showTime=${showTime}&userId=${userId}`,
+                method: "GET",
+                contentType: "application/json",
+                success: function (res) {
+                    callback(res);
+                },
+                error: function (xhr) {
+                    const res = JSON.parse(xhr.responseText);
+                    console.error(res.message);
+                    callback({ status: 'ERROR', data: [] });
+                }
+            });
+        }
+
+        // Hàm nhóm các ghế theo hàng
+        function groupSeatsByRow(seats) {
+            return seats.reduce((acc, seat) => {
+                if (!acc[seat.rowName]) {
+                    acc[seat.rowName] = [];
+                }
+                acc[seat.rowName].push(seat);
+                return acc;
+            }, {});
+        }
+
+        // Hàm cập nhật trạng thái của ghế và hiển thị chúng
+        function updateSeatDisplay(seatsByRow, bookedSeatIds, userBookedSeatIds) {
+            const container = $('.select-seats-container').empty(); // Làm sạch container trước khi thêm ghế mới
+
+            Object.keys(seatsByRow).forEach(row => {
+                const rowDiv = $('<div>').addClass('row');
+                const rowTitleDiv = $('<div>').addClass('row-title')
+                    .html(`<strong>Dãy</strong><span class="row-title-name-seat">${row}</span>`);
+
+                rowDiv.append(rowTitleDiv);
+
+                seatsByRow[row].forEach(seat => {
+                    const seatDiv = $(`<div data-seat-name="${seat.rowName}${seat.columnName}">`).addClass('seat');
+                    const seatClasses = [];
+
+                    if (userBookedSeatIds.includes(seat.seatId)) {
+                        seatClasses.push('bought');
+                    } else if (bookedSeatIds.includes(seat.seatId)) {
+                        seatClasses.push('unavailable');
+                    } else {
+                        seatClasses.push(seat.typeSeat.toLowerCase());
+                    }
+
+                    seatDiv.addClass(seatClasses.join(' '));
+                    seatDiv.attr('title', `${seat.rowName}${seat.columnName}`);
+                    seatDiv.html('<i class="fas fa-couch"></i>');
+
+                    rowDiv.append(seatDiv);
+                });
+
+                container.append(rowDiv);
+            });
+        }
+
+        function callApiGetPriceTicket(movieId, showDate, showTime, callback) {
+            const settings = {
+                url: "http://localhost:8080/api/pub/schedule/priceTicket?movieId=" + movieId + "&showDate=" + showDate + "&showTime=" + showTime,
+                method: "GET",
+                contentType: "application/json",
+                success: function (res) {
+                    callback(res);
+                },
+                error: function (xhr) {
+                    const res = JSON.parse(xhr.responseText);
+                    console.error(res.message);
+                    console.error("Có lỗi khi tải dữ liệu!");
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiSaveBill(bill) {
+            $('.background').show();
+            const settings = {
+                url: "http://localhost:8080/api/pub/bill",
+                method: "POST",
+                data: JSON.stringify(bill),
+                contentType: "application/json",
+                success: function (res) {
+                    $('.background').hide();
+                    $('#ticket-progress').load("/booking/food", function () {
+                        var checkPoint = parseInt($('#check-point').text().trim(), 10);
+                        updateProgress(checkPoint);
+                        step = checkPoint;
+                    });
+                },
+                error: function (xhr, status) {
+                    const res = JSON.parse(xhr.responseText);
+                    if (xhr.status === 400) {
+                        $('.background').hide();
+                        toastr.warning(res.message);
+                    }
+                    else {
+                        $('.background').hide();
+                        console.error(res.message);
+                    }
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiDeleteBillByBillCode(billCode) {
+            const settings = {
+                url: "http://localhost:8080/api/pub/bill?billCode=" + billCode,
+                method: "DELETE",
+                contentType: "applicatin/json",
+                success: function (res) {
+                    console.log(res);
+                },
+                error: function (xhr) {
+                    const res = JSON.parse(xhr.responseText);
+                    console.error(res.message);
+                    console.error("Có lỗi khi xử lý!");
+                }
+            }
+            $.ajax(settings);
+        }
+
+    </script>
+</body>
+
+</html>

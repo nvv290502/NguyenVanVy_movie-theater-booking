@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <div class="row py-3">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="row py-5">
+                <div class="col-md-12">
+                    <div class="row mb-5">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <label for="cinema" class="form-label text-white">Rạp Chiếu Phim</label>
+                            <select id="cinema" class="form-select" aria-describedby="cinema-validation">
+                                <option selected>Chọn Rạp Chiếu Phim</option>
+                            </select>
+                            <div id="cinema-validation" class="form-text text-danger"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="room" class="form-label text-white">Phòng Chiếu</label>
+                            <select id="room" class="form-select" aria-describedby="room-validation">
+                                <option selected>Chọn Phòng Chiếu Phim</option>
+                            </select>
+                            <div id="room-validation" class="form-text text-danger"></div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <div id="external-events">
+                        <div id="move-events" style="pointer-events: all;">
+                            <p class="text-light" style="display: flex; justify-content: center; margin-bottom: 0;">
+                                <strong>DANH SÁCH PHIM</strong>
+                                <button id="toggle-btn" style="margin-left: 10px; background: none; border: none;">
+                                    <i class="fas fa-chevron-up" id="toggle-icon"></i>
+                                </button>
+                            </p>
+                        </div>
+                        <input type="text" id="movie-search" placeholder="Tìm kiếm phim...">
+                        <div class="col-12" id="movie-block"></div>
+                    </div>
+                </div>
+                <div id="calendar" class="text-white"></div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>

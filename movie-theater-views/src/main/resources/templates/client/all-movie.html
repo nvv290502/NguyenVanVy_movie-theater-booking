@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies
+    </title>
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/header.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/client/all-movie.css">
+    <link rel="stylesheet" href="/css/client/content.css">
+    <link rel="stylesheet" href="/css/client/count-down.css" />
+
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <div class="movie-container">
+        <div class="all-movie-container">
+            <div class="page-title">
+                <p>Tất cả phim chúng tôi có ở đây!</p>
+                <p>Chúc bạn có trải nghiệm xem phim tuyệt vời nhất!</p>
+            </div>
+        </div>
+        <div class="all-movie-menu">
+            <ul>
+                <li class="all-movie"><a href="#" id="all-movie">Tất cả</a></li>
+                <li>
+                    <select id="date-picker" class="select-option">
+                        <option value="">Ngày chiếu</option>
+                        <option value="date">Chọn ngày</option>
+                    </select>
+                    <i class="fas fa-calendar-alt select-arrow"></i>
+                    <input type="date" id="movie-date-picker" class="date-picker" style="display: none;">
+                </li>
+                <li class="select-wrapper">
+                    <select id="genre-select" class="select-option">
+                        <option value="">
+                            Thể loại
+                        </option>
+                    </select>
+                    <i class="fas fa-tag select-arrow"></i>
+                </li>
+                <li>
+                    <select id="language-select" class="select-option">
+                        <option value="">Ngôn ngữ</option>
+                        <option value="English">Tiếng Anh</option>
+                        <option value="Vietnamese">Tiếng Việt</option>
+                        <option value="Chinese">Tiếng Trung</option>
+                        <option value="Japanese">Tiếng Nhật</option>
+                        <option value="Korean">Tiếng Hàn</option>
+                        <option value="French">Tiếng Pháp</option>
+                        <option value="German">Tiếng Đức</option>
+                        <option value="Spanish">Tiếng Tây Ban Nha</option>
+                        <option value="Italian">Tiếng Ý</option>
+                        <option value="Portuguese">Tiếng Bồ Đào Nha</option>
+                    </select>
+                    <i class="fas fa-globe-americas select-arrow"></i>
+                </li>
+                <li>
+                    <select id="duration-select" class="select-option">
+                        <option value="">Thời lượng</option>
+                        <option value="under60">Dưới 60 phút</option>
+                        <option value="60to120">60 - 120 phút</option>
+                        <option value="over120">Trên 120 phút</option>
+                    </select>
+                    <i class="fas fa-clock select-arrow"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="container-card">
+
+        </div>
+    </div>
+
+    <!-- <div class="movie-trailer">
+        <div class="movie-trailer-container">
+            <iframe id="movie-trailer" src="" frameborder="3"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+            <span class="close-trailer">&times;</span>
+        </div>
+    </div> -->
+
+    <div class="count-down-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="/js/client/login.js"></script>
+    <script src="/js/client/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"></script>
+
+    <!-- Tải header -->
+    <script>
+        var loading = false;
+        var currentPage = 0;
+        const pageSize = 10;
+        var date, categoryId, language, duration;
+        var hasMoreData = true;
+
+        $(document).ready(function () {
+            const datePicker = $('#movie-date-picker');
+            const dateSelect = $('#date-picker');
+
+            dateSelect.on('change', function () {
+                if ($(this).val() === 'date') {
+                    datePicker.show().focus();
+                } else {
+                    datePicker.hide();
+                    date = null;
+                    searchMovies();
+                }
+            });
+
+            datePicker.on('change', function () {
+                date = $(this).val();
+                searchMovies();
+            });
+
+            $('#header').load("/header", function () {
+                checkAccessToken();
+                $.getScript("/js/client/header.js");
+            });
+
+            $('.count-down-container').load("/count-down", function () {
+                $.getScript("/js/client/count-down.js");
+            });
+
+            callApiGetAllCategory();
+
+            $('.all-movie').addClass('active');
+            searchMovies();
+
+            $('#all-movie').on('click', function (e) {
+                e.preventDefault();
+                $('.all-movie').addClass('active');
+                date = "", categoryId = 0, language = "", duration = 0;
+                searchMovies();
+            })
+
+            $('#genre-select').on('change', function () {
+                $('.all-movie').removeClass('active');
+                categoryId = $(this).val();
+                searchMovies();
+            });
+
+            $('#language-select').on('change', function () {
+                $('.all-movie').removeClass('active');
+                language = $(this).val();
+                searchMovies();
+            });
+
+            $('#duration-select').on('change', function () {
+                $('.all-movie').removeClass('active');
+                duration = $(this).val();
+                searchMovies();
+            });
+
+            $(window).on('scroll', function () {
+                if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                    loadMoreMovies();
+                }
+            });
+        });
+
+        function searchMovies() {
+            currentPage = 0;
+            hasMoreData = true;
+            $('.container-card').empty();
+            loadMovies();
+        }
+
+        function loadMoreMovies() {
+            if (!hasMoreData || loading) return;
+            currentPage++;
+            loadMovies();
+        }
+
+        function loadMovies() {
+            if (loading) return;
+            loading = true;
+
+            let startDuration, endDuration;
+            if (duration === 'under60') {
+                startDuration = 0;
+                endDuration = 60;
+            } else if (duration === '60to120') {
+                startDuration = 60;
+                endDuration = 120;
+            } else if (duration === 'over120') {
+                startDuration = 120;
+                endDuration = 1000000;
+            }
+
+            callApiGetAllMovie(currentPage, pageSize, date, categoryId, language, startDuration, endDuration);
+        }
+
+        function callApiGetAllMovie(page, size, date, categoryId, language, startDuration, endDuration) {
+            if (!hasMoreData) return;
+
+            let url = `http://localhost:8080/api/pub/movie/isEnable?page=${page}&size=${size}`;
+            if (date) url += `&date=${date}`;
+            if (categoryId) url += `&categoryId=${categoryId}`;
+            if (language) url += `&language=${language}`;
+            if (startDuration !== undefined) url += `&startDuration=${startDuration}`;
+            if (endDuration !== undefined) url += `&endDuration=${endDuration}`;
+
+            $.ajax({
+                url: url,
+                method: "GET",
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.data.content.length === 0) {
+                        hasMoreData = false;
+                        if (page === 0) {
+                            $('.container-card').html('<p>Không tìm thấy phim theo yêu cầu!</p>');
+                        }
+                    } else {
+                        response.data.content.forEach(movie => {
+                            renderListMovie(movie);
+                        });
+                    }
+                    loading = false;
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.error(response.message);
+                    loading = false;
+                }
+            });
+        }
+
+        function renderListMovie(movie) {
+            const releasedDate = formatDate(movie.releasedDate);
+            const movieCard = `<div class="card-movie">
+                    <div class="card-movie-image">
+                        <img src="${movie.imageSmallUrl}"
+                             alt="${movie.name}">
+                        <div class="btn-movie">
+                            <button class="detail-movie btn-buy-ticket" data-id="${movie.id}"><i class="fas fa-ticket-alt"></i> <span>Mua vé</span></button>
+                            <button class="detail-movie btn-detail-movie" data-id="${movie.id}"><i class="fa-solid fa-circle-info"></i> <span>Chi tiết</span></button>
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="title-card">
+                            <p>
+                                ${movie.name}
+                            </p>
+                        </div>
+                    </div>
+                </div>`;
+            $('.container-card').append(movieCard);
+            applyAnimationClasses($('.container-card'));
+        }
+
+        var movieCategories = {};
+        function callApiGetCategoryById(id, movieId) {
+            $.ajax({
+                url: "http://localhost:8080/api/pub/category/" + id,
+                method: "GET",
+                success: function (response) {
+                    let category = response.data.name;
+
+                    if (!movieCategories[movieId]) {
+                        movieCategories[movieId] = [];
+                    }
+
+                    movieCategories[movieId].push(category);
+
+                    updateCategoryForMovie(movieId);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            });
+        }
+        function loadCategoriesForMovie(movie) {
+            movie.categoryId.forEach(id => {
+                callApiGetCategoryById(id, movie.id);
+            });
+        }
+
+        function updateCategoryForMovie(movieId) {
+            let categories = movieCategories[movieId];
+
+            let categoryString = categories.join(', ');
+
+            $(`#movie-card-${movieId} .card-movie-category`).text(categoryString);
+        }
+
+        //hàm định dạng ngày tháng năm theo kiểu DD-MM-YYYY
+        function formatDate(dateString) {
+            if (dateString == undefined) {
+                return "";
+            }
+            let [year, month, day] = dateString.split('-');
+
+            return `${day}.${month}.${year}`;
+        }
+
+        function applyAnimationClasses(divParent) {
+            const cards = divParent.find('.card-movie');
+
+            cards.each(function (index) {
+                if (index === 0) {
+                    $(this).addClass('from-left');
+                } else if (index === 4) {
+                    $(this).addClass('from-right');
+                } else {
+                    $(this).addClass('from-bottom');
+                }
+                setTimeout(() => {
+                    $(this).addClass('show');
+                }, 100);
+            });
+        }
+
+
+        function callApiGetAllCategory() {
+            var settings = {
+                url: "http://localhost:8080/api/pub/category",
+                method: "GET",
+                success: function (response) {
+                    const $select = $('#genre-select');
+                    $select.find('option:not(:first)').remove();
+
+                    for (var category of response.data.content) {
+                        $select.append(`<option value="${category.id}">${category.name}</option>`);
+                    }
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+    </script>
+
+</body>
+
+</html>

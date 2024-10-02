@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/libraries.css" />
+    <link rel="stylesheet" href="/css/client/header.css" />
+    <link rel="stylesheet" href="/css/client/index.css" />
+    <link rel="stylesheet" href="/css/client/booking-more.css" />
+    <link rel="stylesheet" href="/css/client/user-info.css" />
+    <link rel="stylesheet" href="/css/client/count-down.css" />
+    <link rel="stylesheet" href="/css/loading.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css" />
+    <link rel="stylesheet" href="/css/client/footer.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+
+<body>
+    <div class="background">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <div id="header"></div>
+
+    <div class="user-info">
+        <div class="user-info-background"></div>
+        <div class="user-info-container">
+            <div class="user-info-rank">
+                <div class="user-info-image">
+                    <img class="user-info-avatar" src="" alt="">
+                    <div class="avatar-overlay">
+                        <input type="file" id="file-input" style="display: none;" accept="image/*">
+                        <label for="file-input" class="change-avatar">
+                            <i class="fas fa-camera"></i>
+                        </label>
+                    </div>
+                    <div class="user-info-name-level">
+                        <p class="user-info-name">
+                        </p>
+                        <p class="user-info-level">
+                            <img id="current-rank-icon" src="/img/basic-rank.png" alt="current rank">
+                            <span id="current-rank-text"></span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="user-info-expenditure">
+                    <div class="expenditure">
+                        <span>Tổng chi tiêu</span>
+                        <span><span class="mouney-expense">0</span> VND</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar">
+                            <div class="rank" data-rank="Basic">
+                                <img class="image-basic" src="/img/basic-rank.png" alt="basic rank">
+                                <div class="circle basic"></div>
+                                <span class="amount amount-basic" data-value="0">0</span>
+                            </div>
+                            <div class="rank" data-rank="Silver">
+                                <img class="image-silver" src="/img/silver-rank.png" alt="basic rank">
+                                <div class="circle silver"></div>
+                                <span class="amount amount-silver" data-value="2000000">2tr</span>
+                            </div>
+                            <div class="rank" data-rank="Gold">
+                                <img class="image-gold" src="/img/gold-rank.png" alt="basic rank">
+                                <div class="circle gold"></div>
+                                <span class="amount amount-gold" data-value="4000000">4tr</span>
+                            </div>
+                            <div class="rank" data-rank="Platinum">
+                                <img class="image-platinum" src="/img/platinum-rank.png" alt="basic rank">
+                                <div class="circle platinum"></div>
+                                <span class="amount amount-platinum" data-value="10000000">10tr</span>
+                            </div>
+                            <div class="rank" data-rank="Diamond">
+                                <img class="image-diamond" src="/img/diamond-rank.png" alt="basic rank">
+                                <div class="circle diamond"></div>
+                                <span class="amount amount-diamond" data-value="20000000">20tr</span>
+                            </div>
+                            <div class="current-expense"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-info-logout" id="logout-user">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Đăng xuất
+                </div>
+            </div>
+            <div class="user-info-content-parent">
+                <div class="user-info-content-menu">
+                    <ul>
+                        <li class="history-movie">Lịch sử xem phim</li>
+                        <li class="personal-information">Thông tin cá nhân</li>
+                        <li class="policy">Chính sách</li>
+                    </ul>
+                </div>
+                <div class="user-info-load">
+                </div>
+            </div>
+        </div>
+        <div class="info-count-money-background">
+            <div class="info-count-money">
+                <div class="info-count-money-title">
+                    CHI TIẾT HÓA ĐƠN
+                </div>
+                <div class="info-invoice">
+                    <p>Mã hóa đơn: <span class="invoice-code-detail">2024090804Abcd</span></p>
+                    <p>Ngày tạo: <span class="invoice-created-date">2024-11-09</span></p>
+                </div>
+                <div class="info-count-money-info">
+                    <div class="info-count-money-info-movie">
+                        <p class="info-count-money-info-movie-name">Đô Rê Mon, Những Cuộc Phưu Lưu Dưới Đáy Biển</p>
+                        <div class="info-count-money-info-time-cinema">
+                            <div class="info-count-money-info-time">
+                                <p class="info-count-money-info-movie-date">2024.07.08</p>
+                                <p class="info-count-money-info-movie-time">8:00</p>
+                            </div>
+                            <div class="info-count-money-info-cinema">
+                                <p class="info-count-money-info-cinema-name">PCV Hà Nội</p>
+                                <p class="info-count-money-info-cinema-room">304</p>
+                                <p class="info-count-money-info-cinema-seats">A1, A2, A3</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="count-money-ticket">
+                        <p>Tiền vé: <span id="amount-money-ticket" style="font-weight: bold; color: yellow;">0</span> Đ
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="count-money-food">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Tên</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                                <th>Tổng tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice-food">
+                            <tr>
+                                <td>Coca</td>
+                                <td>3</td>
+                                <td>10.000</td>
+                                <td>30.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Tiền dịch vụ: <span id="amount-money-food" style="font-weight: bold; color: yellow;">0</span> Đ
+                    </p>
+                </div>
+
+                <div class="count-money-more">
+                    <p>Tổng tiền: <span id="sum-money" style="font-weight: bold; color: yellow;">0</span> Đ
+                    </p>
+                </div>
+                <div class="count-money-promotion">
+                    <p>Tổng tiền: <span id="sum-money-new" style="font-weight: bold; color: yellow;"></span> Đ</p>
+                    <p class="promotion-info">Khuyến mãi</p>
+                </div>
+
+                <button type="button" class="close-btn">&times;</button>
+            </div>
+        </div>
+        <div class="info-review-background">
+            <div class="info-review">
+                <div class="info-review-movie-img">
+                    <img class="movie-review-image"
+                        src="https://thienvu.com.vn/image/catalog/top-nhung-bo-phim-hd-hay-duoc-xem-nhieu-nhat-hien-nay/phim-hd-hay-nhat-love-in-contract.jpg"
+                        alt="hehe">
+                    <div class="info-review-content">
+                        <span class="info-review-rating"><span class="number-star">5</span><i class="fas fa-star"
+                                style="width: 15px;"></i></span>
+                        <div class="review-statistics">
+                            <p>Số bình luận: <span class="count-comment">500</span></p>
+                            <p>Lượt đánh giá: <span class="count-review">1000</span></p>
+                        </div>
+                        <button class="btn-info-review-detail">Xem</button>
+                    </div>
+                </div>
+                <div class="info-my-review">
+                    <span>Đánh giá:</span>
+                    <i class="fas fa-star star" data-value="1"></i>
+                    <i class="fas fa-star star" data-value="2"></i>
+                    <i class="fas fa-star star" data-value="3"></i>
+                    <i class="fas fa-star star" data-value="4"></i>
+                    <i class="fas fa-star star" data-value="5"></i>
+                </div>
+                <div class="info-my-comment">
+                    <span>Comment</span>
+                    <textarea class="comment-textarea" placeholder="Viết bình luận của bạn...."></textarea>
+                </div>
+
+                <div class="btn-review">
+                    <button id="btn-review">Đánh giá</button>
+                </div>
+
+                <button type="button" class="close-btn-review">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="/css/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="/js/client/login.js"></script>
+    <script src="/js/client/checkToken.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+    <script>
+        var accessTokenLocal = localStorage.getItem("accessToken");
+        var accessTokenGoogle = localStorage.getItem("access_token");
+        $(document).ready(function () {
+
+            $('#header').load("/header", function () {
+                checkAccessToken();
+                $.getScript("/js/client/header.js");
+            });
+
+            $('.count-down-container').load("/count-down", function () {
+                $.getScript("/js/client/count-down.js");
+            });
+
+            $('#footer').load("/footer", function () {
+                $.getScript("js/client/footer.js");
+            });
+
+            $(document).on('click', '.close-btn', function (e) {
+                e.preventDefault();
+                $('.info-count-money-background').hide();
+            });
+
+            $(document).on('click', '.invoice-code', function (e) {
+                e.preventDefault();
+                $('.info-count-money-background').show();
+            });
+
+            $(document).on('click', '.close-btn-review', function (e) {
+                e.preventDefault();
+                $('.info-review-background').hide();
+            });
+
+            $(document).on('click', '.movie-review', function (e) {
+                e.preventDefault();
+                $('.info-review-background').show();
+            });
+
+            $('#file-input').on('change', function () {
+                var file = this.files[0];
+                if (file) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.user-info-avatar').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $('.personal-information').addClass('active');
+            $('.user-info-load').load('/user/personal-information', function () {
+
+            });
+
+            $(document).on('click', '.personal-information', function () {
+                $('.user-info-content-menu ul li').removeClass('active');
+                $(this).addClass('active');
+                $('.user-info-load').load('/user/personal-information', function () {
+                    getUser();
+                });
+            });
+
+            $(document).on('click', '.history-movie', function () {
+                $('.user-info-content-menu ul li').removeClass('active');
+                $(this).addClass('active');
+                $('.user-info-load').load('/user-info/history-movie', function () {
+                    historyOrderMain();
+                });
+            });
+
+            $(document).on('click', '.policy', function () {
+                $('.user-info-content-menu ul li').removeClass('active');
+                $(this).addClass('active');
+                $('.user-info-load').load('/user-info/membership-level', function () {
+
+                });
+            });
+
+            $(document).on('click', '#logout-user', function (e) {
+                e.preventDefault();
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("role");
+                localStorage.removeItem("x-token");
+                localStorage.removeItem("accessToken");
+                window.location.href = "/login";
+            });
+
+            getUser();
+
+            updateUser();
+
+            changePassword();
+
+            $(document).on('click', '.invoice-code', function (e) {
+                e.preventDefault();
+                let billCode = $(this).data("id");
+                let movieName = $(this).data("movie");
+                let scheduleDate = $(this).data("date");
+                let scheduleTime = $(this).data("time");
+                let createdDate = $(this).data("create");
+                let sumMoneyNew = $(this).data("money");
+                callApiGetBillDetail(billCode, sumMoneyNew);
+                renderBillInfo(billCode, createdDate, movieName, scheduleDate, scheduleTime);
+                callApiGetBillFood(billCode, sumMoneyNew);
+                calculateSumMoney(sumMoneyNew);
+            });
+
+            review();
+        });
+
+        var username = "";
+        var userId;
+        var sumOld = 0;
+        var totalPage;
+        var size = 6;
+        var page = 0;
+
+        //Hàm cập nhật thanh tiến trình rank
+        function updatedMembershipLevel() {
+            // Lấy tổng chi tiêu và giới hạn ở mức tối đa
+            let amount = parseFloat($('.mouney-expense').text().replace(/[^\d]/g, ''));
+            if (amount > 20000000) {
+                amount = 20000000;
+            }
+
+            // Tính phần trăm tiến trình
+            let currentPercent = (amount / 20000000) * 100;
+            $('.current-expense').css('width', `${currentPercent.toFixed(2)}%`);
+
+            let currentRank = '';
+            let currentRankIcon = '';
+
+            // Xóa các lớp hiện tại và đã hoàn thành trước đó
+            $('.rank').removeClass('completed current');
+
+            $('.rank').each(function () {
+                let rankAmount = parseFloat($(this).find('.amount').data('value'));
+
+                if (rankAmount <= amount) {
+                    $(this).find('.circle').addClass('completed');
+                    $(this).find('.amount').addClass('completed');
+                    currentRank = $(this).data('rank');
+                    currentRankIcon = $(this).find('img').attr('src');
+                } else {
+                    // Nếu rankAmount lớn hơn tổng chi tiêu, đánh dấu là rank hiện tại
+                    if (currentRank === '' && rankAmount > amount) {
+                        $(this).find('.circle').addClass('current');
+                        $(this).find('.amount').addClass('current');
+                        currentRank = $(this).data('rank');
+                        currentRankIcon = $(this).find('img').attr('src');
+                    }
+                }
+            });
+
+            // Hiển thị rank hiện tại
+            $('#current-rank-icon').attr('src', currentRankIcon || '/img/basic-rank.png');
+            $('#current-rank-text').text(currentRank || 'Basic');
+        }
+
+        //hàm xử lý hiển thị thông tin
+        function getUser() {
+            if (accessTokenLocal != null) {
+                callApiGetUserInfo(accessTokenLocal, "http://localhost:8080/user/info");
+            }
+            if (accessTokenGoogle != null) {
+                callApiGetUserInfo(accessTokenGoogle, "http://localhost:8080/oauth2/getUser");
+            }
+        }
+
+        //Hàm gọi api lấy thông tin khách hàng theo token
+        function callApiGetUserInfo(accessToken, url) {
+            $.ajax({
+                url: url,
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                success: function (response) {
+                    username = response.username;
+                    userId = response.id;
+                    renderUserInfo(response);
+                    callApiGetAmountMoney(response.id);
+                },
+                error: function (xhr) {
+                    console.log("Có lỗi khi tải dữ liệu!");
+                }
+            });
+        }
+
+        //hàm map dữ liệu thông tin khách hàng
+        function renderUserInfo(user) {
+            $('#user-id').val(user.id);
+            $('#full-name').val(user.fullName);
+            $('#phone').val(user.phone);
+            $('#dob').val(user.dob);
+            $('#email').val(user.email);
+            $('.user-info-name').text(user.fullName);
+            $('.user-info-avatar').attr('src', user.avatarUrl);
+        }
+
+        //Hàm gọi api lấy tổng tiền đã chi tiêu theo khách hàng
+        function callApiGetAmountMoney(userId) {
+            $.ajax({
+                url: "http://localhost:8080/user/api/pub/amount-money?userId=" + userId,
+                method: "GET",
+                success: function (response) {
+                    $('.mouney-expense').text(response.toLocaleString('vi-VN'));
+                    updatedMembershipLevel();
+                },
+                error: function (xhr) {
+                    console.log("Có lỗi khi tải dữ liệu!");
+                }
+            });
+        }
+
+        //hàm xử lý cập nhật thông tin
+        function updateUser() {
+            $(document).on('click', '.user-info-update', function (e) {
+                e.preventDefault();
+
+                let form = new FormData();
+                form.append('id', parseInt($('#user-id').val(), 10));
+                form.append('fullName', $('#full-name').val());
+                form.append('phone', $('#phone').val());
+                let dob = new Date($('#dob').val());
+                let dobFormatted = "";
+                if (!isNaN(dob.getTime())) {
+                    dobFormatted = dob.toISOString().split('T')[0];
+                }
+                form.append('dob', dobFormatted);
+                let avatarUrl = $('#file-input')[0].files[0];
+                form.append('avatarUrl', avatarUrl);
+                let level = $('#current-rank-text').text().toUpperCase();
+                form.append('membershipLevel', level);
+                callApiUpdateUserInfo(form);
+            });
+
+        }
+
+        //Hàm gọi api cập nhật thông tin người dùng
+        function callApiUpdateUserInfo(data) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/user/api/pub/update",
+                method: "PUT",
+                data: data,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $('.background').hide();
+                    toastr.success(data.message);
+                    getUser();
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //hàm xử lý đổi mật khẩu
+        function changePassword() {
+            $(document).on('click', '.btn-reset-password', function (e) {
+                e.preventDefault();
+                const data = {
+                    oldPassword: $('#current-password').val(),
+                    newPassword: $('#new-password').val(),
+                    rePassword: $('#confirm-password').val(),
+                    username: username
+                }
+                callApiChangePassword(data);
+            })
+        }
+
+        //Hàm call api đổi mật khẩu
+        function callApiChangePassword(data) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/user/api/pub/change-password",
+                type: "PUT",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function (data) {
+                    $('.background').hide();
+                    toastr.success(data.message);
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm xử lý lịch sử xem phim
+        function historyOrderMain() {
+            callApiGetHistoryOrder(userId, size, page);
+
+            $(document).on('click', '.paging-item-movie', function (e) {
+                e.preventDefault();
+                page = $(this).data("value");
+                callApiGetHistoryOrder(userId, size, page);
+            });
+
+            $(document).on('click', '.next', function (e) {
+                e.preventDefault();
+                callApiGetHistoryOrder(userId, size, totalPage - 1);
+            })
+
+            $(document).on('click', '.previous', function (e) {
+                e.preventDefault();
+                callApiGetHistoryOrder(userId, size, 0);
+            })
+        }
+
+        //Hàm gọi api lấy danh sách phim đã xem
+        function callApiGetHistoryOrder(userId, size, page) {
+            var settings = {
+                url: "http://localhost:8080/user/api/pub/history-order?userId=" + userId + "&size=" + size + "&page=" + page,
+                method: "GET",
+                contentType: "application/json",
+                success: function (res) {
+                    const $tbody = $('.history-order');
+                    $tbody.empty();
+                    totalPage = res.data.totalPages;
+                    renderPagingNumberMovie(totalPage, page);
+                    for (var order of res.data.content) {
+                        renderHistoryOrder(order);
+                    }
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm map dữ liệu lịch sử xem phim
+        function renderHistoryOrder(order) {
+            const tr = `<tr>
+                <td class="invoice-code" data-id="${order.billCode}"
+                                         data-movie="${order.movieName}"
+                                         data-date="${order.scheduleDate}"
+                                         data-time="${order.scheduleTime}"
+                                         data-create="${order.createdDate}"
+                                         data-money="${order.amountMoney}">${order.billCode}</td>
+                <td>${order.movieName}</td>
+                <td class="history-date">${order.scheduleDate}</td>
+                <td class="history-time">${order.scheduleTime}</td>
+                <td>${order.amountMoney}</td>
+                <td class="td-movie-review">
+                    <button class="movie-review" data-id=${order.movieId}>
+                        <i class="fas fa-star"></i>
+                        <span>Đánh giá</span>
+                    </button>
+                </td>
+            </tr>`;
+
+            $('.history-order').append(tr);
+        }
+
+        //hàm phân trang
+        function renderPagingNumberMovie(totalPages, currentPage) {
+            var pagingMovie = $('.paging-number-movie');
+            pagingMovie.empty();
+
+            const maxPagesToShow = 3; // Số trang tối đa để hiển thị
+            const pageRange = Math.floor(maxPagesToShow / 2); // Số trang trước và sau trang hiện tại
+            let startPage, endPage;
+
+            if (totalPages <= maxPagesToShow) {
+                // Nếu số trang nhỏ hơn số trang tối đa để hiển thị, hiển thị tất cả
+                startPage = 0;
+                endPage = totalPages - 1;
+            } else {
+                // Nếu không, chỉ hiển thị một số trang quanh trang hiện tại
+                if (currentPage <= pageRange) {
+                    startPage = 0;
+                    endPage = maxPagesToShow - 1;
+                } else if (currentPage + pageRange >= totalPages) {
+                    startPage = totalPages - maxPagesToShow;
+                    endPage = totalPages - 1;
+                } else {
+                    startPage = currentPage - pageRange;
+                    endPage = currentPage + pageRange;
+                }
+            }
+
+            if (startPage > 0) {
+                pagingMovie.append('<a href="#" class="paging-item paging-item-movie" data-value="0">1</a>');
+                if (startPage > 1) {
+                    pagingMovie.append('<span class="hidden-paging">...</span>');
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const isActive = i === currentPage ? 'active' : '';
+                pagingMovie.append(`<a href="#" class="paging-item paging-item-movie ${isActive}" data-value="${i}">${i + 1}</a>`);
+            }
+
+            if (endPage < totalPages - 1) {
+                if (endPage < totalPages - 2) {
+                    pagingMovie.append('<span class="hidden-paging">...</span>');
+                }
+                pagingMovie.append(`<a href="#" class="paging-item paging-item-movie" data-value="${totalPages - 1}">${totalPages}</a>`);
+            }
+
+        }
+
+        //hàm gọi api lấy thông tin vé theo mã hóa đơn
+        function callApiGetBillDetail(billCode, sumNew) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/bill-detail?billCode=" + billCode,
+                method: "GET",
+                success: function (res) {
+                    const roomName = res.data[0].roomName;
+                    const cinemaName = res.data[0].cinemaName;
+                    const seats = res.data.map(item => `${item.rowName}${item.columnName}`).join(', ');
+                    const ticketMoney = res.data.reduce((total, item) => total + parseFloat(item.priceTicket), 0);
+                    $('.info-count-money-info-cinema-name').text(cinemaName);
+                    $('.info-count-money-info-cinema-room').text(roomName);
+                    $('.info-count-money-info-cinema-seats').text(seats);
+                    $('#amount-money-ticket').text(ticketMoney.toLocaleString('vi-VN'));
+
+                    calculateSumMoney(sumNew);
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm map dữ liệu thông tin hóa đơn 
+        function renderBillInfo(billCode, createdDate, movieName, scheduleDate, scheduleTime) {
+            $('.invoice-code-detail').text(billCode);
+            $('.invoice-created-date').text(formatDateTime(createdDate));
+            $('.info-count-money-info-movie-name').text(movieName);
+            $('.info-count-money-info-movie-date').text(scheduleDate);
+            $('.info-count-money-info-movie-time').text(scheduleTime);
+        }
+
+        //Hàm gọi api lấy hóa đơn đồ ăn theo mã hóa đơn
+        function callApiGetBillFood(billCode, sumNew) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/bill-food-detail?billCode=" + billCode,
+                method: "GET",
+                success: function (res) {
+                    const tbody = $('.invoice-food');
+                    tbody.empty();
+                    let moneyFood = 0;
+                    for (let bill of res.data) {
+                        renderBillFood(bill);
+                        moneyFood += parseFloat(bill.amountMoney);
+                    }
+                    $('#amount-money-food').text(moneyFood.toLocaleString('vi-VN'));
+
+                    calculateSumMoney(sumNew);
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm map dữ liệu danh sách đồ ăn
+        function renderBillFood(bill) {
+            const tr = `<tr>
+                            <td>${bill.foodName}</td>
+                            <td>${bill.quantity}</td>
+                            <td>${bill.price}</td>
+                            <td>${bill.amountMoney}</td>
+                        </tr>`;
+            $('.invoice-food').append(tr);
+        }
+
+        //Hàm tình tổng tiền hóa đơn
+        function calculateSumMoney(sumNew) {
+            let ticketMoneyText = $('#amount-money-ticket').text();
+            let ticketMoney = parseFloat(ticketMoneyText.replace(/[^0-9]/g, '')) || 0;
+            let foodMoneyText = $('#amount-money-food').text();
+            let foodMoney = parseFloat(foodMoneyText.replace(/[^0-9]/g, '')) || 0;
+            let sumMoney = ticketMoney + foodMoney;
+            $('#sum-money').text(sumMoney.toLocaleString('vi-VN')); // Định dạng theo tiền tệ Việt Nam
+            sumOld = parseFloat($('#sum-money').text().replace(/[^0-9]/g, ''));
+            if (sumNew < sumOld) {
+                $('.count-money-promotion').css('display', 'flex');
+                $('#sum-money').css('text-decoration', 'line-through');
+                $('#sum-money-new').text(sumNew.toLocaleString('vi-VN'));
+            }
+        }
+
+        //Hàm định dạng kiểu localDateTime
+        function formatDateTime(dateTimeString) {
+            const date = new Date(dateTimeString);
+
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+
+            return date.toLocaleString('vi-VN', options);
+        }
+
+        //Hàm chức năng đánh giá
+        function review() {
+            var movieId;
+            $(document).on('click', '.movie-review', function () {
+                movieId = $(this).data('id');
+                callApiGetMovieById(movieId);
+                callApiGetStatisticsReview(movieId);
+                callApiGetReviewByUser(userId, movieId);
+            });
+
+            $(document).on('click', '.btn-info-review-detail', function (e) {
+                e.preventDefault();
+                window.location.href = "/movie?id=" + movieId + "&step=review";
+            })
+        }
+
+        //Hàm gọi api lấy phim theo id
+        function callApiGetMovieById(id) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/movie/" + id,
+                method: "GET",
+                success: function (response) {
+                    $('.movie-review-image').attr('src', response.data.imageLargeUrl);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                    toastr.error("Có lỗi khi tải dữ liệu!");
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm gọi api lấy thông kê đánh giá theo phim
+        function callApiGetStatisticsReview(movieId) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/review-statistics?movieId=" + movieId,
+                method: "GET",
+                success: function (response) {
+                    $('.number-star').text(response.data.rating);
+                    $('.count-comment').text(response.data.countComment);
+                    $('.count-review').text(response.data.countRating);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                    toastr.error("Có lỗi khi tải dữ liệu!");
+                }
+            }
+            $.ajax(settings);
+        }
+        //Hàm gọi api lưu đánh giá
+        function callApiSaveReview(review) {
+            const settings = {
+                url: "http://localhost:8080/api/pub/review",
+                method: "POST",
+                data: JSON.stringify(review),
+                contentType: "application/json",
+                success: function (res) {
+                    toastr.success("Cảm ơn bạn đã đánh giá!");
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm gọi api lấy đánh giá theo user
+        function callApiGetReviewByUser(userId, movieId) {
+            const settings = {
+                url: "http://localhost:8080/api/pub/review?userId=" + userId + "&movieId=" + movieId,
+                method: "GET",
+                success: function (res) {
+
+                    $('.info-my-review').data('rating', null);
+                    $('.comment-textarea').val("");
+                    $('#btn-review').css('display', 'block');
+                    $('.star').removeClass('selected');
+
+                    if (res.data.content.length === 0) {
+                        handleReview(movieId, userId);
+                    } else {
+                        const review = res.data.content[0];
+                        $('.info-my-review').data('rating', review.numberStar);
+                        $('.comment-textarea').val(review.comment);
+                        $('#btn-review').css('display', 'none');
+                        $('.info-my-comment').css('padding-bottom', '20px');
+
+                        $('.star').each(function () {
+                            var starValue = $(this).data('value');
+                            if (starValue <= review.numberStar) {
+                                $(this).addClass('selected');
+                            } else {
+                                $(this).removeClass('selected');
+                            }
+                        });
+
+                    }
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                    toastr.error("Có lỗi khi tải dữ liệu!");
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm xử lý đánh giá
+        function handleReview(movieId, userId) {
+            let currentRating;
+
+            $('#btn-review').off('click');
+
+            $(document).on('click', '.star', function () {
+                var clickedRating = $(this).data('value');
+
+                if (clickedRating === currentRating) {
+                    $('.star').removeClass('selected');
+                    currentRating = 0;
+                } else {
+                    $('.star').each(function () {
+                        var starValue = $(this).data('value');
+                        if (starValue <= clickedRating) {
+                            $(this).addClass('selected');
+                        } else {
+                            $(this).removeClass('selected');
+                        }
+                    });
+                    currentRating = clickedRating;
+                }
+
+                $('.info-my-review').data('rating', currentRating);
+            });
+
+            $(document).on('click', '#btn-review', function () {
+                const review = {
+                    movieId: parseInt(movieId, 10),
+                    userId: parseInt(userId, 10),
+                    numberStar: parseInt(currentRating, 10),
+                    comment: $('.comment-textarea').val()
+                }
+                callApiSaveReview(review);
+            })
+        }
+    </script>
+</body>
+
+</html>

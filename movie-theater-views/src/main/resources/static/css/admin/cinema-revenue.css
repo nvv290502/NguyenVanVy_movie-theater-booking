@@ -1,0 +1,185 @@
+.admin-containers {
+    width: 100%;
+    height: auto;
+    background-color: rgb(27, 27, 27);
+    font-size: 13px;
+    font-family: "Roboto", sans-serif;
+}
+
+.cinema-revenue-title {
+    font-size: 13px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.cinema-revenue-container {
+    width: calc(100% - 50px);
+    margin-left: 50px;
+    padding: 20px;
+}
+.cinema-revenue-container hr {
+    border: 1px solid white;
+}
+
+.filter-container {
+    display: flex;
+    gap: 10px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    max-width: 1000px;
+}
+
+.date-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0);
+    color: rgb(208, 203, 203);
+}
+
+.filter-btn {
+    padding: 8px 15px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-btn {
+    background-color: #17a2b8;
+}
+
+.filter-btn:hover {
+    opacity: 0.9;
+}
+
+canvas#cinemaRevenueChart {
+    margin-bottom: 20px;
+}
+
+.chart-container {
+    max-width: 1000px;
+    background-color: rgba(32, 35, 37);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px black;
+    color: rgb(208, 203, 203);
+    position: relative;
+    height: 400px;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.chart-title {
+    font-style: italic;
+    font-size: 12px;
+    text-align: center;
+    color: #939191;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.table-container {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px black;
+    color: #ccc;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    font-size: 13px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 12px;
+}
+
+th {
+    background-color: #202020;
+    font-weight: bold;
+}
+
+.reset-zoom-container {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.reset-zoom-btn {
+    background-color: #04a8a8;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.reset-zoom-btn:hover {
+    background-color: #046985;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.page-btn {
+    background-color: #2a2a2a;
+    color: #fff;
+    border: none;
+    padding: 4px 8px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.page-btn:hover {
+    background-color: #3a3a3a;
+}
+
+.page-btn.active {
+    background-color: #ff6600;
+}
+
+.page-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.ellipsis {
+    color: #fff;
+    margin: 0 5px;
+}
+.export-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.export-btn:hover {
+    background-color: #45a049;
+}

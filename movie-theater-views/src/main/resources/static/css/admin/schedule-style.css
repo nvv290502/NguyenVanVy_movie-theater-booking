@@ -1,0 +1,265 @@
+.select2-container--default .select2-results__option--selected {
+  background-color: #656667 !important;
+}
+.toast-success {
+  background-color: #28a745 !important; /* Xanh lá cây cho thông báo thành công */
+}
+.toast-warning {
+  background-color: #ffc107 !important; /* Vàng cho thông báo cảnh báo */
+  color: black; /* Đặt màu chữ là đen để dễ đọc trên nền vàng */
+}
+.toast-error {
+  background-color: #dc3545 !important; /* Đỏ cho thông báo lỗi */
+}
+body {
+  font-family: "Roboto", sans-serif !important;
+  font-size: 13px;
+  user-select: none;
+}
+#movie-block {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  display: none;
+}
+
+#movie-block::-webkit-scrollbar {
+  width: 8px;
+}
+
+#movie-block::-webkit-scrollbar-thumb {
+  background-color: #6c757d;
+  border-radius: 10px;
+}
+
+#movie-block::-webkit-scrollbar-thumb:hover {
+  background-color: #5a6268;
+}
+
+.fc-scrollgrid {
+  background-color: white;
+  color: black;
+}
+.bg-yeah {
+  /* background: radial-gradient(circle, rgb(52, 53, 97) 30%, rgba(25, 26, 61, 1) 70%); */
+  background-color: rgb(20, 22, 23);
+}
+.no-interaction {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.no-move {
+  cursor: default;
+}
+.no-move * {
+  pointer-events: none;
+}
+#external-events {
+  cursor: default;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  width: 300px;
+  z-index: 100;
+  background-color: black;
+  border-radius: 5px;
+  padding: 5px;
+  max-height: 396px;
+}
+
+#move-events:hover {
+  cursor: move;
+}
+.fc .fc-timegrid-slot-label {
+  font-size: 12px;
+}
+.fc .fc-timegrid-slot {
+  height: 20px;
+}
+.fc-event-main {
+  /* background-color: black; */
+  padding: 3px;
+  border-radius: 3px;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#movie-search {
+  display: none;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.event-title {
+  font-weight: 600;
+}
+.event-time {
+  font-size: 10px;
+}
+#calender {
+  position: relative;
+}
+
+.remove-event {
+  font-size: 12px;
+  font-weight: 600;
+  background-color: red;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+  z-index: 100;
+}
+
+/* Thay đổi màu nền và viền cho ngày hiện tại */
+.fc-day-today {
+  border: 2px solid #cab303 !important;
+  background: rgba(0, 0, 0, 0) !important;
+}
+.fc-col-header-cell.fc-day-today {
+  color: #d35400 !important;
+}
+.hour-view .fc-event {
+  font-size: 12px;
+}
+.hour-view .fc-event img,
+.hour-view .fc-event .event-text,
+.hour-view .fc-event .fc-event-main-frame .fc-event-time {
+  display: none !important;
+}
+.header-schedule {
+  width: calc(100% - 50px);
+  margin-left: 50px;
+  height: 60px;
+  background-color: rgb(29, 28, 28);
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  padding: 0 10px;
+}
+.header-schedule p {
+  font-weight: 600;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 0;
+  width: 40%;
+}
+.menu-schedule {
+  bottom: 0;
+  display: flex;
+  justify-content: left;
+  height: 100%;
+  align-items: end;
+  width: 60%;
+}
+.menu-schedule button {
+  background-color: rgb(29, 28, 28);
+  width: 150px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+.menu-schedule button:hover,
+.menu-schedule button.active {
+  background-color: rgb(20, 22, 23);
+}
+.schedule-container {
+  width: calc(100% - 50px);
+  margin-left: 50px;
+}
+.list-manager {
+  font-size: 13px;
+}
+.btn-save {
+  background-color: #cab303;
+  transition: background 0.5s ease;
+  border: none;
+  font-size: 13px;
+}
+.btn-save-price-ticket:hover {
+  background-color: #ca9803;
+}
+.form-control {
+  max-width: 100px;
+  display: inline;
+  font-size: 13px;
+}
+.btn-cancel {
+  font-size: 13px;
+}
+.disabled-row {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.fc-event {
+  position: relative;
+  border: none;
+}
+.fc-event .fc-event-main {
+  z-index: 20;
+  padding: 0;
+  font-size: 13px;
+}
+.fc-event img {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.fc-v-event .fc-event-main-frame {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+.fc-v-event .fc-event-title-container {
+  font-weight: 600;
+  padding-left: 3px;
+}
+.fc-v-event .fc-event-time {
+  font-size: 11px;
+  padding-left: 3px;
+  padding-top: 3px;
+}
+.past-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(200, 200, 200, 0.3);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.past-event {
+  opacity: 0.5;
+}
+.movie-management-title {
+  width: 40%;
+}
+.form-select,
+.fc .fc-toolbar-title,
+.fc-toolbar-chunk .btn,
+.swal2-title,
+.swal2-html-container,
+.swal2-confirm,
+.swal2-cancel {
+  font-size: 13px !important;
+}
+.swal2-icon {
+  width: 50px !important;
+  height: 50px !important;
+}

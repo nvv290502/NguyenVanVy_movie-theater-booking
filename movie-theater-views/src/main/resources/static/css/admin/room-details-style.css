@@ -1,0 +1,63 @@
+.select2-container--default .select2-results__option--selected {
+  background-color: #656667 !important;
+}
+.toast-success {
+  background-color: #28a745 !important; /* Xanh lá cây cho thông báo thành công */
+}
+.toast-warning {
+  background-color: #ffc107 !important; /* Vàng cho thông báo cảnh báo */
+  color: black; /* Đặt màu chữ là đen để dễ đọc trên nền vàng */
+}
+.toast-error {
+  background-color: #dc3545 !important; /* Đỏ cho thông báo lỗi */
+}
+.customize-btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  border: none;
+}
+.table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px; /* Tùy chỉnh kích thước padding nếu cần */
+}
+
+.table img {
+  max-width: 100%;
+  height: auto;
+}
+.screen {
+  background-color: #ece0e0;
+  border: 5px solid #ffffff;
+  border-radius: 75% 75% 0 0; /* Đường cong nhẹ ở 2 cạnh trên */
+  box-shadow: 0 0 10px rgba(248, 248, 248, 0.5); /* Viền sáng mờ dần */
+}
+.screen.small {
+  width: 600px;
+  height: 10px;
+}
+.screen.medium {
+  width: 900px;
+  height: 10px;
+}
+.screen.large {
+  width: 1200px;
+  height: 10px;
+}
+.modal {
+  z-index: 2; /* Bootstrap default z-index for modals */
+}
+.modal-backdrop {
+  z-index: 1; /* Bootstrap default z-index for modal backdrops */
+}
+.bg-yeah {
+  background: radial-gradient(
+    circle,
+    rgb(52, 53, 97) 30%,
+    rgba(25, 26, 61, 1) 70%
+  );
+}

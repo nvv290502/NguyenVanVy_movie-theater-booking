@@ -1,0 +1,174 @@
+.select-room {
+    width: 100%;
+    height: auto;
+}
+.room-container {
+    height: auto;
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1c1c1c; /* Màu nền tối cho khu vực chính */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #66c0f4; /* Màu sáng cho liên kết */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.back-link:hover {
+    color: #4a9fd4; /* Màu sáng hơn khi hover */
+}
+
+.movie-choosed {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #343a40; /* Màu nền tối */
+    color: #fff; /* Màu chữ sáng */
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.movie-choosed p {
+    font-weight: bold;
+    margin: 5px 10px;
+    font-size: 16px;
+}
+
+.movie-choosed span {
+    font-style: italic;
+    font-weight: normal;
+    color: rgb(0, 255, 255); /* Màu chữ sáng */
+}
+
+h3#movie-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    color: white;
+    display: inline;
+    padding: 5px 5%;
+    margin-left: 38%;
+}
+
+.room-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.room-item {
+    background-color: #2c2c2c; /* Màu nền tối cho các phòng */
+    border: 1px solid #444;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s;
+    transition:
+            transform 0.3s ease,
+            background 0.3s ease;
+}
+
+.room-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.room-image {
+    width: 100%;
+    height: 70%; /* Fixed height for images */
+    object-fit: cover;
+}
+
+.room-info {
+    padding: 5px;
+}
+
+.room-info p {
+    margin-bottom: 0;
+}
+
+.room-name {
+    font-size: 15px;
+    margin-right: 10px;
+    color: #f1f1f1; /* Màu chữ sáng cho tên phòng */
+}
+
+.room-name,
+.room-location {
+    display: inline-block;
+}
+
+.room-location,
+.room-seats {
+    font-size: 13px;
+    color: #b0b0b0; /* Màu chữ sáng hơn cho thông tin phòng */
+}
+
+@media (max-width: 789px) {
+    .room-item {
+        width: 140px;
+        height: 140px;
+    }
+    .room-info {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .room-info .room-name {
+        margin: 0;
+        margin-right: 5px;
+        font-size: 12px;
+    }
+
+    .room-info .room-location,
+    .room-info .room-seats {
+        font-size: 10px;
+    }
+
+    .movie-choosed p {
+        font-size: 13px;
+    }
+
+    h3#movie-title {
+        font-size: 18px;
+        margin-left: 35%;
+    }
+}
+
+@media (max-width: 489px) {
+    .room-item {
+        width: 120px;
+        height: 140px;
+    }
+
+    .room-info .room-name {
+        font-size: 13px;
+    }
+
+    .room-info .room-location,
+    .room-info .room-seats {
+        font-size: 10px;
+    }
+
+    .movie-choosed p {
+        font-size: 12px;
+    }
+
+    h3#movie-title {
+        font-size: 15px;
+        margin-left: 28%;
+    }
+}

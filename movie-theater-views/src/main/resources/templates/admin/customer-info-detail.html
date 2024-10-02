@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Quản Lý Khách Hàng</title>
+
+    <link href="/css/admin/account-manager_style.css" rel="stylesheet" />
+    <link href="/css/libraries.css" rel="stylesheet" />
+    <link href="/css/client/index.css" rel="stylesheet" />
+    <link href="/css/admin/index.css" rel="stylesheet" />
+    <link href="/css/admin/menu.css" rel="stylesheet" />
+    <link href="/css/loading.css" rel="stylesheet" />
+    <link href="/css/client/booking-more.css" rel="stylesheet" />
+    <link href="/css/admin/customer-info-detail.css" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+</head>
+
+<body>
+    <div class="admin-containers">
+        <div class="menu-admin"></div>
+        <div class="background">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="account-management">
+                <div class="account-management-title">
+                    <i class="fas fa-home"></i>Trang Quản Trị
+                    <i class="fas fa-chevron-right"></i>
+                    <span style="color:#e3e3e3;">Quản Lý Khách Hàng</span>
+                    <i class="fas fa-chevron-right"></i>
+                    <span style="color: #007bff;" class="title-customer-name">Nguyễn Văn Vỹ</span>
+                </div>
+                <div class="user-info-container">
+                    <ul class="tabs">
+                        <li class="tab active" data-tab="customer-detail">Thông tin user</li>
+                        <li class="tab" data-tab="booking-history">Tra cứu hóa đơn</li>
+                    </ul>
+                    <div class="customer-detail">
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Quay lại</button>
+                            <button class="btn btn-primary update-customer-info"><i class="fas fa-pen-square"></i> Cập
+                                nhật</button>
+                        </div>
+
+                        <form class="user-form">
+                            <input type="hidden" id="user-id" required>
+                            <div class="form-group">
+                                <label for="username">Tên đăng nhập</label>
+                                <input type="text" id="username" value="" required readonly
+                                    style="background-color: #ccc;">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Mật khẩu</label>
+                                <input type="text" id="password" value="Không thể xem mật khẩu của khách hàng" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fullName">Họ tên</label>
+                                <input type="text" id="fullName" value="Phạm Đình Tiến" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" value="phamdinhrien@gmail.com" required readonly
+                                    style="background-color: #ccc;">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Số điện thoại</label>
+                                <input type="tel" id="phone" value="0709732310" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Ngày sinh</label>
+                                <input type="date" id="dob">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role">Quyền</label>
+                                <select id="role" required disabled style="background-color: #ccc;">
+                                    <option value="ROLE_USER">USER</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="status">Trạng thái</label>
+                                <select id="status" required>
+                                    <option value="active">Kích hoạt</option>
+                                    <option value="inactive">Chưa kích hoạt</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Ngày tạo</label>
+                                <input type="text" id="created-date" readonly style="background-color: #ccc;">
+                            </div>
+                            <div class="form-group">
+                                <label for="rank">Cấp bậc</label>
+                                <select id="rank" required disabled style="background-color: #ccc;">
+                                    <option value="BASIC">BASIC</option>
+                                    <option value="SILVER">SILVER</option>
+                                    <option value="GOLD">GOLD</option>
+                                    <option value="PLATINUM">PLATINUM</option>
+                                    <option value="DIAMOND">DIAMOND</option>
+                                </select>
+                            </div>
+                        </form>
+                        <div class="user-avatar">
+                            <div class="avatar">
+                                <img id="image-avatar-detail" src="" alt="">
+                                <div class="avatar-zoom" id="avatar-zoom">
+                                    <img src="path/to/avatar.jpg" alt="Avatar Zoom">
+                                </div>
+                                <button class="btn-change-avatar">
+                                    <input type="file" class="avatar" id="customer-avatar-input" name="avatarUrl"
+                                        accept="image/*" />
+                                    Thay đổi ảnh đại diện</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="booking-history">
+                        <p>Lịch sử đặt vé của <span class="booking-history-full-name">Nguyễn Văn Vỹ</span>
+                        <p>
+                        <table class="booking-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã hóa đơn</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Tên phim</th>
+                                    <th>Ngày chiếu</th>
+                                    <th>Giờ chiếu</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>BK001</td>
+                                    <td>2023-09-22</td>
+                                    <td>Đô rê mon</td>
+                                    <td>2024-09-09</td>
+                                    <td>20:00</td>
+                                    <td>1.000.000</td>
+                                    <td><span class="status-paid">Đã thanh toán</span></td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm">Chi tiết</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>BK001</td>
+                                    <td>2023-09-22</td>
+                                    <td>Đô rê mon</td>
+                                    <td>2024-09-09</td>
+                                    <td>20:00</td>
+                                    <td>1.000.000</td>
+                                    <td><span class="status-paid">Đã thanh toán</span></td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm">Chi tiết</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>BK001</td>
+                                    <td>2023-09-22</td>
+                                    <td>Đô rê mon</td>
+                                    <td>2024-09-09</td>
+                                    <td>20:00</td>
+                                    <td>1.000.000</td>
+                                    <td><span class="status-paid">Đã thanh toán</span></td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm">Chi tiết</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="paging paging-movie">
+                            <a href="" class="paging-item previous">&laquo;</a>
+                            <div class="paging-number-movie">
+                            </div>
+                            <a href="" class="paging-item next">&raquo;</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="info-count-money-background">
+                <div class="info-count-money">
+                    <div class="info-count-money-title">
+                        CHI TIẾT HÓA ĐƠN
+                    </div>
+                    <div class="info-invoice">
+                        <p>Mã hóa đơn: <span class="invoice-code">2024090804Abcd</span></p>
+                        <p>Ngày tạo: <span class="invoice-created-date">2024-11-09</span></p>
+                    </div>
+                    <div class="info-count-money-info">
+                        <div class="info-count-money-info-movie">
+                            <p class="info-count-money-info-movie-name">Đô Rê Mon, Những Cuộc Phưu Lưu Dưới Đáy Biển</p>
+                            <div class="info-count-money-info-time-cinema">
+                                <div class="info-count-money-info-time">
+                                    <p class="info-count-money-info-movie-date">2024.07.08</p>
+                                    <p class="info-count-money-info-movie-time">8:00</p>
+                                </div>
+                                <div class="info-count-money-info-cinema">
+                                    <p class="info-count-money-info-cinema-name">PCV Hà Nội</p>
+                                    <p class="info-count-money-info-cinema-room">304</p>
+                                    <p class="info-count-money-info-cinema-seats">A1, A2, A3</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="count-money-ticket">
+                            <p>Tiền vé: <span id="amount-money-ticket"
+                                    style="font-weight: bold; color: rgb(61, 179, 219);">0</span> Đ
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="count-money-food">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Số lượng</th>
+                                    <th>Giá</th>
+                                    <th>Tổng tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice-food">
+                                <tr>
+                                    <td>Coca</td>
+                                    <td>3</td>
+                                    <td>10.000</td>
+                                    <td>30.000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>Tiền dịch vụ: <span id="amount-money-food"
+                                style="font-weight: bold; color: rgb(61, 179, 219);">0</span>
+                            Đ
+                        </p>
+                    </div>
+
+                    <div class="count-money-more">
+                        <p>Tổng tiền: <span id="sum-money" style="font-weight: bold; color: rgb(61, 179, 219);">0</span>
+                            Đ
+                        </p>
+                    </div>
+                    <div class="count-money-promotion">
+                        <p>Tổng tiền: <span id="sum-money-new"
+                                style="font-weight: bold; color: rgb(61, 179, 219);"></span> Đ</p>
+                        <p class="promotion-info">Khuyến mãi</p>
+                    </div>
+
+                    <button type="button" class="close-btn">&times;</button>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="/js/admin/account-manager.js"></script>
+        <script>
+
+            var sumOld = 0;
+            var totalPage;
+            var size = 10;
+            var page = 0;
+            var urlParams = new URLSearchParams(window.location.search);
+            var userId = urlParams.get('user');
+
+            $(document).ready(function () {
+                //Load menu admin
+                $(".menu-admin").load("/menu", function () {
+                    $.getScript("/js/admin/menu.js");
+                });
+
+                // Xử lí việc chọn ảnh từ thiết bị để hiển thị lên
+                $('input[type="file"]').on('change', function () {
+                    var $img = $('#image-avatar-detail');
+                    var file = this.files[0];
+
+                    if (file) {
+                        var reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            $img.attr('src', e.target.result);
+                        }
+
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                //Xử lý việc chọn tap menu quản lý user
+                $('.tabs .tab').click(function () {
+                    var tabId = $(this).data('tab');
+                    $('.tabs .tab').removeClass('active');
+                    $(this).addClass('active');
+                    $('.customer-detail').css('display', 'none');
+                    $('.booking-history').css('display', 'none');
+                    $(`.${tabId}`).css('display', 'block');
+                });
+
+                $('.btn-secondary').click(function () {
+                    window.history.back();
+                });
+
+                $('.booking-table .btn-info').click(function () {
+                    var bookingId = $(this).closest('tr').find('td:first').text();
+                    alert('Xem chi tiết đặt vé: ' + bookingId);
+                });
+
+                $('.pagination .btn-secondary').click(function () {
+                    alert('Trang trước');
+                });
+
+                $('.pagination .btn-primary').click(function () {
+                    alert('Trang sau');
+                });
+
+                callApiGetCustomerById(userId);
+
+                updateCustomerInfo();
+
+                historyOrderMain();
+
+                $(document).on('click', '.btn-detail-bill', function (e) {
+                    e.preventDefault();
+                    $('.info-count-money-background').show();
+                    let billCode = $(this).data("id");
+                    let movieName = $(this).data("movie");
+                    let scheduleDate = $(this).data("date");
+                    let scheduleTime = $(this).data("time");
+                    let createdDate = $(this).data("create");
+                    let sumMoneyNew = $(this).data("money");
+                    callApiGetBillDetail(billCode, sumMoneyNew);
+                    renderBillInfo(billCode, createdDate, movieName, scheduleDate, scheduleTime);
+                    callApiGetBillFood(billCode, sumMoneyNew);
+                    calculateSumMoney(sumMoneyNew);
+                });
+
+                $(document).on('click', '.close-btn', function (e) {
+                    e.preventDefault();
+                    $('.info-count-money-background').hide();
+                });
+
+                $('#image-avatar-detail').hover(
+                    function () {
+                        var src = $(this).attr('src');
+                        $('#avatar-zoom img').attr('src', src);
+                        $('#avatar-zoom').fadeIn(200);
+                    },
+                    function () {
+                        $('#avatar-zoom').fadeOut(200);
+                    }
+                );
+            });
+
+            //gọi api lấy thông tin khách hàng theo id
+            function callApiGetCustomerById(id) {
+                var settings = {
+                    url: "http://localhost:8080/account/" + id,
+                    method: "GET",
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+                    },
+                    success: function (response) {
+                        renderCustomerDetail(response.data);
+                        $('.title-customer-name').text(response.data.fullName);
+                        $('.booking-history-full-name').text(response.data.fullName);
+                    },
+                    error: function (xhr) {
+                        var response = JSON.parse(xhr.responseText);
+                        console.error(response.message);
+                        toastr.error("Có lỗi khi tải dữ liệu!");
+                    },
+                };
+                $.ajax(settings);
+            }
+            //hàm lấy dữ liệu thông tin chi tiết khách hàng hiển thị lên giao diện
+            function renderCustomerDetail(customer) {
+                $("#user-id").val(customer.id);
+                $("#image-avatar-detail").attr("src", customer.avatarUrl);
+                $("#username").val(customer.username);
+                $("#fullName").val(customer.fullName);
+                $("#email").val(customer.email);
+                $("#dob").val(customer.dob);
+                $("#phone").val(customer.phone);
+                $("#role").val(customer.roles[0].roleName);
+                const status = customer.isConfirm ? 'active' : 'inactive';
+                $('#status').val(status);
+                $('#created-date').val(formatDateTime(customer.createdDate));
+                $('#rank').val(customer.membershipLevel);
+            }
+            //Hàm cập nhật thông tin khách hàng
+            function updateCustomerInfo() {
+                $(document).on("click", ".update-customer-info", function (e) {
+                    e.preventDefault();
+                    var form = new FormData();
+                    var avatarUrl = $("#customer-avatar-input")[0].files[0];
+                    form.append("id", parseInt($("#user-id").val(), 10));
+                    form.append("username", $("#username").val());
+                    form.append("fullName", $("#fullName").val());
+                    form.append("email", $("#email").val());
+                    form.append("phone", $("#phone").val());
+                    form.append("roleName", $("#role").val());
+                    const isConfirm = $('#status').val() === 'active' ? 'true' : 'false';
+                    form.append("isConfirm", isConfirm);
+                    form.append("membershipLevel", $('#rank').val());
+                    form.append("avatarUrl", avatarUrl);
+                    var dob = new Date($("#dob").val());
+                    var formattedDate = "";
+                    if (!isNaN(dob.getTime())) {
+                        formattedDate = dob.toISOString().split("T")[0];
+                    }
+                    form.append("dob", formattedDate);
+
+                    callApiUpdateCustomerInfo(form);
+                });
+            }
+
+            //Hàm gọi api cập nhật thông tin khách hàng
+            function callApiUpdateCustomerInfo(formData) {
+                $('.background').show();
+                var settings = {
+                    url: "http://localhost:8080/account/update/customer",
+                    type: "PUT",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+                    },
+                    success: function (data) {
+                        $('.background').hide();
+                        toastr.success(data.message);
+                    },
+                    error: function (xhr) {
+                        $('.background').hide();
+                        var response = JSON.parse(xhr.responseText);
+                        toastr.error(response.message);
+                        console.error(response.message);
+                    },
+                };
+                $.ajax(settings);
+            }
+            //Hàm định dạng kiểu localDateTime
+            function formatDateTime(dateTimeString) {
+                const date = new Date(dateTimeString);
+
+                const options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                };
+
+                return date.toLocaleString('vi-VN', options);
+            }
+
+            //Hàm xử lý lịch sử xem phim
+            function historyOrderMain() {
+                callApiGetHistoryOrder(userId, size, page);
+
+                $(document).on('click', '.paging-item-movie', function (e) {
+                    e.preventDefault();
+                    page = $(this).data("value");
+                    callApiGetHistoryOrder(userId, size, page);
+                });
+
+                $(document).on('click', '.next', function (e) {
+                    e.preventDefault();
+                    callApiGetHistoryOrder(userId, size, totalPage - 1);
+                })
+
+                $(document).on('click', '.previous', function (e) {
+                    e.preventDefault();
+                    callApiGetHistoryOrder(userId, size, 0);
+                })
+            }
+
+            //Hàm gọi api lấy danh sách hóa đơn theo khách hàng
+            function callApiGetHistoryOrder(userId, size, page) {
+                var settings = {
+                    url: "http://localhost:8080/user/api/pub/history-order?userId=" + userId + "&size=" + size + "&page=" + page,
+                    method: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                        const $tbody = $('.booking-table tbody');
+                        $tbody.empty();
+                        totalPage = res.data.totalPages;
+                        if (res.data.totalElements === 0) {
+                            $(".booking-table tbody").append('<tr><td colspan="8" style="text-align: center;">Khách hàng này chưa có hóa đơn nào!</td></tr>');
+                        }
+                        renderPagingNumberMovie(totalPage, page);
+                        console.log(res.data.content);
+                        for (var order of res.data.content) {
+                            renderHistoryOrder(order);
+                        }
+                    },
+                    error: function (xhr) {
+                        $('.background').hide();
+                        var response = JSON.parse(xhr.responseText);
+                        toastr.error(response.message);
+                    }
+                }
+                $.ajax(settings);
+            }
+
+            //Hàm map dữ liệu lịch sử xem phim
+            function renderHistoryOrder(order) {
+                const status = order.status === 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán';
+                const statusClass = order.status === 'PAID' ? 'status-paid' : 'status-unpaid';
+                const tr = `<tr>
+                <td>${order.billCode}</td>
+                <td>${order.createdDate}</td>
+                <td>${order.movieName}</td>
+                <td class="history-date">${order.scheduleDate}</td>
+                <td class="history-time">${order.scheduleTime}</td>
+                <td>${order.amountMoney}</td>
+                <td><span class="${statusClass}">${status}</span></td>
+                <td>
+                    <button class="btn btn-info btn-sm btn-detail-bill"
+                                         data-id="${order.billCode}"
+                                         data-movie="${order.movieName}"
+                                         data-date="${order.scheduleDate}"
+                                         data-time="${order.scheduleTime}"
+                                         data-create="${order.createdDate}"
+                                         data-money="${order.amountMoney}">Chi tiết</button>
+                </td>
+            </tr>`;
+
+                $('.booking-table tbody').append(tr);
+            }
+
+            //hàm phân trang
+            function renderPagingNumberMovie(totalPages, currentPage) {
+                var pagingMovie = $('.paging-number-movie');
+                pagingMovie.empty();
+
+                const maxPagesToShow = 3; // Số trang tối đa để hiển thị
+                const pageRange = Math.floor(maxPagesToShow / 2); // Số trang trước và sau trang hiện tại
+                let startPage, endPage;
+
+                if (totalPages <= maxPagesToShow) {
+                    // Nếu số trang nhỏ hơn số trang tối đa để hiển thị, hiển thị tất cả
+                    startPage = 0;
+                    endPage = totalPages - 1;
+                } else {
+                    // Nếu không, chỉ hiển thị một số trang quanh trang hiện tại
+                    if (currentPage <= pageRange) {
+                        startPage = 0;
+                        endPage = maxPagesToShow - 1;
+                    } else if (currentPage + pageRange >= totalPages) {
+                        startPage = totalPages - maxPagesToShow;
+                        endPage = totalPages - 1;
+                    } else {
+                        startPage = currentPage - pageRange;
+                        endPage = currentPage + pageRange;
+                    }
+                }
+
+                if (startPage > 0) {
+                    pagingMovie.append('<a href="#" class="paging-item paging-item-movie" data-value="0">1</a>');
+                    if (startPage > 1) {
+                        pagingMovie.append('<span class="hidden-paging">...</span>');
+                    }
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    const isActive = i === currentPage ? 'active' : '';
+                    pagingMovie.append(`<a href="#" class="paging-item paging-item-movie ${isActive}" data-value="${i}">${i + 1}</a>`);
+                }
+
+                if (endPage < totalPages - 1) {
+                    if (endPage < totalPages - 2) {
+                        pagingMovie.append('<span class="hidden-paging">...</span>');
+                    }
+                    pagingMovie.append(`<a href="#" class="paging-item paging-item-movie" data-value="${totalPages - 1}">${totalPages}</a>`);
+                }
+            }
+
+            //hàm gọi api lấy thông tin vé theo mã hóa đơn
+            function callApiGetBillDetail(billCode, sumNew) {
+                var settings = {
+                    url: "http://localhost:8080/api/pub/bill-detail?billCode=" + billCode,
+                    method: "GET",
+                    success: function (res) {
+                        const roomName = res.data[0].roomName;
+                        const cinemaName = res.data[0].cinemaName;
+                        const seats = res.data.map(item => `${item.rowName}${item.columnName}`).join(', ');
+                        const ticketMoney = res.data.reduce((total, item) => total + parseFloat(item.priceTicket), 0);
+                        $('.info-count-money-info-cinema-name').text(cinemaName);
+                        $('.info-count-money-info-cinema-room').text(roomName);
+                        $('.info-count-money-info-cinema-seats').text(seats);
+                        $('#amount-money-ticket').text(ticketMoney.toLocaleString('vi-VN'));
+
+                        calculateSumMoney(sumNew);
+                    },
+                    error: function (xhr) {
+                        $('.background').hide();
+                        var response = JSON.parse(xhr.responseText);
+                        toastr.error(response.message);
+                    }
+                }
+                $.ajax(settings);
+            }
+
+            //Hàm map dữ liệu thông tin hóa đơn 
+            function renderBillInfo(billCode, createdDate, movieName, scheduleDate, scheduleTime) {
+                $('.invoice-code').text(billCode);
+                $('.invoice-created-date').text(formatDateTime(createdDate));
+                $('.info-count-money-info-movie-name').text(movieName);
+                $('.info-count-money-info-movie-date').text(scheduleDate);
+                $('.info-count-money-info-movie-time').text(scheduleTime);
+            }
+
+            //Hàm gọi api lấy hóa đơn đồ ăn theo mã hóa đơn
+            function callApiGetBillFood(billCode, sumNew) {
+                var settings = {
+                    url: "http://localhost:8080/api/pub/bill-food-detail?billCode=" + billCode,
+                    method: "GET",
+                    success: function (res) {
+                        const tbody = $('.invoice-food');
+                        tbody.empty();
+                        let moneyFood = 0;
+                        for (let bill of res.data) {
+                            renderBillFood(bill);
+                            moneyFood += parseFloat(bill.amountMoney);
+                        }
+                        $('#amount-money-food').text(moneyFood.toLocaleString('vi-VN'));
+
+                        calculateSumMoney(sumNew);
+                    },
+                    error: function (xhr) {
+                        $('.background').hide();
+                        var response = JSON.parse(xhr.responseText);
+                        toastr.error(response.message);
+                    }
+                }
+                $.ajax(settings);
+            }
+
+            //Hàm map dữ liệu danh sách đồ ăn
+            function renderBillFood(bill) {
+                const tr = `<tr>
+                            <td>${bill.foodName}</td>
+                            <td>${bill.quantity}</td>
+                            <td>${bill.price}</td>
+                            <td>${bill.amountMoney}</td>
+                        </tr>`;
+                $('.invoice-food').append(tr);
+            }
+
+            //Hàm tình tổng tiền hóa đơn
+            function calculateSumMoney(sumNew) {
+                let ticketMoneyText = $('#amount-money-ticket').text();
+                let ticketMoney = parseFloat(ticketMoneyText.replace(/[^0-9]/g, '')) || 0;
+                let foodMoneyText = $('#amount-money-food').text();
+                let foodMoney = parseFloat(foodMoneyText.replace(/[^0-9]/g, '')) || 0;
+                let sumMoney = ticketMoney + foodMoney;
+                $('#sum-money').text(sumMoney.toLocaleString('vi-VN')); // Định dạng theo tiền tệ Việt Nam
+                sumOld = parseFloat($('#sum-money').text().replace(/[^0-9]/g, ''));
+                if (sumNew < sumOld) {
+                    $('.count-money-promotion').css('display', 'flex');
+                    $('#sum-money').css('text-decoration', 'line-through');
+                    $('#sum-money-new').text(sumNew.toLocaleString('vi-VN'));
+                }
+            }
+        </script>
+</body>
+
+</html>

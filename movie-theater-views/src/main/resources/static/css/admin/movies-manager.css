@@ -1,0 +1,643 @@
+/*/ custom lại template dùng sẵn*/
+.select2-container--default .select2-results__option--selected {
+    background-color: #656667 !important;
+}
+.toast-success {
+    background-color: #28a745 !important; /* Xanh lá cây cho thông báo thành công */
+}
+.toast-warning {
+    background-color: #ffc107 !important; /* Vàng cho thông báo cảnh báo */
+    color: black; /* Đặt màu chữ là đen để dễ đọc trên nền vàng */
+}
+.toast-error {
+    background-color: #dc3545 !important; /* Đỏ cho thông báo lỗi */
+}
+/*/ custom lại template dùng sẵn*/
+
+/* Thanh cuộn đẹp trên trình duyệt WebKit (Chrome, Safari) */
+textarea::-webkit-scrollbar {
+    width: 5px; /* Chiều rộng của thanh cuộn dọc */
+    height: 5px; /* Chiều cao của thanh cuộn ngang */
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: #0e53d5; /* Màu của phần kéo của thanh cuộn */
+    border-radius: 10px; /* Bo góc của phần kéo */
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Màu khi di chuột qua phần kéo */
+}
+
+textarea::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Màu nền của thanh cuộn */
+    border-radius: 10px; /* Bo góc của phần nền */
+}
+
+.movie-management {
+    max-width: 1200px;
+    height: 100%;
+    min-height: 100vh;
+    font-size: 13px;
+    position: relative;
+    font-family: "Roboto", sans-serif;
+}
+
+.movie-management hr {
+    border: 1px solid #f1efef;
+    margin-bottom: 5px;
+}
+
+.movie-management-title {
+    font-weight: 500;
+    text-align: left;
+    margin-bottom: 20px;
+    color: #ffffff;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.movie-management-title .fa-home,
+.movie-management-title .fa-chevron-right {
+    padding: 0 10px;
+}
+.movie-management-title span {
+    color: #007bff;
+}
+.list-manager-head {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-manager-head .search-movie input,
+.list-manager-head .search-movie button,
+.list-manager-head .size-of-page select {
+    height: 75%;
+}
+
+.list-manager-head .search-movie input {
+    width: 200px;
+    padding-left: 10px;
+    background-color: black;
+    border-radius: 5px;
+    border: 1px solid white;
+    color: white;
+}
+
+.list-manager-head .size-of-page select {
+    border-radius: 6px;
+    border: none;
+    color: white;
+    margin-right: 5px;
+    background-color: rgba(72, 71, 71, 0.44);
+    box-shadow: 0 2px 4px black;
+}
+
+.btn-search {
+    padding: 5px 10px !important;
+    background-color: #232222;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    transition:
+        transform 0.3s ease,
+        background 0.4s ease;
+}
+.btn-search:hover {
+    background-color: #505052;
+}
+
+hr {
+    border: 1px solid rgb(43, 42, 42);
+    margin: 0;
+}
+
+.list-manager {
+    margin: 20px auto;
+    width: 100%;
+    max-width: 1200px;
+    color: #fff;
+    padding: 0 10px;
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #e7e4e4;
+}
+
+.table thead {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    text-align: left;
+    max-width: 200px;
+    border-bottom: 1px solid #555;
+}
+.table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table th {
+    font-weight: bold;
+    color: #ddd;
+    position: relative;
+    transition: background 0.5s ease;
+}
+
+.table th:hover {
+    background-color: rgb(30, 29, 29);
+}
+
+.table th:hover .box-sort {
+    height: auto;
+}
+
+.table th .fa-caret-down {
+    color: #ddd;
+    transition: transfrom 0.3s ease;
+}
+
+.box-sort {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    cursor: pointer;
+    height: 0;
+    font-size: 10px !important;
+    color: black;
+    font-weight: normal;
+    background-color: #ffffff;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+
+.box-sort ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.box-sort ul li {
+    padding: 5px;
+}
+
+.box-sort ul li:hover {
+    color: white;
+    background-color: #000000;
+    font-weight: 600;
+}
+
+.add-new {
+    width: 100px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.44);
+    border-radius: 5px;
+    overflow: hidden;
+    color: rgb(206, 206, 206);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px black;
+    transition: transform 0.3s ease;
+}
+
+.add-new:hover {
+    background-color: #2c3e50;
+    color: white;
+    transform: scale(1.03);
+}
+
+.add-new .fa-plus {
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.btn-detail {
+    padding: 3px 6px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px black;
+    background: #0a58ca;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+.btn-enable,
+.btn-disable {
+    padding: 3px 6px;
+    border: none;
+    box-shadow: 0 2px 4px #000000;
+    background: #a41212;
+    cursor: pointer;
+    border-radius: 5px;
+    color: white;
+    margin-left: 10px;
+    transition: opacity 0.3s ease;
+}
+.btn-disable {
+    background-color: #4c4a4a;
+}
+
+.fa-info-circle,
+.fa-eye,
+.fa-eye-slash {
+    font-size: 12px;
+}
+.btn-movie-manager:hover,
+.btn-detail-movie-manager:hover {
+    opacity: 0.7;
+}
+
+.form-content {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 20px;
+}
+
+.form-content .child-content {
+    display: flex;
+    width: calc(50% - 20px);
+}
+
+.child-content label {
+    width: 30%;
+}
+.child-content input,
+.child-content select,
+.child-content textarea {
+    width: 70%;
+}
+.image-preview {
+    object-fit: cover;
+    margin-top: 10px;
+}
+.small-image-preview {
+    width: 50px;
+    height: 70px;
+}
+.large-image-preview {
+    width: 100%;
+    height: 70px;
+}
+
+.form-actions {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.form-actions button {
+    padding: 5px 20px;
+    margin-left: 10px;
+    border: none;
+    transition: transform 0.3s ease;
+    color: rgb(219, 216, 216);
+}
+
+.form-actions button:hover {
+    font-weight: bold;
+    transform: scale(1.02);
+}
+
+.form-actions .btn-submit {
+    background-color: #09a1e8;
+    transition: background 0.3s ease;
+}
+
+.form-actions .btn-cancel {
+    background-color: rgb(189, 67, 10);
+    transition: background 0.3s ease;
+}
+
+.form-actions .btn-submit:hover {
+    background-color: #1809e8;
+}
+
+.form-actions .btn-cancel:hover {
+    background-color: red;
+}
+
+.paging {
+    display: flex;
+    justify-content: center; /* Canh giữa phân trang */
+    margin: 20px 0; /* Khoảng cách trên và dưới */
+}
+
+.paging-item {
+    display: inline-block;
+    padding: 5px 8px;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #333; /* Màu văn bản */
+    background-color: #f8f8f8; /* Màu nền */
+    border: 1px solid #ddd; /* Đường viền */
+    border-radius: 5px; /* Bo góc */
+    transition:
+        background-color 0.3s,
+        color 0.3s; /* Hiệu ứng chuyển tiếp */
+}
+
+.paging-item:hover,
+.paging-item.active {
+    background-color: #007bff; /* Màu nền khi hover hoặc đang chọn */
+    color: #fff; /* Màu văn bản khi hover hoặc đang chọn */
+    border-color: #007bff; /* Đường viền khi hover hoặc đang chọn */
+}
+
+.paging-item.previous,
+.paging-item.next {
+    font-weight: bold; /* Đậm chữ cho Previous và Next */
+}
+
+.info-schedule {
+    margin-left: 10px;
+}
+
+.info-schedule:hover {
+    font-weight: bold;
+}
+
+/* Css box xem thông tin suất chiếu khi click vào xem ở trang schedule-manager */
+
+.box-info-schedule {
+    width: 0;
+    background-color: rgb(221, 221, 221);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    padding: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease;
+    box-shadow: 0 10px 20px black;
+    z-index: 100;
+}
+
+.box-info-schedule table {
+    font-size: 12px !important;
+}
+
+.box-info-schedule .paging {
+    font-size: 10px !important;
+}
+
+.box-info-schedule .paging .paging-item {
+    padding: 5px 10px;
+}
+
+.manager-container,
+.manager-container-category {
+    opacity: 0;
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.form-movie-manager {
+    /*display: none;*/
+    min-width: 800px;
+    min-height: 600px;
+    background: radial-gradient(circle, rgb(52, 53, 97) 30%, rgba(25, 26, 61, 1) 70%);
+    border-radius: 20px;
+    position: fixed;
+    top: 150%;
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.8),
+        0 0 25px rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    left: 50%;
+    transition: top 0.5s ease;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+.form-movie-manager .required-star {
+    color: red;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.form-movie-manager .form-movie-manager-title {
+    text-align: center;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #0a53be;
+}
+
+.form-movie-manager hr {
+    border: 1px solid white;
+}
+
+.form-movie-manager .close-icon {
+    color: red;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: transfom 0.3s ease;
+}
+.form-movie-manager .close-icon:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+.form-movie-manager-image {
+    padding: 10px;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: space-around;
+}
+.form-movie-manager-image .image-small {
+    width: 150px;
+    height: 100%;
+}
+
+.image-small,
+.image-large {
+    position: relative;
+}
+
+.image-small-upload,
+.image-large-upload {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.change-image-button {
+    position: absolute;
+    bottom: 10px; /* Điều chỉnh vị trí của nút */
+    right: 10px; /* Điều chỉnh vị trí của nút */
+    background-color: rgba(0, 0, 0, 0.7); /* Màu nền của nút */
+    color: #fff; /* Màu chữ của nút */
+    border: none; /* Bỏ viền của nút */
+    padding: 10px 20px; /* Padding của nút */
+    cursor: pointer; /* Con trỏ chuột khi hover vào nút */
+    opacity: 0; /* Ẩn nút khi không hover */
+    transition: opacity 0.3s ease; /* Thêm hiệu ứng chuyển đổi cho nút */
+}
+
+.image-small:hover .change-image-button,
+.image-large:hover .change-image-button {
+    opacity: 1; /* Hiển thị nút khi hover */
+}
+
+.form-movie-manager-image .image-large {
+    width: 400px;
+    height: 100%;
+}
+
+.form-movie-manager-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px black;
+    transition: opacity 0.3s ease;
+}
+
+.form-movie-manager-content {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    display: flex;
+}
+
+.form-movie-manager .content-movie {
+    width: 50%;
+}
+
+.content-movie p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #259ab0;
+    display: flex;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 0;
+}
+.content-movie .movie-summary {
+    height: 145px;
+}
+
+.content-movie .select2-container {
+    padding: 0 !important;
+}
+.content-movie input,
+.content-movie .select2-container,
+.content-movie .movie-summary,
+.content-movie select {
+    width: 60% !important;
+    color: #d0cccc;
+    font-weight: normal;
+    font-size: 13px;
+    padding: 5px;
+    box-shadow: 0 2px 4px #343434;
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    background: black;
+}
+.content-movie .select2-container--default .select2-selection--multiple {
+    background: black !important;
+    border: none;
+}
+.content-movie .select2-selection__choice {
+    background: #0a58ca !important;
+}
+.content-movie .content-form-title {
+    display: inline-block;
+    width: 120px;
+}
+
+.form-movie-manager .btn-manager-movie {
+    padding: 8px 16px;
+    border: none;
+    background: #0a58ca;
+    border-radius: 5px;
+    color: #d5d2d2;
+    font-size: 16px;
+    margin-left: 10px;
+    box-shadow: 0 2px 4px blue;
+    transition: transform 0.3s ease;
+}
+
+.form-movie-detail .btn-update-movie:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+/*Css gợi ý tên phim tìm kiếm*/
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    max-width: 200px;
+    color: black;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.suggestions-list li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestions-list li:hover {
+    background-color: #f0f0f0;
+}
+/*Css gợi ý tên phim tìm kiếm*/
+
+/*css dấu ba chấm ẩn paging*/
+.hidden-paging {
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+}
+/*css dấu ba chấm ẩn paging*/
+
+/* CSS for loading spinner */
+#loadingSpinner {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}

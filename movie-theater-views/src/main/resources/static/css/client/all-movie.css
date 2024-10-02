@@ -1,0 +1,274 @@
+.movie-container {
+    margin-top: 60px;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+.all-movie-container {
+    width: 100%;
+    background-image: url("https://wallpapers.com/images/hd/poster-background-hlybuowt1whxbh2z.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.page-title {
+    padding: 40px 0;
+    background-color: rgb(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+.page-title p {
+    margin: 0;
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+.page-title p:first-of-type {
+    font-size: 2em;
+    background: linear-gradient(to top, #ff9800 50%, #dede09 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #ff9800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: wave 1.5s infinite linear;
+}
+
+.highlight {
+    border: 2px solid red;
+    padding: 5px;
+}
+
+@keyframes wave {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.page-title p:last-of-type {
+    font-size: 1.2em;
+    color: #ce8f09;
+    font-weight: normal;
+}
+
+.container-card {
+    width: 100%;
+    padding: 20px;
+    max-width: 1200px;
+    padding-bottom: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 0 auto;
+}
+.container-card .card-movie {
+    width: 200px;
+    aspect-ratio: 0.58;
+}
+
+.container-card .content-card {
+    width: 100%;
+    aspect-ratio: 5/1;
+}
+
+.all-movie-menu {
+    background-color: rgba(0, 0, 0, 0.8);
+    position: sticky;
+    top: 60px;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+}
+
+.all-movie-menu ul {
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.all-movie-menu li {
+    margin: 10px 15px;
+    position: relative;
+}
+
+.all-movie-menu .select-option {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 30px;
+    background-color: transparent;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 35px 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    min-width: 150px;
+}
+
+.all-movie-menu .select-option:hover,
+.all-movie-menu .select-option:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    outline: none;
+}
+
+.all-movie-menu li::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #fff;
+    pointer-events: none;
+    font-size: 12px;
+}
+
+.all-movie-menu .select-option option {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+.all-movie-menu .date-picker {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    z-index: 2;
+}
+
+.all-movie-menu .dropdown-content .date-picker {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.all-movie-menu .dropdown-content .date-picker::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.all-movie-menu ul {
+    align-items: center;
+}
+
+.all-movie-menu li a,
+.all-movie-menu .select-option {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    min-width: 150px;
+    display: inline-block;
+    width: 100%;
+}
+
+.all-movie-menu .select-option:hover,
+.all-movie-menu .select-option:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+.all-movie-menu li {
+    border-radius: 5px;
+}
+
+.all-movie-menu li:hover,
+.all-movie-menu li.active {
+    background: linear-gradient(to right, rgb(227, 62, 2), rgb(216, 159, 5));
+}
+
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #ffffff;
+}
+
+.select-option::-ms-expand {
+    display: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+@media (max-width: 768px) {
+    .all-movie-menu ul {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .all-movie-menu li {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .all-movie-menu .select-option {
+        width: 100%;
+    }
+    .page-title {
+        display: none;
+    }
+    .all-movie-menu li a,
+    .all-movie-menu .select-option {
+        font-size: 14px;
+    }
+
+    .container-card {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .container-card .card-movie {
+        width: 30%;
+    }
+}
+@media (max-width: 489px) {
+    .all-movie-menu li a,
+    .all-movie-menu .select-option {
+        font-size: 13px;
+    }
+    .container-card .card-movie {
+        width: 40%;
+    }
+}

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/2.1.4/css/dataTables.bootstrap5.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/bootstrap-table.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="/css/libraries.css" />
+    <link rel="stylesheet" href="/css/admin/cinema-style.css" />
+    <link rel="stylesheet" href="/css/admin/menu.css" />
+    <link rel="stylesheet" href="/css/loading.css"/>
+
+    <title>Quản Lý Rạp Chiếu Phim</title>
+  </head>
+  <body class="bg-yeah">
+    <div class="menu-admin z-3 position-absolute"></div>
+    <div class="background">
+      <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row py-3">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <div>
+            <h4 class="text-white">Quản Lý Rạp Chiếu Phim</h4>
+          </div>
+          <hr style="color: white" />
+          <div class="row">
+            <div class="col-md-1"></div>
+          <div class="col-md-10 text-light">
+            <div
+              id="toolbar"
+              class="d-flex justify-content-between align-items-center pt-3 pb-4"
+            >
+            <button
+              class="btn bg-black text-white"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Thêm Rạp Chiếu Phim
+            </button>
+              <input
+                id="customSearch"
+                class="bg-dark text-white form-control w-25 border-dark"
+                placeholder="Tìm kiếm..."
+                type="text"
+              />
+            </div>
+            <table
+              class="table custom-table"
+              id="table"
+              data-toggle="table"
+              data-sortable="true"
+              data-pagination="true"
+              data-pagination-v-align="bottom"
+              data-pagination-pre-text="<<"
+              data-pagination-next-text=">>"
+              data-page-list="[3, 6, 12]"
+              data-page-size="3"
+            >
+              <thead>
+                <tr>
+                  <th data-field="id" data-sortable="true" data-width="1">
+                    ID
+                  </th>
+                  <th data-field="name" data-sortable="true">Tên</th>
+                  <th data-field="address" data-sortable="true">Địa Chỉ</th>
+                  <th data-field="description" data-sortable="true">
+                    Mô tả
+                  </th>
+                  <th data-field="hotline" data-sortable="true">Hotline</th>
+                  <th data-field="isEnabled" data-sortable="true" data-formatter="customFormatter">Trạng Thái</th>
+                  <th
+                    data-field="operate"
+                    data-formatter="operateFormatter"
+                    data-width="350"
+                  >
+                    Thao Tác
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-yeah">
+            <div class="modal-header text-white">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Thêm Rạp Chiếu Phim Mới
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="cinema-name" class="form-label text-white"
+                    >Tên<span style="color: red;">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cinema-name"
+                    aria-describedby="cinema-name-validation"
+                    placeholder="Nhập tên rạp chiếu phim"
+                    required
+                  />
+                  <div
+                    id="cinema-name-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="address" class="form-label text-white"
+                    >Địa Chỉ <span style="color: red;">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="address"
+                    aria-describedby="cinema-address-validation"
+                    placeholder="Nhập địa chỉ rạp chiếu phim"
+                    required
+                  />
+                  <div
+                    id="cinema-address-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="description" class="form-label text-white"
+                    >Mô Tả <span style="color: red;">*</span></label
+                  >
+                  <textarea
+                    id="description"
+                    class="form-control"
+                    rows="4"
+                    cols="50"
+                    aria-describedby="cinema-description-validation"
+                    placeholder="Nhập mô tả rạp chiếu phim"
+                    required
+                  ></textarea>
+                  <div
+                    id="cinema-description-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="hotline" class="form-label text-white"
+                    >Hotline <span style="color: red;">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="hotline"
+                    aria-describedby="cinema-hotline-validation"
+                    placeholder="Nhập hotline rạp chiếu phim"
+                    required
+                  />
+                  <div
+                    id="cinema-hotline-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="image" class="form-label text-white"
+                    >Ảnh Thumnail</label
+                  >
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="image"
+                    aria-describedby="image-validation"
+                    placeholder="Chọn ...."
+                    accept="image/*"
+                  />
+                  <div
+                    id="image-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <img
+                    id="preview-image"
+                    style="display: none"
+                    class="w-100 h-auto"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+              >
+                Đóng
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="create-cinema-btn"
+              >
+                Thêm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal fade"
+        id="editModal"
+        tabindex="-1"
+        aria-labelledby="editModel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-yeah">
+            <div class="modal-header text-white">
+              <h1 class="modal-title fs-5" id="editModel">Sửa Rạp Chiếu Phim</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <input type="hidden" id="cinema-id"/>
+                <div class="mb-3">
+                  <label for="update-cinema-name" class="form-label text-white"
+                    >Tên<span style="color: red;">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="update-cinema-name"
+                    aria-describedby="update-cinema-name-validation"
+                    placeholder="Nhập tên rạp chiếu phim"
+                    required
+                  />
+                  <div
+                    id="update-cinema-name-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="update-address" class="form-label text-white"
+                    >Địa Chỉ<span style="color: red;">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="update-address"
+                    aria-describedby="update-cinema-address-validation"
+                    placeholder="Nhập địa chỉ rạp chiếu phim"
+                    required
+                  />
+                  <div
+                    id="update-cinema-address-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="update-description" class="form-label text-white"
+                    >Mô Tả<span style="color: red;">*</span></label
+                  >
+                  <textarea
+                    id="update-description"
+                    class="form-control"
+                    rows="4"
+                    cols="50"
+                    aria-describedby="update-cinema-description-validation"
+                    placeholder="Nhập mô tả rạp chiếu phim"
+                    required
+                  ></textarea>
+                  <div
+                    id="update-cinema-description-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="update-hotline" class="form-label text-white"
+                    >Hotline<span style="color: red;">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="update-hotline"
+                    aria-describedby="update-cinema-hotline-validation"
+                    placeholder="Nhập hotline rạp chiếu phim"
+                    required
+                  />
+                  <div
+                    id="update-cinema-hotline-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="update-image" class="form-label text-white"
+                    >Ảnh Thumnail</label
+                  >
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="update-image"
+                    aria-describedby="update-cinema-imageUrl-validation"
+                    placeholder="Chọn ...."
+                    accept="image/*"
+                  />
+                  <div
+                    id="update-cinema-imageUrl-validation"
+                    class="form-text text-danger"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <img
+                    id="update-preview-image"
+                    style="display: none"
+                    class="w-100 h-auto"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+              >
+                Đóng
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="update-cinema-btn"
+              >
+                Sửa
+              </button>
+            </div>
+          </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/bootstrap-table.min.js"></script>
+  <script src="/js/admin/cinema-script.js"></script>
+</html>

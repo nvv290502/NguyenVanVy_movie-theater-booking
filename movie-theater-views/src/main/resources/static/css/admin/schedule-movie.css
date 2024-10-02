@@ -1,0 +1,216 @@
+.content {
+    display: block;
+    padding-bottom: 20px;
+}
+
+.title {
+    font-size: 25px;
+    text-align: center;
+    padding: 10px;
+}
+
+table {
+    font-size: 13px;
+    width: 90%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    background-color: #333;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+}
+
+th,
+td {
+    border: 1px solid #0b78c1;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+th {
+    background-color: #444;
+    color: #fff;
+    font-weight: normal;
+}
+
+.calender-date {
+    height: 60px;
+    background-color: #0056b3;
+}
+
+.calender-time {
+    font-size: 10px;
+    border-bottom: 1px solid rgb(74, 74, 74);
+}
+
+td {
+    background-color: #c0c0c0;
+    color: #fff;
+}
+
+.movie-cell {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+
+.controls {
+    padding: 0 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.controls button {
+    width: 80px;
+    height: 30px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition:
+        background-color 0.3s,
+        transform 0.3s;
+}
+
+.controls button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.controls button:active {
+    background-color: #004085;
+}
+
+.controls .fa {
+    font-size: 20px;
+}
+
+/* Style cho ô được chọn */
+.selected {
+    background-color: #ffcc00 !important;
+    color: #000 !important;
+}
+
+.btn-confirm-schedule {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    background-color: #006edb;
+}
+
+#confirm-selection {
+    padding: 10px 40px;
+    background-color: #006edb;
+    border: none;
+    font-weight: bold;
+    color: aliceblue;
+    transition: background 0.3s ease;
+}
+
+#confirm-selection:hover {
+    background-color: #0eb1ca;
+}
+
+.select-cinema-room {
+    width: 90%;
+    height: 200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.select-cinema {
+    margin-right: 20px;
+    width: 30%;
+}
+
+.select-room {
+    margin-left: 20px;
+    width: 30%;
+}
+
+.select-room .room-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px 0;
+    gap: 20px;
+}
+
+.room-content .room-name {
+    box-shadow: 0 3px 5px rgb(30, 40, 42);
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.room-content .room-name:hover {
+    background-color: #41ebf0;
+    box-shadow: 0 3px 5px rgb(11, 165, 196);
+
+    transform: scale(1.05);
+    font-weight: bold;
+}
+
+.box-select {
+    padding: 10px;
+    text-align: center;
+    color: rgb(247, 247, 247);
+    cursor: pointer;
+    background-color: #1d1c1c;
+    border: 1px solid #aba9a9;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgb(56, 53, 53);
+}
+
+.box-select:hover {
+    font-weight: bold;
+    color: blueviolet;
+}
+
+.list-cinema {
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.6s ease;
+}
+
+.cinema-content {
+    text-align: left !important;
+    display: flex;
+    align-items: center;
+    padding: 5px 20px;
+    border-bottom: 1px solid #ffffff;
+    background-color: #eeeded;
+    transition: background 0.4s ease;
+}
+
+.cinema-content:hover,
+.cinema-content.active {
+    background-color: #d6d4d4;
+}
+
+.cinema-content:hover p,
+.cinema-content.active p {
+    color: rgb(6, 88, 5);
+}
+
+.cinema-content img {
+    width: 30px;
+    margin-right: 10px;
+    border-radius: 10px;
+    height: 30px;
+}
+
+.cinema-content p {
+    font-size: 12px;
+}

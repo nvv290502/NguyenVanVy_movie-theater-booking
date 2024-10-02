@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doanh thu theo phim</title>
+    <link rel="stylesheet" href="/css/admin/movie-revenue.css">
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/admin/menu.css">
+
+</head>
+
+<body>
+    <div class="admin-containers">
+        <div class="menu-admin"></div>
+        <div class="movie-revenue-container">
+            <h1 class="movie-revenue-title">
+                <i class="far fa-chart-bar"></i> Trang thống kê | <span style="color: rgb(6, 137, 167);">Doanh thu theo
+                    phim</span>
+            </h1>
+            <hr>
+
+            <div class="filter-container">
+                <input type="date" id="startDate" class="date-input" value="2024-04-01">
+                <input type="date" id="endDate" class="date-input" value="2024-06-15">
+                <button id="filterBtn" class="filter-btn"> <i class="fas fa-redo-alt"></i> Load dữ liệu</button>
+                <button id="exportBtn" class="export-btn"><i class="fas fa-file-pdf"></i> Xuất báo cáo</button>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <span>Số vé bán ra theo phim</span>
+                    <span>Doanh thu theo phim</span>
+                </div>
+                <canvas id="movieRevenueChart"></canvas>
+            </div>
+            <div class="reset-zoom-container">
+                <button id="resetZoomBtn" class="reset-zoom-btn">Reset Zoom</button>
+            </div>
+            <div class="chart-title">Biểu đồ thống kê doanh thu theo phim</div>
+
+            <div class="table-container revenue-movie">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tên phim</th>
+                            <th>Tổng vé bán ra</th>
+                            <th>Tổng doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody id="movieRevenueTableBody">
+
+                    </tbody>
+                </table>
+                <div class="pagination"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.2.1/chartjs-plugin-zoom.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.menu-admin').load("/menu", function () {
+                $.getScript('/js/admin/menu.js');
+            });
+        });
+        var movieData = [];
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('movieRevenueChart').getContext('2d');
+            let movieRevenueChart;
+
+            function truncateLabel(label, maxLength) {
+                return label.length > maxLength ? label.substring(0, maxLength - 3) + '...' : label;
+            }
+
+            // Hàm để lấy ngày đầu tiên của năm hiện tại
+            function getFirstDayOfCurrentYear() {
+                const now = new Date();
+                return `${now.getFullYear()}-01-01`;
+            }
+
+            // Hàm để lấy ngày hiện tại
+            function getCurrentDate() {
+                return new Date().toISOString().split('T')[0];
+            }
+
+            function initChart(data) {
+                if (movieRevenueChart) {
+                    movieRevenueChart.destroy();
+                }
+
+                movieRevenueChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.map(item => item.movieName),
+                        datasets: [
+                            {
+                                label: 'Số vé bán ra',
+                                data: data.map(item => item.numberTicket),
+                                backgroundColor: 'rgba(135, 206, 235, 0.8)',
+                                borderColor: 'rgba(135, 206, 235, 1)',
+                                borderWidth: 1,
+                                yAxisID: 'y-axis-1',
+                            },
+                            {
+                                label: 'Doanh thu',
+                                data: data.map(item => item.amountMoney),
+                                backgroundColor: 'rgba(255, 182, 193, 0.8)',
+                                borderColor: 'rgba(255, 182, 193, 1)',
+                                borderWidth: 1,
+                                yAxisID: 'y-axis-2',
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                ticks: {
+                                    callback: function (value, index) {
+                                        return truncateLabel(this.getLabelForValue(value), 15);
+                                    },
+                                    maxRotation: 45,
+                                    minRotation: 45
+                                }
+                            },
+                            'y-axis-1': {
+                                type: 'linear',
+                                position: 'left',
+                                title: {
+                                    display: true,
+                                    text: 'Số vé bán ra'
+                                }
+                            },
+                            'y-axis-2': {
+                                type: 'linear',
+                                position: 'right',
+                                title: {
+                                    display: true,
+                                    text: 'Doanh thu (VNĐ)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            zoom: {
+                                pan: {
+                                    enabled: true,
+                                    mode: 'x',
+                                },
+                                zoom: {
+                                    wheel: {
+                                        enabled: true,
+                                    },
+                                    pinch: {
+                                        enabled: true
+                                    },
+                                    mode: 'x',
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Thiết lập giới hạn ban đầu để hiển thị 5 phim
+                movieRevenueChart.options.scales.x.min = 0;
+                movieRevenueChart.options.scales.x.max = 5;
+                movieRevenueChart.update();
+
+                document.getElementById('resetZoomBtn').addEventListener('click', function () {
+                    movieRevenueChart.resetZoom();
+                });
+            }
+
+            function callApiMovieRevenue(startDate, endDate) {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: `http://localhost:8080/api/pub/revenue/movie?startDate=${startDate}&endDate=${endDate}`,
+                        method: "GET",
+                        success: function (data) {
+                            resolve(data);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Lỗi API:", status, error);
+                            reject(new Error("Lỗi khi gọi API"));
+                        }
+                    });
+                });
+            }
+
+            function loadData(startDate, endDate) {
+                callApiMovieRevenue(startDate, endDate)
+                    .then(data => {
+                        movieData = data;
+                        initChart(data);
+                        updateTable();
+                    })
+                    .catch(error => {
+                        console.error("Lỗi khi lấy dữ liệu:", error);
+                        alert("Có lỗi xảy ra khi tải dữ liệu. Vui lòng thử lại sau.");
+                    });
+            }
+
+            function updateTable(page = 1, pageSize = 10) {
+                const paginatedData = paginateData(movieData, page, pageSize);
+                const tableBody = $('.revenue-movie table tbody');
+                tableBody.empty();
+
+                paginatedData.content.forEach(movie => {
+                    const row = `
+                        <tr>
+                            <td>${movie.movieName}</td>
+                            <td>${movie.numberTicket}</td>
+                            <td>${formatCurrency(movie.amountMoney)}</td>
+                        </tr>
+                    `;
+                    tableBody.append(row);
+                });
+                updateMoviePagination(paginatedData);
+            }
+
+            function updateMoviePagination(data) {
+                const paginationContainer = $('.revenue-movie .pagination');
+                paginationContainer.empty();
+
+                if (data.totalPages > 1) {
+                    const currentPage = data.number + 1;
+                    const totalPages = data.totalPages;
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === 1 ? 'disabled' : ''}" data-page="1">&laquo;</button>`);
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === 1 ? 'disabled' : ''}" data-page="${currentPage - 1}">&lt;</button>`);
+
+                    let startPage = Math.max(1, currentPage - 1);
+                    let endPage = Math.min(totalPages, startPage + 2);
+
+                    if (startPage > 1) {
+                        paginationContainer.append('<span class="ellipsis">...</span>');
+                    }
+
+                    for (let i = startPage; i <= endPage; i++) {
+                        const pageButton = $(`<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`);
+                        paginationContainer.append(pageButton);
+                    }
+
+                    if (endPage < totalPages) {
+                        paginationContainer.append('<span class="ellipsis">...</span>');
+                    }
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === totalPages ? 'disabled' : ''}" data-page="${currentPage + 1}">&gt;</button>`);
+
+                    paginationContainer.append(`<button class="page-btn ${currentPage === totalPages ? 'disabled' : ''}" data-page="${totalPages}">&raquo;</button>`);
+                }
+            }
+
+            function paginateData(data, page, pageSize) {
+                const startIndex = (page - 1) * pageSize;
+                const endIndex = startIndex + pageSize;
+                return {
+                    content: data.slice(startIndex, endIndex),
+                    totalPages: Math.ceil(data.length / pageSize),
+                    number: page - 1
+                };
+            }
+
+            function formatCurrency(amount) {
+                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+            }
+
+            // Thiết lập giá trị mặc định cho input date
+            $('#startDate').val(getFirstDayOfCurrentYear());
+            $('#endDate').val(getCurrentDate());
+
+            // Load dữ liệu ban đầu
+            const startDate = $('#startDate').val();
+            const endDate = $('#endDate').val();
+            console.log(startDate);
+            loadData(startDate, endDate);
+
+            // Xử lý sự kiện nút "Load dữ liệu"
+            $('#filterBtn').on('click', function () {
+                const startDate = $('#startDate').val();
+                const endDate = $('#endDate').val();
+                loadData(startDate, endDate);
+            });
+
+            // Xử lý sự kiện nút "Reset Zoom"
+            $('#resetZoomBtn').on('click', function () {
+                if (movieRevenueChart) {
+                    movieRevenueChart.resetZoom();
+                }
+            });
+
+            // Xử lý sự kiện phân trang
+            $(document).on('click', '.revenue-movie .page-btn:not(.disabled)', function () {
+                const page = $(this).data('page');
+                updateTable(page);
+            });
+
+            function exportPDF() {
+                try {
+                    var docDefinition = {
+                        content: [
+                            { text: 'Báo cáo Doanh thu theo phim', style: 'header' },
+                            { text: `Từ ngày: ${$('#startDate').val()} đến ngày: ${$('#endDate').val()}`, style: 'subheader' },
+                            {
+                                table: {
+                                    headerRows: 1,
+                                    widths: ['*', 'auto', 'auto'],
+                                    body: [
+                                        ['Tên phim', 'Tổng vé bán ra', 'Tổng doanh thu'],
+                                        ...movieData.map(row => [
+                                            row.movieName,
+                                            row.numberTicket.toString(),
+                                            formatCurrency(row.amountMoney)
+                                        ])
+                                    ]
+                                }
+                            }
+                        ],
+                        styles: {
+                            header: {
+                                fontSize: 18,
+                                bold: true,
+                                margin: [0, 0, 0, 10]
+                            },
+                            subheader: {
+                                fontSize: 14,
+                                bold: true,
+                                margin: [0, 10, 0, 5]
+                            }
+                        },
+                        defaultStyle: {
+                            font: 'Roboto'
+                        }
+                    };
+
+                    pdfMake.createPdf(docDefinition).download('bao-cao-doanh-thu-phim.pdf');
+                    console.log("Xuất báo cáo thành công!");
+                } catch (error) {
+                    console.error("Có lỗi khi xuất file PDF:", error);
+                }
+            }
+            $('#exportBtn').on('click', exportPDF);
+        });
+    </script>
+</body>
+
+</html>

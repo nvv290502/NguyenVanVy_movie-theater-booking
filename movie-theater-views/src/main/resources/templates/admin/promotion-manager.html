@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Quản Lý Khuyến Mại</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/admin/index.css">
+    <link rel="stylesheet" href="/css/admin/promotion-manager.css">
+    <link rel="stylesheet" href="/css/admin/menu.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+</head>
+
+<body>
+<div class="admin-containers">
+    <div class="menu-admin"></div>
+    <div class="content">
+        <div class="promotion-management">
+            <div class="promotion-management-title">
+                Quản lý khuyến mãi
+                <div class="search-promotion">
+                    <input type="text" placeholder="Tìm kiếm khuyến mãi...">
+                    <button class="btn-search"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            <hr>
+            <a href="">
+                <div class="add-new add-promotion">
+                    <i class="fas fa-plus"></i>
+                    Thêm mới
+                </div>
+            </a>
+
+            <div class="list-promotion">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Thông tin khuyến mãi</th>
+                        <th>Giảm giá(%)</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Ngày kết thúc</th>
+                        <th>Xem chi tiết</th>
+                        <th>Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody id="promotion-table-body">
+                    <!-- Data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="paging">
+                <!-- Pagination links will be inserted here by JavaScript -->
+            </div>
+
+            <!-- form add promotion -->
+            <div class="manager-container">
+                <div class="form-promotion-manager form-promotion-add">
+                    <i class="fas fa-times-circle close-icon"></i>
+                    <div class="form-promotion-manager-title form-promotion-add-title">Thêm mới khuyến mãi</div>
+                    <hr>
+                    <div class="form-promotion-manager-image form-promotion-add-image">
+                        <img src="https://via.placeholder.com/150?text=Ảnh" alt="ảnh khuyến mãi">
+                        <input type="file" class="image-upload" id="image-add" name="imageUrl" accept="image/*" />
+                        <button class="change-image-button">Chọn Ảnh</button>
+                    </div>
+                    <div class="form-promotion-manager-content form-promotion-add-content">
+                        <div class="content-promotion">
+                            <p>
+                                <span class="content-form-title">Thông tin:<span class="required-star">*</span></span>
+                                <input type="text" class="promotion-info" value="" name="info" placeholder="Nhập thông tin khuyến mãi">
+                            </p>
+                            <p>
+                                <span class="content-form-title">Giảm giá (%):<span class="required-star">*</span></span>
+                                <input type="number" class="promotion-discount" value="" name="discount" placeholder="Nhập phần trăm giảm giá">
+                            </p>
+                            <p>
+                                <span class="content-form-title">Ngày bắt đầu:<span class="required-star">*</span></span>
+                                <input type="datetime-local" class="promotion-startDate" value="" name="startDateTime">
+                            </p>
+                            <p>
+                                <span class="content-form-title">Ngày kết thúc:<span class="required-star">*</span></span>
+                                <input type="datetime-local" class="promotion-endDate" value="" name="endDateTime">
+                            </p>
+                            <p>
+                                <span class="content-form-title">Trạng thái:<span class="required-star">*</span></span>
+                                <select class="promotion-status" name="statusPromotion">
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                </select>
+                            </p>
+                        </div>
+                    </div>
+                    <button class="btn-manager-promotion btn-add-promotion">Thêm mới khuyến mãi</button>
+                </div>
+
+
+<!--            form detail promotion-->
+
+                <div class="form-promotion-manager form-promotion-edit">
+                    <i class="fas fa-times-circle close-icon"></i>
+                    <div class="form-promotion-manager-title form-promotion-edit-title">Thông tin chi tiết khuyến mãi</div>
+                    <hr>
+                    <div class="form-promotion-manager-image form-promotion-edit-image">
+                        <input type="hidden" id="promotion-imageUrl-update" value="">
+                        <img src="https://via.placeholder.com/150?text=Ảnh" id="img" alt="ảnh khuyến mãi">
+                        <input type="file" class="image-upload" id="image-update" name="image" accept="image/*" />
+                        <button class="change-image-button">Thay ảnh</button>
+                    </div>
+                    <div class="form-promotion-manager-content form-promotion-edit-content">
+                        <div class="content-promotion">
+                            <p><span class="content-form-title">Id:</span> <input style="background-color: #d2d0d0; color: black" type="text" class="promotion-id" id="promotion-id-update" readonly></p>
+                            <p>
+                                <span class="content-form-title">Thông tin:</span>
+                                <input type="text" class="promotion-info" id="promotion-info-update">
+                            </p>
+                            <p>
+                                <span class="content-form-title">Giảm giá (%):</span>
+                                <input type="number" class="promotion-discount" id="promotion-discount-update">
+                            </p>
+                            <p>
+                                <span class="content-form-title">Ngày bắt đầu:</span>
+                                <input type="datetime-local" class="promotion-startDate" id="promotion-startDateTime-update">
+                            </p>
+                            <p>
+                                <span class="content-form-title">Ngày kết thúc:</span>
+                                <input type="datetime-local" class="promotion-endDate" id="promotion-endDateTime-update">
+                            </p>
+                            <p>
+                                <span class="content-form-title">Trạng thái:</span>
+                                <select class="promotion-status" id="promotion-statusPromotion-update">
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                </select>
+                            </p>
+                        </div>
+                    </div>
+                    <button class="btn-manager-promotion btn-edit-promotion">Cập nhật khuyến mãi</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="/js/admin/promotion-manager.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.menu-admin').load("/menu", function () {
+            $.getScript('/js/admin/menu.js');
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('input[type="file"]').on('change', function () {
+            var $fileInput = $(this);
+            var $img = $fileInput.siblings('img');
+            var file = this.files[0];
+
+            if (file) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $img.attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+
+</script>
+</body>
+
+</html>

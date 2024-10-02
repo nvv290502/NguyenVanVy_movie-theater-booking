@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/admin/index.css">
+    <link rel="stylesheet" href="/css/admin/movies-manager.css">
+    <link rel="stylesheet" href="/css/admin/menu.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <title>Quản Lý Phim</title>
+</head>
+
+<body>
+    <div class="admin-containers">
+        <div class="menu-admin"></div>
+        <div class="background">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="movie-management">
+                <div class="movie-management-title">
+                    <i class="fas fa-home"></i>Trang Quản Trị
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Quản Lý Phim</span>
+                </div>
+                <hr>
+                <div class="list-manager list-movie">
+                    <div class="list-manager-head">
+                        <div style="display: flex">
+                            <div class="size-of-page">
+                                Show
+                                <select class="number-element-of-page-movie">
+                                    <option value="3">3</option>
+                                    <option value="6">6</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <a href="">
+                                <div class="add-new add-movie">
+                                    <i class="fas fa-plus"></i>
+                                    Thêm mới
+                                </div>
+                            </a>
+                        </div>
+                        <div class="search-movie">
+                            <input type="text" id="search-movie" placeholder="Tìm kiếm theo tên phim...">
+                            <button class="btn-search" id="btn-search-movie"><i class="fas fa-search"></i></button>
+                            <ul id="suggestions-list" class="suggestions-list"></ul>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="movie-sort" data-value="id" data-id="asc">Tăng dần</li>
+                                            <li class="movie-sort" data-value="id" data-id="desc">Giảm dần</li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Tên phim
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="movie-sort" data-value="name" data-id="asc">Tăng dần</li>
+                                            <li class="movie-sort" data-value="name" data-id="desc">Giảm dần</li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Thời lượng
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="movie-sort" data-value="duration" data-id="asc">Tăng dần</li>
+                                            <li class="movie-sort" data-value="duration" data-id="desc">Giảm dần</li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Ngày phát hành
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="movie-sort" data-value="releasedDate" data-id="asc">Tăng dần</li>
+                                            <li class="movie-sort" data-value="releasedDate" data-id="desc">Giảm dần
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Trạng thái
+                                    <!--                                    <a href="">-->
+                                    <!--                                        <i class="fas fa-caret-down"></i>-->
+                                    <!--                                    </a>-->
+                                    <!--                                    <div class="box-sort">-->
+                                    <!--                                        <ul>-->
+                                    <!--                                            <li>Đang chiếu</li>-->
+                                    <!--                                            <li>Ngừng chiếu</li>-->
+                                    <!--                                            <li>Sắp chiếu</li>-->
+                                    <!--                                        </ul>-->
+                                    <!--                                    </div>-->
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--form thêm mới phim-->
+                <div class="manager-container">
+                    <div class="form-movie-manager form-movie-add">
+                        <i class="fas fa-times-circle close-icon"></i>
+                        <div class="form-movie-manager-title form-movie-add-title">Thêm mới phim</div>
+                        <hr>
+                        <div class="form-movie-manager-image form-movie-add-image">
+                            <div class="image-small">
+                                <img src="https://via.placeholder.com/150?text=Ảnh+nhỏ" alt="ảnh nhỏ">
+                                <input type="file" class="image-small-upload" id="image-small-add" name="imageSmall"
+                                    accept="image/*" />
+                                <button class="change-image-button">Chọn Ảnh</button>
+                            </div>
+                            <div class="image-large">
+                                <img src="https://via.placeholder.com/300?text=Ảnh+lớn" alt="ảnh lớn">
+                                <input type="file" class="image-large-upload" id="image-large-add" name="imageLarge"
+                                    accept="image/*" />
+                                <button class="change-image-button">Chọn Ảnh</button>
+                            </div>
+                        </div>
+                        <div class="form-movie-manager-content form-movie-add-content">
+                            <div class="content-movie">
+                                <p style="display: none;"><span class="content-form-title">Id:</span> <input type="text"
+                                        class="movie-id" value="1" readonly></p>
+                                <p><span class="content-form-title">Tên phim:<span class="required-star">*</span></span>
+                                    <input type="text" class="movie-name" id="movie-name-add"
+                                        placeholder="Nhập tên phim">
+                                </p>
+                                <p><span class="content-form-title">Thời lượng:<span
+                                            class="required-star">*</span></span> <input style="width: 50% !important;"
+                                        type="number" class="movie-duration" id="movie-duration-add" value=""
+                                        placeholder="Nhập thời lượng"> phút</p>
+                                <p><span class="content-form-title">Ngày phát hành:<span
+                                            class="required-star">*</span></span> <input type="date"
+                                        class="movie-releaseDate" id="movie-releaseDate-add"
+                                        placeholder="Nhập ngày phát hành"></p>
+                                <p><span class="content-form-title">Thể loại:<span class="required-star">*</span></span>
+                                    <select class="movie-category" id="movie-category-add" multiple="multiple"
+                                        style="width: 100%;">
+
+                                    </select>
+                                </p>
+                                <p><span class="content-form-title">Tác giả:<span class="required-star">*</span></span>
+                                    <input type="text" class="movie-author" id="movie-author-add" value=""
+                                        placeholder="Nhập tác giả">
+                                </p>
+                                <p><span class="content-form-title">Diễn viên:<span
+                                            class="required-star">*</span></span> <input type="text" class="movie-actor"
+                                        id="movie-actor-add" value="" placeholder="Nhập diễn viên"></p>
+                            </div>
+                            <div class="content-movie">
+                                <p><span class="content-form-title">Ngôn ngữ:<span class="required-star">*</span></span>
+                                    <select class="movie-language" id="movie-language-add" multiple="multiple"
+                                        style="width: 100%;">
+                                        <option value="English">Tiếng Anh</option>
+                                        <option value="Vietnamese">Tiếng Việt</option>
+                                        <option value="Chinese">Tiếng Trung</option>
+                                        <option value="Japanese">Tiếng Nhật</option>
+                                        <option value="Korean">Tiếng Hàn</option>
+                                        <option value="French">Tiếng Pháp</option>
+                                        <option value="German">Tiếng Đức</option>
+                                        <option value="Spanish">Tiếng Tây Ban Nha</option>
+                                        <option value="Italian">Tiếng Ý</option>
+                                        <option value="Portuguese">Tiếng Bồ Đào Nha</option>
+                                    </select>
+                                </p>
+                                <p><span class="content-form-title">Trailer:</span> <input type="text"
+                                        class="movie-trailer" id="movie-trailer-add" value=""
+                                        placeholder="Nhập id trailer phim"></p>
+                                <p><span class="content-form-title">Tóm tắt:</span> <textarea class="movie-summary"
+                                        rows="4" id="movie-summary-add" placeholder="Nhập tóm tắt phim..."></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <button class="btn-manager-movie btn-add-movie">Thêm mới phim</button>
+                    </div>
+
+                    <!--                Form xem chi tiết và cập nhật phim-->
+                    <div class="form-movie-manager form-movie-detail">
+                        <i class="fas fa-times-circle close-icon"></i>
+                        <div class="form-movie-manager-title form-movie-detail-title">Thông tin chi tiết phim</div>
+                        <hr>
+                        <div class="form-movie-manager-image form-movie-detail-image">
+                            <input type="hidden" id="image-small-url-update" value="">
+                            <input type="hidden" id="image-large-url-update" value="">
+                            <div class="image-small">
+                                <img src="https://ravanna.vidangel.com/file/ravanna/b/8/movies-557_0010_03_b8a522c759d3ef7e.jpg"
+                                    id="img-small" alt="ảnh nhỏ">
+                                <input type="file" class="image-small-upload" id="image-small-update" name="imageSmall"
+                                    accept="image/*" />
+                                <button class="change-image-button">Thay ảnh</button>
+                            </div>
+                            <div class="image-large">
+                                <img src="https://external-preview.redd.it/68umXjmXGT9ea9hIybPy2jGLnYQ4MzzbSMXZZCVa_0s.jpg?auto=webp&s=e32c45691c2c2b3fcc362b7001f8038dbfbdb442"
+                                    id="img-large" alt="ảnh lớn">
+                                <input type="file" class="image-large-upload" id="image-large-update" name="imageLarge"
+                                    accept="image/*" />
+                                <button class="change-image-button">Thay ảnh</button>
+                            </div>
+                        </div>
+                        <div class="form-movie-manager-content form-movie-detail-content">
+                            <div class="content-movie">
+                                <p><span class="content-form-title">Id:</span> <input
+                                        style="background-color: #d2d0d0; color: black" type="text" class="movie-id"
+                                        id="movie-id-update" readonly></p>
+                                <p><span class="content-form-title">Tên phim:</span> <input type="text"
+                                        class="movie-name" id="movie-name-update"></p>
+                                <p><span class="content-form-title">Thời lượng:</span> <input
+                                        style="width: 50% !important;" type="number" class="movie-duration"
+                                        id="movie-duration-update"> phút</p>
+                                <p><span class="content-form-title">Ngày phát hành:</span> <input type="date"
+                                        class="movie-releaseDate" id="movie-releaseDate-update"></p>
+                                <p><span class="content-form-title">Thể loại:</span>
+                                    <select class="movie-category" id="movie-category-update" multiple="multiple"
+                                        style="width: 100%;">
+                                    </select>
+                                </p>
+                                <p><span class="content-form-title">Tác giả:</span> <input type="text"
+                                        class="movie-author" id="movie-author-update"></p>
+                                <p><span class="content-form-title">Diễn viên:</span> <input type="text"
+                                        class="movie-actor" id="movie-actor-update"></p>
+                            </div>
+                            <div class="content-movie">
+                                <p><span class="content-form-title">Ngôn ngữ:</span>
+                                    <select class="movie-language" id="movie-language-update" multiple="multiple"
+                                        style="width: 100%;">
+                                        <option value="English">Tiếng Anh</option>
+                                        <option value="Vietnamese">Tiếng Việt</option>
+                                        <option value="Chinese">Tiếng Trung</option>
+                                        <option value="Japanese">Tiếng Nhật</option>
+                                        <option value="Korean">Tiếng Hàn</option>
+                                        <option value="French">Tiếng Pháp</option>
+                                        <option value="German">Tiếng Đức</option>
+                                        <option value="Spanish">Tiếng Tây Ban Nha</option>
+                                        <option value="Italian">Tiếng Ý</option>
+                                        <option value="Portuguese">Tiếng Bồ Đào Nha</option>
+                                    </select>
+                                </p>
+                                <p><span class="content-form-title">Trailer:</span> <input type="text"
+                                        class="movie-trailer" id="movie-trailer-update"></p>
+                                <p><span class="content-form-title">Tóm tắt:</span> <textarea class="movie-summary"
+                                        id="movie-summary-update" rows="4"></textarea></p>
+                            </div>
+                        </div>
+                        <button class="btn-manager-movie btn-update-movie">Cập nhật phim</button>
+                    </div>
+                </div>
+
+
+                <div class="paging paging-movie">
+                    <a href="" class="paging-item previous">&laquo;</a>
+                    <div class="paging-number-movie">
+                    </div>
+                    <a href="" class="paging-item next">&raquo;</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/admin/movies-manager.js"></script>
+    <!--    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.menu-admin').load("/menu", function () {
+                $.getScript('/js/admin/menu.js');
+            });
+        });
+
+    </script>
+    <script>
+        var listMovieName = [];
+        var total = 0;
+
+        $(document).ready(function () {
+            // Xử lí việc select option chọn nhiều trường
+            $('.movie-category').select2({
+                tags: true,
+                placeholder: "Chọn thể loại",
+                multiple: true,
+                width: 'resolve'
+            });
+            $('.movie-language').select2({
+                tags: true,
+                placeholder: "Chọn ngôn ngữ",
+                multiple: true,
+                width: 'resolve'
+            });
+
+            // Xử lí việc chọn ảnh từ thiết bị để hiển thị lên
+            $('input[type="file"]').on('change', function () {
+                var $fileInput = $(this);
+                var $img = $fileInput.siblings('img');
+                var file = this.files[0];
+
+                if (file) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $img.attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+
+            var sizeElementMovie = localStorage.getItem('sizeElementMovie') || 6;
+            var numberPageMovie = 0;
+            var columnSort = "";
+            var sortType = "";
+
+            $('.number-element-of-page-movie').val(sizeElementMovie);
+
+            saveMovie();
+            updateMovie();
+            callApiGetCategory();
+            callApiGetAllMovie(numberPageMovie, sizeElementMovie, "", "");
+
+            $(document).on('change', '.number-element-of-page-movie', function () {
+                sizeElementMovie = $(this).val();
+                localStorage.setItem('sizeElementMovie', sizeElementMovie);
+                callApiGetAllMovie(numberPageMovie, sizeElementMovie, columnSort, sortType);
+            })
+
+            $(document).on('click', '.paging-item-movie', function (e) {
+                e.preventDefault();
+                numberPageMovie = $(this).data("value");
+                callApiGetAllMovie(numberPageMovie, sizeElementMovie, columnSort, sortType);
+            })
+
+            $(document).on('click', '.btn-detail-movie-manager', function (e) {
+                e.preventDefault();
+                var movieId = $(this).data('id');
+                callApiGetMovieById(movieId);
+            })
+
+            $(document).on('click', '.btn-update-isEnable', function () {
+                var $isEnable = $(this).data("value");
+                var $idMovie = $(this).data("id");
+                console.log($isEnable);
+                console.log($idMovie);
+                callApiUpdateIsEnable($idMovie, !$isEnable);
+            });
+
+            $(document).on('click', '.movie-sort', function () {
+                columnSort = $(this).data("value");
+                sortType = $(this).data("id");
+                callApiGetAllMovie(numberPageMovie, sizeElementMovie, columnSort, sortType);
+            });
+
+            $(document).on('click', '.next', function (e) {
+                e.preventDefault();
+                callApiGetAllMovie(total - 1, sizeElementMovie, columnSort, sortType);
+            })
+
+            $(document).on('click', '.previous', function (e) {
+                e.preventDefault();
+                callApiGetAllMovie(0, sizeElementMovie, columnSort, sortType);
+            })
+
+            $(document).on('click', '#btn-search-movie', function (e) {
+                e.preventDefault();
+                var name = $('#search-movie').val();
+                callApiSearchMovieByName(name);
+            })
+        });
+    </script>
+
+    <script>
+
+        function saveMovie() {
+            $(document).on('click', ".btn-add-movie", function (e) {
+                e.preventDefault();
+                var form = new FormData();
+                form.append('name', $('#movie-name-add').val());
+                var duration = $('#movie-duration-add').val();
+                if (duration !== "") {
+                    duration = parseInt($('#movie-duration-add').val(), 10);
+                }
+                form.append('duration', duration);
+                var releaseDate = new Date($('#movie-releaseDate-add').val());
+                var formattedDate = "";
+                if (!isNaN(releaseDate.getTime())) {
+                    formattedDate = releaseDate.toISOString().split('T')[0];
+                }
+                form.append('releasedDate', formattedDate);
+                var categoryIds = [];
+                $('#movie-category-add').find('option:selected').each(function () {
+                    categoryIds.push($(this).val());
+                });
+                console.log(categoryIds);
+                form.append('categoryId', JSON.stringify(categoryIds));
+                form.append('author', $('#movie-author-add').val());
+                form.append('actor', $('#movie-actor-add').val());
+                form.append('language', $('#movie-language-add').val().toString());
+                form.append('trailerUrl', $('#movie-trailer-add').val());
+                form.append('summary', $('#movie-summary-add').val());
+                var imageSmall = $('#image-small-add')[0].files[0];
+                var imageLarge = $('#image-large-add')[0].files[0];
+                form.append('imageSmall', imageSmall);
+                form.append('imageLarge', imageLarge);
+
+                callApiSaveMovie(form);
+            })
+        }
+        function callApiSaveMovie(formData) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/movie",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $('.background').hide();
+                    toastr.success(data.message);
+                    callApiGetAllMovie(0, localStorage.getItem('sizeElementMovie'), "", "");
+                    $('.form-movie-manager').css('opacity', '0').css('top', '150%');
+                    $('.manager-container').css('opacity', '0').css('z-index', '-1');
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiGetCategory(categoryValues) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/category",
+                method: "GET",
+                success: function (response) {
+                    var $select = $('.movie-category');
+                    $select.empty();
+                    for (var category of response.data.content) {
+                        renderCategoryInSelect(category);
+                    }
+                    $('#movie-category-update').val(categoryValues).trigger('change');
+
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function renderCategoryInSelect(category) {
+            var $select = $('.movie-category');
+            const option = `<option value="${category.id}">${category.name}</option>`;
+            $select.append(option);
+        }
+
+        function callApiGetAllMovie(page, size, column, sortType) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/movie?size=" + size + "&page=" + page + "&column=" + column + "&sortType=" + sortType,
+                method: "GET",
+                success: function (response) {
+                    $('.paging-number-movie').empty();
+                    $('.list-movie tbody').empty();
+                    total = response.data.totalPages;
+                    renderPagingNumberMovie(total, page);
+                    for (var movie of response.data.content) {
+                        renderMovie(movie);
+                    }
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function renderPagingNumberMovie(totalPages, currentPage) {
+            var pagingMovie = $('.paging-number-movie');
+            pagingMovie.empty();
+
+            const maxPagesToShow = 3; // Số trang tối đa để hiển thị
+            const pageRange = Math.floor(maxPagesToShow / 2); // Số trang trước và sau trang hiện tại
+            let startPage, endPage;
+
+            if (totalPages <= maxPagesToShow) {
+                // Nếu số trang nhỏ hơn số trang tối đa để hiển thị, hiển thị tất cả
+                startPage = 0;
+                endPage = totalPages - 1;
+            } else {
+                // Nếu không, chỉ hiển thị một số trang quanh trang hiện tại
+                if (currentPage <= pageRange) {
+                    startPage = 0;
+                    endPage = maxPagesToShow - 1;
+                } else if (currentPage + pageRange >= totalPages) {
+                    startPage = totalPages - maxPagesToShow;
+                    endPage = totalPages - 1;
+                } else {
+                    startPage = currentPage - pageRange;
+                    endPage = currentPage + pageRange;
+                }
+            }
+
+            if (startPage > 0) {
+                pagingMovie.append('<a href="#" class="paging-item paging-item-movie" data-value="0">1</a>');
+                if (startPage > 1) {
+                    pagingMovie.append('<span class="hidden-paging">...</span>');
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const isActive = i === currentPage ? 'active' : '';
+                pagingMovie.append(`<a href="#" class="paging-item paging-item-movie ${isActive}" data-value="${i}">${i + 1}</a>`);
+            }
+
+            if (endPage < totalPages - 1) {
+                if (endPage < totalPages - 2) {
+                    pagingMovie.append('<span class="hidden-paging">...</span>');
+                }
+                pagingMovie.append(`<a href="#" class="paging-item paging-item-movie" data-value="${totalPages - 1}">${totalPages}</a>`);
+            }
+
+        }
+        function renderMovie(movie) {
+            let btnEnableDisplay = movie.isEnable ? 'inline' : 'none';
+            let btnDisableDisplay = movie.isEnable ? 'none' : 'inline';
+            const movieTr = `<tr>
+                                <td>${movie.id}</td>
+                                <td>${movie.name}</td>
+                                <td>${movie.duration} phút</td>
+                                <td>${movie.releasedDate}</td>
+                                <td>${movie.status}</td>
+                                <td>
+                                    <button class="btn-detail btn-detail-movie-manager" data-id="${movie.id}">
+                                        <i class="fas fa-info-circle"></i>
+                                        Xem chi tiết
+                                    </button>
+                                    <button class = "btn-update-isEnable btn-enable movie-enable" data-id = "${movie.id}" data-value="${movie.isEnable}" style="display: ${btnEnableDisplay}">
+                                        <i class="fas fa-eye"></i>
+                                        Hiện
+                                    </button>
+                                    <button class = "btn-update-isEnable btn-disable movie-disable" data-id = "${movie.id}" data-value="${movie.isEnable}" style="display: ${btnDisableDisplay}">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Ẩn
+                                    </button>
+                                </td>`;
+            $('.list-movie tbody').append(movieTr);
+        }
+
+        function callApiGetMovieById(id) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/movie/" + id,
+                method: "GET",
+                success: function (response) {
+                    console.log(response);
+                    renderMovieDetail(response.data);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function renderMovieDetail(movie) {
+
+            $('#movie-id-update').val(movie.id);
+            $('#movie-name-update').val(movie.name);
+            $('#movie-duration-update').val(movie.duration);
+            $('#movie-releaseDate-update').val(movie.releasedDate);
+            $('#movie-author-update').val(movie.author);
+            $('#movie-actor-update').val(movie.actor);
+            $('#movie-summary-update').val(movie.summary);
+            $('#movie-trailer-update').val(movie.trailerUrl);
+            $('#image-small-url-update').val(movie.imageSmallUrl);
+            $('#image-large-url-update').val(movie.imageLargeUrl);
+
+            var $movieCategoryUpdate = $('#movie-category-update');
+            $movieCategoryUpdate.val(movie.categoryId);
+            var categoryValues = $movieCategoryUpdate.val();
+
+            $('#img-small').attr('src', movie.imageSmallUrl);
+            $('#img-large').attr('src', movie.imageLargeUrl);
+
+            var languages = movie.language ? movie.language.split(',').map(lang => lang.trim()) : [];
+            $('#movie-language-update').val(languages).trigger('change');
+            callApiGetCategory(categoryValues);
+
+        }
+
+        function updateMovie() {
+            $(document).on('click', ".btn-update-movie", function (e) {
+                e.preventDefault();
+                var form = new FormData();
+                form.append('id', parseInt($('#movie-id-update').val(), 10));
+                form.append('name', $('#movie-name-update').val());
+                var duration = $('#movie-duration-update').val();
+                if (duration !== "") {
+                    duration = parseInt(duration, 10);
+                }
+                form.append('duration', duration);
+                var releaseDate = new Date($('#movie-releaseDate-update').val());
+                var formattedDate = "";
+                if (!isNaN(releaseDate.getTime())) {
+                    formattedDate = releaseDate.toISOString().split('T')[0];
+                }
+                form.append('releasedDate', formattedDate);
+                var categoryIds = [];
+                $('#movie-category-update').find('option:selected').each(function () {
+                    categoryIds.push($(this).val());
+                });
+                form.append('categoryId', JSON.stringify(categoryIds));
+                form.append('author', $('#movie-author-update').val());
+                form.append('actor', $('#movie-actor-update').val());
+                form.append('language', $('#movie-language-update').val().toString());
+                form.append('trailerUrl', $('#movie-trailer-update').val());
+                form.append('summary', $('#movie-summary-update').val());
+
+                var imageSmallHidden = $('#image-small-url-update').val();
+                var imageLargeHidden = $('#image-large-url-update').val();
+
+                var fileInputSmall = $('#image-small-update')[0].files[0];
+                if (fileInputSmall) {
+                    form.append('imageSmall', fileInputSmall);
+                } else {
+                    form.append('imageSmallUrl', imageSmallHidden);
+                }
+
+                var fileInputLarge = $('#image-large-update')[0].files[0];
+                if (fileInputLarge) {
+                    form.append('imageLarge', fileInputLarge);
+                } else {
+                    form.append('imageLargeUrl', imageLargeHidden);
+                }
+
+                callApiUpdateMovie(form);
+            })
+        }
+
+        function callApiUpdateMovie(formData) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/movie",
+                type: "PUT",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $('.background').hide();
+                    toastr.success(data.message);
+                    callApiGetAllMovie(0, localStorage.getItem('sizeElementMovie'), "", "");
+                    $('.form-movie-manager').css('opacity', '0').css('top', '150%');
+                    $('.manager-container').css('opacity', '0').css('z-index', '-1');
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiUpdateIsEnable(id, isEnable) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/movie/isEnable?id=" + id + "&isEnable=" + isEnable,
+                method: "POST",
+                contentType: "application/json",
+                success: function (response) {
+                    updateMovieIsEnable(id, isEnable);
+                    toastr.success(response.message);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function updateMovieIsEnable(id, isEnable) {
+            var $row = $('button[data-id="' + id + '"]').closest('tr');
+            var $btnEnable = $row.find('.btn-enable');
+            var $btnDisable = $row.find('.btn-disable');
+
+            if (isEnable) {
+                $btnEnable.show();
+                $btnDisable.hide();
+            } else {
+                $btnEnable.hide();
+                $btnDisable.show();
+            }
+        }
+
+        $(document).ready(function () {
+
+            var suggestionsList = $('#suggestions-list');
+
+            callApiGetNameMovie();
+
+            $('#search-movie').on('input', function () {
+                var query = $(this).val().toLowerCase();
+                if (query.length >= 2) { // Chỉ hiển thị gợi ý khi người dùng gõ ít nhất 2 ký tự
+                    displaySuggestions(query);
+                } else {
+                    suggestionsList.empty();
+                }
+            });
+
+            function displaySuggestions(query) {
+                var filteredNames = listMovieName.filter(function (name) {
+                    return name.toLowerCase().includes(query);
+                });
+
+                suggestionsList.empty();
+
+                if (filteredNames.length === 0) {
+                    suggestionsList.append('<li>Không có gợi ý nào</li>');
+                } else {
+                    for (var name of filteredNames) {
+                        suggestionsList.append(`<li>${name}</li>`);
+                    }
+                }
+            }
+
+            suggestionsList.on('click', 'li', function () {
+                var selectedName = $(this).text();
+                $('#search-movie').val(selectedName);
+                $('#suggestions-list').empty();
+            });
+
+            $(document).on('click', function (event) {
+                if (!$(event.target).closest('#search-movie, #suggestions-list').length) {
+                    $('#suggestions-list').empty();
+                }
+            });
+        });
+
+        function callApiGetNameMovie() {
+            var settings = {
+                url: "http://localhost:8080/api/pub/movie/getName",
+                method: "GET",
+                success: function (response) {
+                    listMovieName = response.data;
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiSearchMovieByName(name) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/movie/search?name=" + name,
+                method: "GET",
+                success: function (response) {
+                    var idMovie = response.data.id;
+                    var numberPage = Math.ceil(idMovie / localStorage.getItem('sizeElementMovie'));
+                    callApiGetAllMovie(numberPage - 1, localStorage.getItem('sizeElementMovie'), "", "");
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+    </script>
+
+</body>
+
+</html>

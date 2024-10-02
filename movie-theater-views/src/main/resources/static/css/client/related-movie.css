@@ -1,0 +1,141 @@
+.related-movie-container {
+    width: 100%;
+    height: auto;
+    border: 1px solid #283e59;
+    border-bottom: none;
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 13px;
+}
+.related-movie-title {
+    color: rgb(173, 168, 165);
+    font-size: 18px;
+    font-weight: bold;
+    padding: 20px;
+    font-weight: 800;
+    border-bottom: 1px solid #283e59;
+}
+.card-related-movie {
+    width: 100%;
+    height: 100px;
+    border-bottom: 1px solid #283e59;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-related-movie img {
+    width: 120px;
+    min-width: 100px;
+    height: 80px;
+    margin: 0 10px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.related-movie-info {
+    color: rgb(173, 168, 165);
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80px;
+}
+
+.related-movie-title p,
+.related-movie-info p {
+    margin: 0;
+}
+.r-category {
+    color: #95aac9;
+}
+
+.r-name {
+    font-size: 18px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.r-duration,
+.r-released-date,
+.r-minus {
+    display: inline-block;
+}
+
+.r-duration {
+    border: 1px solid #283e59;
+    color: #283e59;
+    padding: 0 10px;
+}
+
+.btn-detail {
+    width: 30%;
+    height: 100%;
+    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.btn-detail button {
+    background: rgba(0, 0, 0, 0);
+    width: 0;
+    overflow: hidden;
+    height: 0;
+    border: none;
+    color: #283e59;
+    font-weight: bold;
+    transition:
+        width 0.5s ease,
+        background 0.5s ease;
+}
+.btn-detail button span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+.card-related-movie:hover {
+    background-color: #283e59;
+}
+.card-related-movie:hover .btn-detail button {
+    background-color: #283e59;
+    width: 100%;
+    height: 100%;
+    white-space: wrap;
+}
+
+@media (max-width: 789px) {
+    .r-name {
+        font-size: 15px;
+    }
+    .card-related-movie {
+        height: 80px;
+    }
+
+    .card-related-movie img,
+    .related-movie-info {
+        height: 70px;
+    }
+    .card-related-movie img {
+        min-width: 70px;
+        width: 90px;
+    }
+
+    .related-movie-info {
+        width: 60%;
+    }
+}
+
+@media (max-width: 489px) {
+    .related-movie-title p {
+        font-size: 16px;
+    }
+    .r-name {
+        font-size: 14px;
+    }
+    .related-movie-container {
+        font-size: 12px;
+    }
+}

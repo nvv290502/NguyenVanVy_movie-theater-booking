@@ -1,0 +1,122 @@
+.menu-bar {
+    width: 50px;
+    height: 100%;
+    background-color: #1b1b1b;
+    transition: width 0.5s ease-in-out;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    box-shadow: 0 5px 20px rgb(18, 18, 18);
+}
+.fa-angle-double-right {
+    font-size: 15px;
+    padding: 20px;
+    color: #716e6e;
+    cursor: pointer;
+}
+.menu-bar-top {
+    height: 150px;
+    color: rgb(178, 177, 177);
+    background-color: rgb(26, 27, 27);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    display: none;
+}
+
+.menu-bar-top .image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.menu-bar-top .name {
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.menu-bar-top .role {
+    display: flex;
+    align-items: center;
+}
+
+.menu-bar-top .role p {
+    margin-bottom: 0;
+    font-size: 10px;
+}
+
+.role i {
+    font-size: 10px;
+    margin-right: 5px;
+}
+
+.fa-angle-double-left {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    color: #c6c4c4;
+}
+
+.menu-bar-bottom ul {
+    padding-left: 0;
+}
+
+.menu-bar-bottom ul li {
+    list-style-type: none;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    font-size: 13px;
+    transition: background 0.3s ease;
+    color: #7f7c7c;
+    cursor: pointer;
+}
+
+.menu-bar-bottom ul li:hover,
+.menu-bar-bottom ul li.active,
+.logout:hover {
+    background-color: rgba(146, 146, 146, 0.5);
+    color: white;
+    font-weight: 400;
+    transform: scale(1.03);
+    color: #387ee5;
+}
+
+.menu-bar-bottom .fas,
+.fab {
+    padding-right: 10px;
+    min-width: 30px;
+}
+
+.logout {
+    width: 100%;
+    cursor: pointer;
+    height: auto;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #999898;
+    display: none;
+}
+
+.logout .fa-sign-out-alt {
+    font-size: 18px;
+}

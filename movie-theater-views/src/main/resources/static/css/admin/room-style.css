@@ -1,0 +1,72 @@
+.select2-container--default .select2-results__option--selected {
+  background-color: #656667 !important;
+}
+.toast-success {
+  background-color: #28a745 !important; /* Xanh lá cây cho thông báo thành công */
+}
+.toast-warning {
+  background-color: #ffc107 !important; /* Vàng cho thông báo cảnh báo */
+  color: black; /* Đặt màu chữ là đen để dễ đọc trên nền vàng */
+}
+.toast-error {
+  background-color: #dc3545 !important; /* Đỏ cho thông báo lỗi */
+}
+.custom-table {
+  border: 1px solid #000;
+  overflow: hidden;
+}
+.custom-table thead {
+  background-color: #000;
+  border-bottom: 1px solid #fff;
+}
+.custom-table tbody {
+  border: 1px solid rgba(0, 0, 0);
+}
+.custom-table th,
+.custom-table td {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+.bootstrap-table .fixed-table-pagination {
+  display: flex; /* Sử dụng flexbox */
+  justify-content: center; /* Căn giữa các phần tử con */
+  margin-top: 10px; /* Khoảng cách từ trên (nếu cần) */
+}
+/* Tùy chỉnh phần tử phân trang */
+.bootstrap-table .pagination {
+  display: inline-flex; /* Hiển thị phân trang theo hàng ngang */
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.bootstrap-table .pagination .page-link {
+  border: 1px solid #ddd; /* Đường viền cho các phần tử phân trang */
+  border-radius: 3px; /* Bo góc cho các phần tử phân trang */
+  padding: 10px 20px;
+  margin: 0px 10px; /* Padding cho các phần tử phân trang */
+}
+
+.bootstrap-table .pagination .page-item.active .page-link {
+  background-color: #0a78ee; /* Màu nền cho phần tử phân trang đang được chọn */
+  color: #fff; /* Màu chữ cho phần tử phân trang đang được chọn */
+  z-index: 1;
+}
+
+.bootstrap-table .pagination-info {
+  display: none;
+}
+
+.modal {
+  z-index: 2; /* Bootstrap default z-index for modals */
+}
+.modal-backdrop {
+  z-index: 1; /* Bootstrap default z-index for modal backdrops */
+}
+.bg-yeah {
+  background: radial-gradient(
+    circle,
+    rgb(52, 53, 97) 30%,
+    rgba(25, 26, 61, 1) 70%
+  );
+}

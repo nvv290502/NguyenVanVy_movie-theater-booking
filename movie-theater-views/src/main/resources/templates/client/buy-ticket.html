@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cụm rạp
+    </title>
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/header.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/client/buy-ticket.css">
+    <link rel="stylesheet" href="/css/client/slide.css">
+    <link rel="stylesheet" href="/css/client/count-down.css" />
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+
+<body>
+    <div class="background">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <div id="header"></div>
+    <div class="buy-ticket-page">
+        <div class="buy-ticket">
+            <div class="booking-more-movie">
+                <div class="booking-more-movie-image">
+                    <img id="info-image" src="" alt="">
+                </div>
+                <div class="booking-more-movie-info">
+                    <p class="info-name" id="info-name"></p>
+                    <div class="info-duration-category">
+                        <p class="info-category" id="info-category"></p>
+                        <p class="info-duration" id="info-duration"></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="buy-ticket-container">
+                <div class="buy-ticket-title">MUA VÉ NGAY!</div>
+                <div class="ticket-guide">
+                    Hướng dẫn:
+                    <span>B1: Chọn khu vực</span>
+                    <span>B2: Chọn ngày</span>
+                    <span>B3: Chọn rạp</span>
+                    <span>B4: Chọn khung giờ</span>
+                </div>
+                <div class="choose-city">
+                    <select name="city" id="city-select">
+                        <option value="" selected>Chọn thành phố</option>
+                        <option value="Hà Nội">Hà Nội</option>
+                        <option value="Đà Nẵng">Đà Nẵng</option>
+                        <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                    </select>
+                </div>
+                <div class="choose-day">
+                </div>
+                <div class="choose-cinema-parent">
+                </div>
+
+            </div>
+
+            <div class="btn-confirm">
+                <button id="choose-cinema-confirm">Xác nhận</button>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="count-down-container"></div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="/js/client/slide.js"></script>
+    <script src="/js/client/login.js"></script>
+    <script src="/js/client/checkToken.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#header').load("/header", function () {
+                checkAccessToken();
+                $.getScript("/js/client/header.js");
+            });
+
+            $('.count-down-container').load("/count-down", function () {
+                $.getScript("/js/client/count-down.js");
+            })
+        })
+    </script>
+
+    <script>
+        var categoryName = [];
+        var count = 0;
+        $(document).ready(function () {
+            //Hàm xử lý sự kiện khi chọn 1 rạp
+            $(document).on('click', '.cinema-item', function () {
+                $('.choose-cinema .cinema-item').removeClass('active');
+                $(this).addClass('active');
+                let cinemaId = $(this).data("cinema-id");
+                localStorage.setItem('cinema', cinemaId);
+                updateUrlParameter('cinema', cinemaId);
+                var $chooseTimes = $(this).siblings('.choose-times');
+                if ($chooseTimes.is(':visible')) {
+                    $chooseTimes.slideUp(); // Thu lại
+                } else {
+                    $('.choose-times').slideUp(); // Thu lại tất cả các phần tử khác
+                    $chooseTimes.slideDown(); // Xổ xuống phần tử này
+                }
+                displayedTimesByCinema.clear();
+            });
+
+            //Xử lý sự kiện khi click và nút "xác nhận"
+            $(document).on('click', '#choose-cinema-confirm', function (e) {
+                e.preventDefault();
+                // Lấy thông tin từ localStorage hoặc từ các phần tử DOM
+                const date = localStorage.getItem('showDate');
+                const cinema = localStorage.getItem('cinema');
+                const time = localStorage.getItem('showTime');
+
+                // Kiểm tra xem người dùng đã chọn đủ các yếu tố chưa
+                if (!date || !cinema || !time) {
+                    // Nếu chưa chọn đủ, hiển thị thông báo
+                    toastr.warning('Vui lòng chọn đầy đủ ngày, rạp và giờ chiếu!');
+                } else {
+                    // Nếu đã chọn đủ, chuyển hướng đến trang đặt vé
+                    window.location.href = "/booking";
+                }
+            });
+
+            const today = new Date();
+            const days = generateDays(today, 7); // Ngày hiện tại + 6 ngày sau
+
+            //hiển thị 7 ngày từ ngày hôm nay lên giao diện
+            const dayContainer = $('.choose-day');
+            dayContainer.empty();
+            days.forEach(day => {
+                dayContainer.append(`<span class="day" data-date="${day.fullDate}">${day.display}</span>`);
+            });
+
+            // var urlParams = new URLSearchParams(window.location.search);
+            // var id = urlParams.get('id');
+            var id = localStorage.getItem('movie');
+
+            var city = localStorage.getItem('city') || "";
+            var date = localStorage.getItem('showDate') || "";
+
+            // Đặt lớp active cho city đã chọn
+            $('#city-select').val(city);
+
+            // Đặt lớp active cho ngày đã chọn
+            $('.choose-day .day').each(function () {
+                if ($(this).data('date') === date) {
+                    $(this).addClass('active');
+                }
+            });
+            //Gọi hàm call api lấy danh sách phim
+            callApiGetMovieById(id);
+            //Call api lấy danh sách rạp theo id, city, date
+            callApiGetCinema(city, date, id);
+
+            //Xử lý sự kiện click vào một ngày
+            dayContainer.on('click', '.day', function () {
+                $('.choose-day .day').removeClass('active');
+                $(this).addClass('active');
+                date = $(this).data('date');
+                localStorage.setItem('showDate', date);
+                updateUrlParameter('date', date);
+                callApiGetCinema(city, date, id);
+                displayedTimesByCinema.clear();
+            });
+
+            //Xử lý sự kiện khi click vào 1 thành phố
+            $(document).on('click', '#city-select', function () {
+                city = $(this).val();
+                localStorage.setItem('city', city);
+                callApiGetCinema(city, date, id);
+                displayedTimesByCinema.clear();
+            });
+
+            //Xử lý sự kiện khi chọn 1 giờ chiếu
+            $(document).on('click', ".time", function () {
+                $('.choose-times .time').removeClass('active');
+                $(this).addClass('active');
+                let time = $(this).data("value");
+                localStorage.setItem('showTime', time);
+                updateUrlParameter('time', time);
+                displayedTimesByCinema.clear();
+            });
+
+        });
+
+        //Hàm xử lý lấy ngày theo ngày bắt đầu và số ngày sau đó
+        function generateDays(startDate, numberOfDays) {
+            const days = [];
+            for (let i = 0; i < numberOfDays; i++) {
+                const date = new Date(startDate);
+                date.setDate(date.getDate() + i);
+
+                const day = date.getDate().toString().padStart(2, '0');
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const year = date.getFullYear();
+
+                //Lưu thông tin ngày hiển thị lên và gía trị của ngày đó
+                days.push({
+                    display: `${day}/${month}`,
+                    fullDate: `${year}-${month}-${day}`
+                });
+            }
+            return days;
+        }
+
+        //Hàm call api lấy danh sách phim theo id
+        function callApiGetMovieById(id) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/movie/" + id,
+                method: "GET",
+                success: function (response) {
+                    $('.background').hide();
+                    renderInfoMovie(response.data);
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        //Hàm call api lấy danh sách thể loại theo id
+        function callApiGetCategoryById(id) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/category/" + id,
+                method: "GET",
+                success: function (response) {
+                    $('.background').hide();
+                    categoryName.push(response.data.name);
+                    count--;
+                    if (count === 0) {
+                        renderCategoryName();
+                    }
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+
+            $.ajax(settings);
+        }
+
+        //Hàm map data phim lên giao diện
+        function renderInfoMovie(movie) {
+            $('#info-name').text(movie.name);
+            $('#info-duration').text(movie.duration + " phút");
+            $('#info-image').attr('src', movie.imageLargeUrl).attr('alt', movie.name);
+            count = movie.categoryId.length;
+            for (let id of movie.categoryId) {
+                callApiGetCategoryById(id);
+            }
+        }
+
+        //Hàm map data thể loại lên giao diện
+        function renderCategoryName() {
+            var categoryString = categoryName.join(', ');
+            console.log(categoryString);
+            $('#info-category').text(categoryString);
+        }
+
+        //Hàm call api lấy danh sách rạp có suất chiếu theo thành phố, ngày chiếu, phim
+        function callApiGetCinema(city, date, id) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/cinema/showtime?movieId=" + id + "&city=" + city + "&showDate=" + date,
+                method: "GET",
+                contentType: "application/json",
+                success: function (response) {
+                    let chooseCinemaParent = $('.choose-cinema-parent');
+                    chooseCinemaParent.empty();
+                    if (response.length === 0) {
+                        chooseCinemaParent.append('<p>Không có suất chiếu!</p>');
+                    }
+                    else {
+                        for (let cinema of response) {
+                            renderCinema(cinema);
+                            callApiGetShowtime(id, city, date, cinema.id);
+                            restoreSelectedCinema();
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function renderCinema(cinema) {
+            const div = `<div class="choose-cinema">
+                           <div class="cinema-item" data-cinema-id="${cinema.id}">
+                            <img src="${cinema.imageUrl}"
+                                alt="${cinema.name}" class="cinema-image">
+                            <div class="cinema-info">
+                                <p class="cinema-name">${cinema.name}</p>
+                                <p class="cinema-address">${cinema.address}</p><br>
+                                <a href="" class="cinema-detail">Chi tiết rạp</a>
+                            </div>
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                        <div class="choose-times">
+                        </div>
+                    </div>`
+            $('.choose-cinema-parent').append(div);
+        }
+
+        //Hàm gọi api lấy danh sách suất chiếu.
+        function callApiGetShowtime(movieId, city, date, cinemaId) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/schedule/byCinema?movieId=" + movieId + "&city=" + city + "&showDate=" + date + "&cinemaId=" + cinemaId,
+                method: "GET",
+                contentType: "application/json",
+                success: function (response) {
+                    for (let sch of response) {
+                        renderShowTime(sch, cinemaId);
+                    }
+                    var showTime = localStorage.getItem('showTime') || "";
+                    // Đặt lớp active cho giờ chiếu đã chọn
+                    $('.choose-times .time').each(function () {
+                        if ($(this).data('value') === showTime) {
+                            $(this).addClass('active');
+                        }
+                    });
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        // Khởi tạo đối tượng để lưu trữ các thời gian chiếu đã hiển thị theo từng rạp
+        const displayedTimesByCinema = new Map();
+
+        function renderShowTime(schedule, cinemaId) {
+            let showDateTime = new Date(schedule.date + 'T' + schedule.time);
+            let now = new Date();
+            let isPast = showDateTime < now;
+            let showtimePast = isPast ? 'past-showtime' : '';
+
+            const cinemaItem = $(`.cinema-item[data-cinema-id="${cinemaId}"]`);
+            const chooseTimes = cinemaItem.siblings('.choose-times');
+
+            // Kiểm tra xem nếu thời gian đã được hiển thị cho rạp này chưa
+            if (!displayedTimesByCinema.has(cinemaId)) {
+                displayedTimesByCinema.set(cinemaId, new Set());
+            }
+
+            const displayedTimesForCinema = displayedTimesByCinema.get(cinemaId);
+
+            if (!displayedTimesForCinema.has(schedule.time)) {
+                // Thêm thời gian vào đối tượng đã hiển thị cho rạp này
+                displayedTimesForCinema.add(schedule.time);
+
+                // Thêm thời gian vào phần tử choose-times
+                const span = `<span class="time ${showtimePast}" data-value="${schedule.time}">${schedule.time}</span>`;
+                chooseTimes.append(span);
+            }
+        }
+
+
+        // Hàm cập nhật tham số trong URL
+        function updateUrlParameter(param, value) {
+            var url = new URL(window.location.href); // Lấy URL hiện tại
+            var params = new URLSearchParams(url.search); // Lấy các tham số hiện tại
+
+            if (value) {
+                params.set(param, value); // Cập nhật hoặc thêm tham số
+            } else {
+                params.delete(param); // Xóa tham số nếu giá trị rỗng
+            }
+
+            // Cập nhật URL trong thanh địa chỉ của trình duyệt
+            history.pushState({}, '', `${url.pathname}?${params.toString()}`);
+        }
+
+        function restoreSelectedCinema() {
+            var cinemaId = localStorage.getItem('cinema') || "";
+
+            // Đặt lớp active cho cinema đã chọn
+            $('.choose-cinema .cinema-item').each(function () {
+                if ($(this).data("cinema-id") === parseInt(cinemaId)) {
+                    $(this).addClass('active');
+                    $(this).siblings('.choose-times').slideDown();
+                }
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>

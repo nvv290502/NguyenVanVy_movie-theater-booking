@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cụm rạp
+    </title>
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/cinema.css">
+    <link rel="stylesheet" href="/css/client/header.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="/css/client/slide.css">
+    <link rel="stylesheet" href="/css/client/content.css">
+    <link rel="stylesheet" href="/css/client/footer.css">
+    <link rel="stylesheet" href="/css/client/count-down.css" />
+    <!-- <link rel="stylesheet" href="/css/movie-details.css"> -->
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <div class="cinema-container">
+        <div class="cinema-column">
+            <h3>Danh Sách Cụm Rạp <span style="color: white;display: flex; float: right;"><i
+                        class="fas fa-angle-double-right"></i></span></h3>
+            <div class="cinema-list">
+            </div>
+        </div>
+        <div class="showtimes-column">
+            <h3>Ngày Chiếu<span style="color: white;display: flex; float: right;"><i
+                        class="fas fa-angle-double-right"></i></span></h3>
+            <div class="date-list" id="date-list">
+                <!-- Ngày chiếu sẽ hiển thị ở đây -->
+            </div>
+            <h3>Khung Giờ Chiếu<span style="color: white;display: flex; float: right;"><i
+                        class="fas fa-angle-double-right"></i></span></h3>
+            <div class="showtimes" id="showtimes">
+                <!-- Khung giờ chiếu sẽ hiển thị ở đây -->
+            </div>
+        </div>
+
+        <div class="movies-column">
+            <h3>Phim Chiếu Trong Khung Giờ</h3>
+            <div class="movies" id="movies">
+                <!-- Thông tin phim sẽ hiển thị ở đây -->
+            </div>
+        </div>
+    </div>
+
+    <div id="map-container">
+        <button id="close-map">Đóng</button>
+        <div id="map"></div>
+    </div>
+
+    <div class="count-down-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="/css/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/client/slide.js"></script>
+    <script src="/js/client/cinema.js"></script>
+    <script src="/js/client/login.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            callApiGetAllCinema();
+
+            $('.count-down-container').load("/count-down", function () {
+                $.getScript("js/client/count-down.js");
+            })
+
+            //hàm xử lý sự kiện khi click vào 1 rạp
+            $(document).on('click', '.cinema-item', function () {
+                $('.cinema-item').removeClass('active');
+                $(this).addClass('active');
+                const cinemaId = $(this).data('cinema-id');
+                callApiGetShowTime(cinemaId, "");
+                displayedShowTime.clear();
+                $('#showtimes').empty();
+                $('.movies').empty();
+                localStorage.setItem('cinema', cinemaId);
+            });
+
+            //hàm xử lý sự kiện khi click vào 1 ngày chiếu
+            $(document).on('click', '.date-item', function () {
+                $('.date-item').removeClass('active');
+                $(this).addClass('active');
+                const date = $(this).data("date");
+                const cinemaId = localStorage.getItem('cinema');
+                callApiGetShowTime(cinemaId, date);
+                displayedShowTime.clear();
+                localStorage.setItem('showDate', date);
+            });
+
+            //hàm xử lý sự kiện khi click vào 1 giờ chiếu
+            $(document).on('click', '.showtime-item', function () {
+                $('.showtime-item').removeClass('active');
+                $(this).addClass('active');
+                const date = $(this).data("date");
+                const cinemaId = localStorage.getItem('cinema');
+                const time = $(this).data("time");
+                callApiGetMovieByShowTime(time, date, cinemaId);
+                localStorage.setItem('showTime', time);
+            });
+
+            //  Xử lí sự kiện click 1 phim trong khung giờ
+            $(document).on('click', '.movie-item', function () {
+                const movieId = $(this).data("id");
+                localStorage.setItem('movie', movieId);
+                window.location.href = "/booking?movie=" + movieId;
+            });
+        });
+        function callApiGetAllCinema() {
+            const settings = {
+                url: "http://localhost:8080/api/pub/cinema/isEnable",
+                method: "GET",
+                success: function (response) {
+                    const cinemaList = $('.cinema-list');
+                    cinemaList.empty();
+                    if (response.data.content.length === 0) {
+                        cinemaList.append('<p>Danh sách rạp trống!</p>')
+                    }
+                    for (let cinema of response.data.content) {
+                        renderCinema(cinema);
+                    }
+                },
+                error: function (xhr) {
+                    const response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function renderCinema(cinema) {
+            const cinemaItem = `<div class="cinema-item" data-cinema-id="${cinema.id}">
+                    <img src="${cinema.imageUrl}"
+                        alt="${cinema.name}" class="cinema-image">
+                    <div class="cinema-info">
+                        <p class="cinema-name">${cinema.name}</p>
+                        <p class="cinema-address">${cinema.address}</p>
+                        <a href="" class="cinema-detail" data-id="${cinema.id}">Chi tiết rạp</a>
+                        <span class="location-icon material-icons">location_on</span>
+                    </div>
+                </div>`
+            $('.cinema-list').append(cinemaItem);
+        }
+
+        const displayedShowTime = new Set();
+        function callApiGetShowTime(cinemaId, showDate) {
+            const settings = {
+                url: "http://localhost:8080/api/pub/schedule/byCinema?cinemaId=" + cinemaId + "&showDate=" + showDate,
+                method: "GET",
+                contentType: "application/json",
+                success: function (res) {
+                    if (showDate === "") {
+                        const dateList = $('#date-list');
+                        dateList.empty();
+                        if (res.length === 0) {
+                            $('.background').hide();
+                            dateList.append('<p style="color: red;">Không có suất chiếu!</p>');
+                        }
+                        for (let showtime of res) {
+                            if (!displayedShowTime.has(showtime.date)) {
+                                displayedShowTime.add(showtime.date);
+                                $('.background').hide();
+                                renderShowDateByCinema(showtime);
+                            }
+                        }
+                    }
+                    else {
+                        const showTime = $('#showtimes');
+                        showTime.empty();
+                        if (res.length === 0) {
+                            showTime.append('<p style="color: red;">Không có suất chiếu!</p>');
+                        }
+                        for (let showtime of res) {
+                            let showDateTime = new Date(showtime.date + 'T' + showtime.time);
+                            let now = new Date();
+                            let isPast = showDateTime < now;
+                            let showtimePast = isPast ? 'past-showtime' : '';
+
+                            if (!displayedShowTime.has(showtime.time)) {
+                                displayedShowTime.add(showtime.time);
+                                showTime.append(`<div class="showtime-item ${showtimePast}"
+                                                                        data-date="${showtime.date}"
+                                                                        data-time="${showtime.time}">${showtime.time}</div>`)
+                            }
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    const response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function renderShowDateByCinema(showtime) {
+            const date = `<div class="date-item" data-date="${showtime.date}">${showtime.date}</div>`
+            $('#date-list').append(date);
+        }
+
+        function callApiGetMovieByShowTime(showTime, showDate, cinemaId) {
+            const settings = {
+                url: "http://localhost:8080/api/pub/movie/byShowTime?showTime=" + showTime + "&showDate=" + showDate + "&cinemaId=" + cinemaId,
+                method: "GET",
+                contentType: "application/json",
+                success: function (res) {
+                    const mov = $('.movies');
+                    mov.empty();
+                    if (!res) {
+                        mov.append('<p style="color:red;">Không có suất chiếu!</p>')
+                    }
+                    else {
+                        for (let movie of res.data) {
+                            mov.append(`<div class="movie-item" data-id="${movie.id}">
+                            <img src="${movie.imageSmallUrl}" alt="${movie.name}" class="movie-image">
+                            <p class="movie-title">${movie.name}</p>
+                            </div>`)
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    const response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+    </script>
+
+</body>
+
+</html>

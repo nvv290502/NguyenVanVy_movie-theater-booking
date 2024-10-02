@@ -1,0 +1,368 @@
+.buy-ticket-page {
+    width: 100%;
+    height: auto;
+    margin-top: 60px;
+    background-color: rgb(26, 28, 30);
+}
+
+.buy-ticket {
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.booking-more-movie {
+    position: relative;
+    width: 100%;
+    height: 20%;
+}
+
+.booking-more-movie-image {
+    width: 100%;
+    height: 100%;
+}
+
+.booking-more-movie-image img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.booking-more-movie-info {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(1, 19, 51, 0.6);
+    z-index: 100;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-name {
+    margin: 0 auto;
+    max-width: 70%;
+    font-size: 30px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.info-category {
+    display: inline-block;
+    font-size: 15px;
+    color: rgb(0, 113, 251);
+    padding: 0 15px;
+    border-right: 2px solid blue;
+}
+
+.info-duration {
+    margin-left: 15px;
+    font-size: 13px;
+    color: #ccc;
+    background: linear-gradient(to right, rgb(180, 63, 63), rgb(26, 11, 141));
+    display: inline;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+.buy-ticket-container {
+    width: 50%;
+    height: auto;
+    margin: 0 auto;
+}
+.buy-ticket-title {
+    width: 100%;
+    text-align: center;
+    padding: 30px;
+    padding-bottom: 0;
+    font-weight: bold;
+    color: yellow;
+}
+
+.ticket-guide {
+    width: 100%;
+    font-weight: bold;
+    font-style: italic;
+    color: rgb(130, 191, 194);
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+}
+
+.ticket-guide span {
+    font-weight: normal;
+    margin-left: 10px;
+}
+
+.choose-city select {
+    width: 50%;
+    background-color: rgb(26, 28, 30);
+    color: rgb(95, 160, 200);
+    padding: 10px 20px;
+    text-align: left;
+    border: 1px solid rgb(95, 160, 200);
+}
+
+.choose-city option {
+    font-size: 15px;
+}
+
+.choose-day {
+    margin-top: 10px;
+    width: 100%;
+    height: 50px;
+    border: 1px solid rgb(95, 160, 200);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.choose-day .day:last-child {
+    border: none;
+}
+
+.choose-day span {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(95, 160, 200);
+    border-right: 1px solid rgb(95, 160, 200);
+}
+
+.choose-day .day {
+    width: calc((100% / 6));
+}
+
+.choose-cinema-parent {
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.choose-cinema-parent p {
+    color: white;
+}
+
+.cinema-item {
+    width: 100%;
+    margin-bottom: 5px;
+    height: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid rgb(95, 160, 200);
+    border-radius: 5px;
+    /* background-color: rgba(208, 209, 209, 0.8); */
+}
+.cinema-item i {
+    margin: 0 auto;
+    font-size: 20px;
+    color: #ccc;
+}
+
+.cinema-image {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.cinema-info {
+    width: 80%;
+    padding: 5px;
+    font-size: 15px;
+}
+
+.cinema-info p {
+    color: #ccc;
+    display: inline-block;
+    margin: 0;
+}
+
+.cinema-info .cinema-name {
+    font-weight: bold;
+}
+
+.cinema-info .cinema-address {
+    font-size: 13px;
+    color: rgb(95, 160, 200);
+}
+
+.cinema-info a {
+    color: rgb(10, 190, 290);
+    font-size: 12px;
+}
+.cinema-item,
+.choose-day span,
+.choose-city select {
+    transition: background 0.5s ease;
+}
+.choose-times .time:hover,
+.cinema-item:hover,
+.choose-day span:hover,
+.choose-city select:hover {
+    background-color: rgba(166, 176, 187, 0.2);
+}
+.choose-times .time.active,
+.cinema-item.active,
+.choose-day span.active,
+.choose-city select.active {
+    background-color: rgba(166, 176, 187, 0.2);
+}
+
+.choose-times {
+    width: 100%;
+    height: auto;
+    display: none;
+    transition: max-height 0.3s ease;
+}
+
+.choose-times .time {
+    display: flex;
+    float: left;
+    width: 60px;
+    height: 40px;
+    margin: 5px 0 10px 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    border-radius: 5px;
+    color: rgb(208, 216, 221);
+    border: 1px solid rgb(208, 216, 221);
+}
+
+.past-showtime {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.btn-confirm {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-confirm button {
+    width: 150px;
+    border-radius: 20px;
+    height: 100%;
+    color: white;
+    border: none;
+    background: linear-gradient(to right, rgb(95, 160, 200), rgb(16, 10, 181));
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+.btn-confirm button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(to right, rgb(16, 10, 181), rgb(95, 160, 200));
+}
+
+@media (max-width: 789px) {
+    .info-name {
+        font-size: 20px;
+        padding-top: 15px;
+    }
+    .booking-more-movie {
+        height: 15%;
+    }
+
+    .info-category {
+        font-size: 14px;
+    }
+
+    .info-duration {
+        font-size: 12px;
+    }
+    .buy-ticket-container {
+        width: 80%;
+    }
+
+    .choose-city select {
+        padding: 8px 10px;
+        font-size: 15px;
+    }
+
+    .choose-day {
+        width: 100%;
+        height: 50px;
+        font-size: 13px;
+    }
+
+    .cinema-info .cinema-name,
+    .cinema-info .cinema-address,
+    .cinema-info a,
+    .cinema-item i {
+        font-size: 12px;
+    }
+
+    .choose-times .time {
+        height: 30px;
+        font-size: 12px;
+    }
+    .ticket-guide {
+        font-size: 13px;
+        margin-left: 8px;
+    }
+    .btn-confirm button {
+        width: 100px;
+        height: 80%;
+        font-size: 13px;
+    }
+    .choose-cinema-parent {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 489px) {
+    .info-name {
+        font-size: 16px;
+        padding-top: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .booking-more-movie {
+        height: 20%;
+    }
+
+    .info-duration,
+    .info-category,
+    .choose-city select,
+    .choose-city select option {
+        font-size: 13px;
+    }
+    .buy-ticket-container {
+        width: 90%;
+    }
+    .ticket-guide {
+        display: flex;
+        flex-direction: column;
+        font-size: 12px;
+    }
+    .ticket-guide span {
+        margin-left: 0;
+    }
+    .btn-confirm button {
+        width: 100px;
+        font-size: 12px;
+    }
+    .choose-day {
+        height: 40px;
+    }
+    .cinema-info .cinema-address {
+        display: none;
+    }
+}

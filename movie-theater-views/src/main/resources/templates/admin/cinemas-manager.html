@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/admin/index.css">
+    <link rel="stylesheet" href="/css/admin/movies-manager.css">
+    <link rel="stylesheet" href="/css/admin/cinemas-manager.css">
+    <link rel="stylesheet" href="/css/admin/menu.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <title>Quản Lý Rạp</title>
+</head>
+
+<body>
+    <div class="admin-containers">
+        <div class="menu-admin"></div>
+        <div class="background">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="movie-management">
+                <div class="movie-management-title">
+                    <i class="fas fa-home"></i>Trang Quản Trị
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Quản Lý Rạp</span>
+                </div>
+                <hr>
+                <div class="list-manager list-cinema">
+                    <div class="list-manager-head">
+                        <div style="display: flex">
+                            <div class="size-of-page">
+                                Show
+                                <select class="number-element-of-page-cinema">
+                                    <option value="3">3</option>
+                                    <option value="6">6</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <a href="">
+                                <div class="add-new add-cinema">
+                                    <i class="fas fa-plus"></i>
+                                    Thêm mới
+                                </div>
+                            </a>
+                        </div>
+                        <div class="search-movie">
+                            <input type="text" id="search-cinema" placeholder="Tìm kiếm rạp ...">
+                            <button class="btn-search" id="btn-search-cinema"><i class="fas fa-search"></i></button>
+                            <ul id="suggestions-list" class="suggestions-list"></ul>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="cinema-sort" data-value="id" data-id="asc">Tăng dần</li>
+                                            <li class="cinema-sort" data-value="id" data-id="desc">Giảm dần</li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Tên rạp
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="cinema-sort" data-value="name" data-id="asc">Tăng dần</li>
+                                            <li class="cinema-sort" data-value="name" data-id="desc">Giảm dần</li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Địa chỉ
+                                    <a href="">
+                                        <i class="fas fa-caret-down"></i>
+                                    </a>
+                                    <div class="box-sort">
+                                        <ul>
+                                            <li class="cinema-sort" data-value="address" data-id="asc">Tăng dần</li>
+                                            <li class="cinema-sort" data-value="address" data-id="desc">Giảm dần</li>
+                                        </ul>
+                                    </div>
+                                </th>
+                                <th>Trạng thái
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Rap 1</td>
+                                <td>HA noi</td>
+                                <td>
+                                    <button class="btn-update-isEnable btn-enable">
+                                        <i class="fas fa-eye"></i>
+                                        IsEnable
+                                    </button>
+                                    <button class="btn-update-isEnable btn-disable">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Disable
+                                    </button>
+                                </td>
+                                <td>5
+                                    <button class="btn-manager-room">Quản lý phòng</button>
+                                </td>
+                                <td>
+                                    <button class="btn-detail btn-detail-cinema-manager">
+                                        <i class="fas fa-info-circle"></i>
+                                        Xem chi tiết
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Rap 1</td>
+                                <td>HA noi</td>
+                                <td>
+                                    <button class="btn-update-isEnable btn-enable">
+                                        <i class="fas fa-eye"></i>
+                                        IsEnable
+                                    </button>
+                                    <button class="btn-update-isEnable btn-disable">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Disable
+                                    </button>
+                                </td>
+                                <td>5
+                                    <button class="btn-manager-room">Quản lý phòng</button>
+                                </td>
+                                <td>
+                                    <button class="btn-detail btn-detail-cinema-manager">
+                                        <i class="fas fa-info-circle"></i>
+                                        Xem chi tiết
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Rap 1</td>
+                                <td>HA noi</td>
+                                <td>
+                                    <button class="btn-update-isEnable btn-enable">
+                                        <i class="fas fa-eye"></i>
+                                        IsEnable
+                                    </button>
+                                    <button class="btn-update-isEnable btn-disable">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Disable
+                                    </button>
+                                </td>
+                                <td>5
+                                    <button class="btn-manager-room">Quản lý phòng</button>
+                                </td>
+                                <td>
+                                    <button class="btn-detail btn-detail-cinema-manager">
+                                        <i class="fas fa-info-circle"></i>
+                                        Xem chi tiết
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--form thêm mới rap-->
+                <div class="manager-container-cinema">
+                    <div class="form-movie-manager form-cinema-add">
+                        <i class="fas fa-times-circle close-icon"></i>
+                        <div class="form-movie-manager-title form-movie-add-title">Thêm mới rạp</div>
+                        <hr>
+                        <div class="form-container">
+                            <div class="form-movie-manager-image form-cinema-add-image">
+                                <div class="image-large">
+                                    <img src="https://via.placeholder.com/300?text=cinema-image" alt="cinema image">
+                                    <input type="file" class="image-large-upload" id="image-large-add" name="imageLarge"
+                                        accept="image/*" />
+                                    <button class="change-image-button">Chọn Ảnh</button>
+                                </div>
+                            </div>
+                            <div class="form-movie-manager-content form-movie-add-content">
+                                <div class="content-movie content-cinema">
+                                    <p><span class="content-form-title">Tên rạp:<span
+                                                class="required-star">*</span></span>
+                                        <input type="text" class="cinema-name" id="cinema-name-add"
+                                            placeholder="Nhập tên rạp">
+                                    </p>
+                                    <p><span class="content-form-title">Địa chỉ:<span
+                                                class="required-star">*</span></span>
+                                        <input type="text" class="cinema-address" id="cinema-address-add"
+                                            placeholder="Nhập địa chỉ">
+                                    <p><span class="content-form-title">Hotline: <span
+                                                class="required-star">*</span></span>
+                                        <input type="phone" class="hotline" id="hotline-add" placeholder="Nhập hotline">
+                                    </p>
+                                    <p><span class="content-form-title">Mô tả: <span
+                                                class="required-star">*</span></span> <textarea
+                                            class="cinema-description" rows="4" id="cinema-description-add"
+                                            placeholder="Nhập mô tả..."></textarea>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-container">
+                            <button class="btn-manager-movie btn-add-cinema">Thêm mới rạp</button>
+                        </div>
+                    </div>
+
+                    <!--                Form xem chi tiết và cập nhật rap-->
+                    <div class="form-movie-manager form-cinema-detail">
+                        <i class="fas fa-times-circle close-icon"></i>
+                        <div class="form-movie-manager-title form-cinema-detail-title">Thông tin chi tiết rạp</div>
+                        <hr>
+                        <div class="form-container">
+                            <div class="form-movie-manager-image form-cinema-detail-image">
+                                <div class="image-large">
+                                    <img src="https://external-preview.redd.it/68umXjmXGT9ea9hIybPy2jGLnYQ4MzzbSMXZZCVa_0s.jpg?auto=webp&s=e32c45691c2c2b3fcc362b7001f8038dbfbdb442"
+                                        id="img-large" alt="ảnh lớn">
+                                    <input type="file" class="image-large-upload" id="image-large-update"
+                                        name="imageLarge" accept="image/*" />
+                                    <button class="change-image-button">Thay ảnh</button>
+                                </div>
+                            </div>
+                            <div class="form-movie-manager-content form-cinema-detail-content">
+                                <div class="content-movie content-cinema">
+                                    <p><span class="content-form-title">Id:</span> <input
+                                            style="background-color: #d2d0d0; color: black" type="text"
+                                            class="cinema-id" id="cinema-id-update" readonly></p>
+                                    <p><span class="content-form-title">Tên rạp:<span
+                                                class="required-star">*</span></span>
+                                        <input type="text" class="cinema-name" id="cinema-name-update"
+                                            placeholder="Nhập tên rạp">
+                                    </p>
+                                    <p><span class="content-form-title">Địa chỉ:<span
+                                                class="required-star">*</span></span>
+                                        <input type="text" class="cinema-address" id="cinema-address-update"
+                                            placeholder="Nhập địa chỉ">
+                                    <p><span class="content-form-title">Hotline: <span
+                                                class="required-star">*</span></span>
+                                        <input type="phone" class="hotline" id="hotline-update"
+                                            placeholder="Nhập hotline">
+                                    </p>
+                                    <p><span class="content-form-title">Mô tả:<span
+                                                class="required-star">*</span></span> <textarea
+                                            class="cinema-description" rows="4" id="cinema-description-update"
+                                            placeholder="Nhập mô tả..."></textarea>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-container">
+                            <button class="btn-manager-movie btn-update-cinema">Cập nhật rạp</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="paging paging-cinema">
+                    <a href="" class="paging-item previous">&laquo;</a>
+                    <div class="paging-number-cinema">
+                    </div>
+                    <a href="" class="paging-item next">&raquo;</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/admin/movies-manager.js"></script>
+    <!--    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.menu-admin').load("/menu", function () {
+                $.getScript('/js/admin/menu.js');
+            });
+        });
+
+        $(document).on('click', '.add-cinema', function (e) {
+            e.preventDefault();
+            $('.form-cinema-add').css('opacity', '1').css('top', '50%');
+            $('.manager-container-cinema').css('opacity', '1').css('z-index', '1');
+        });
+
+        $(document).on('click', '.btn-detail-cinema-manager', function (e) {
+            e.preventDefault();
+            $('.form-cinema-detail').css('opacity', '1').css('top', '50%');
+            $('.manager-container-cinema').css('opacity', '1').css('z-index', '1');
+        });
+
+        $(document).on('click', '.close-icon', function (e) {
+            e.preventDefault();
+            $('.form-cinema-manager').css('opacity', '0').css('top', '150%');
+            $('.manager-container-cinema').css('opacity', '0').css('z-index', '-1');
+        });
+
+        $(document).on('click', '.btn-manager-room', function (e) {
+            e.preventDefault();
+            const cinemaId = $(this).data('id');
+            window.location.href = "/rooms-manager?cinema=" + cinemaId;
+        });
+
+    </script>
+    <script>
+        var listCinemaName = [];
+        var total = 0;
+        $(document).ready(function () {
+
+            // Xử lí việc chọn ảnh từ thiết bị để hiển thị lên
+            $('input[type="file"]').on('change', function () {
+                var $fileInput = $(this);
+                var $img = $fileInput.siblings('img');
+                var file = this.files[0];
+
+                if (file) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $img.attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            var sizeElementCinema = localStorage.getItem('sizeElementCinema') || 6;
+            var numberPageCinema = 0;
+            var columnSort = "";
+            var sortType = "";
+
+            $('.number-element-of-page-cinema').val(sizeElementCinema);
+
+            saveCinema();
+            updateCinema();
+            callApiGetAllCinema(numberPageCinema, sizeElementCinema, "", "");
+
+            $(document).on('change', '.number-element-of-page-cinema', function () {
+                sizeElementCinema = $(this).val();
+                localStorage.setItem('sizeElementCinema', sizeElementCinema);
+                callApiGetAllCinema(numberPageCinema, sizeElementCinema, columnSort, sortType);
+            })
+
+            $(document).on('click', '.paging-item-cinema', function (e) {
+                e.preventDefault();
+                numberPageCinema = $(this).data("value");
+                callApiGetAllCinema(numberPageCinema, sizeElementCinema, columnSort, sortType);
+            })
+
+            $(document).on('click', '.btn-detail-cinema-manager', function (e) {
+                e.preventDefault();
+                var cinemaId = $(this).data('id');
+                console.log(cinemaId);
+                callApiGetCinemaById(cinemaId);
+            })
+
+            $(document).on('click', '.btn-update-isEnable', function () {
+                var $isEnable = $(this).data("value");
+                var $idCinema = $(this).data("id");
+                callApiUpdateIsEnable($idCinema, !$isEnable);
+            });
+
+            $(document).on('click', '.cinema-sort', function () {
+                columnSort = $(this).data("value");
+                sortType = $(this).data("id");
+                callApiGetAllCinema(numberPageCinema, sizeElementCinema, columnSort, sortType);
+            });
+
+            $(document).on('click', '.next', function (e) {
+                e.preventDefault();
+                callApiGetAllCinema(total - 1, sizeElementCinema, columnSort, sortType);
+            })
+
+            $(document).on('click', '.previous', function (e) {
+                e.preventDefault();
+                callApiGetAllCinema(0, sizeElementCinema, columnSort, sortType);
+            })
+
+            $(document).on('click', '#btn-search-cinema', function (e) {
+                e.preventDefault();
+                var name = $('#search-cinema').val();
+                callApiSearchCinemaByName(name);
+            })
+        });
+    </script>
+
+    <script>
+
+        function saveCinema() {
+            $(document).on('click', ".btn-add-cinema", function (e) {
+                e.preventDefault();
+                var form = new FormData();
+
+                form.append('name', $('#cinema-name-add').val());
+                form.append('address', $('#cinema-address-add').val());
+                form.append('hotline', $('#hotline-add').val());
+                form.append('description', $('#cinema-description-add').val());
+
+                var imageUrl = $('#image-large-add')[0].files[0];
+                form.append('imageUrl', imageUrl);
+
+                callApiSaveCinema(form);
+            })
+        }
+        function callApiSaveCinema(formData) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/cinema",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $('.background').hide();
+                    toastr.success(data.message);
+                    callApiGetAllCinema(0, localStorage.getItem('sizeElementCinema'), "", "");
+                    $('.form-cinema-manager').css('opacity', '0').css('top', '150%');
+                    $('.manager-container-cinema').css('opacity', '0').css('z-index', '-1');
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiGetAllCinema(page, size, column, sortType) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/cinema-paging?size=" + size + "&page=" + page + "&column=" + column + "&sortType=" + sortType,
+                method: "GET",
+                success: function (response) {
+                    $('.paging-number-cinema').empty();
+                    $('.list-cinema tbody').empty();
+                    total = response.data.totalPages;
+                    renderPagingNumberCinema(total, page);
+                    for (var cinema of response.data.content) {
+                        renderCinema(cinema);
+                    }
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function renderPagingNumberCinema(totalPages, currentPage) {
+            var pagingCinema = $('.paging-number-cinema');
+            pagingCinema.empty();
+
+            const maxPagesToShow = 3; // Số trang tối đa để hiển thị
+            const pageRange = Math.floor(maxPagesToShow / 2); // Số trang trước và sau trang hiện tại
+            let startPage, endPage;
+
+            if (totalPages <= maxPagesToShow) {
+                // Nếu số trang nhỏ hơn số trang tối đa để hiển thị, hiển thị tất cả
+                startPage = 0;
+                endPage = totalPages - 1;
+            } else {
+                // Nếu không, chỉ hiển thị một số trang quanh trang hiện tại
+                if (currentPage <= pageRange) {
+                    startPage = 0;
+                    endPage = maxPagesToShow - 1;
+                } else if (currentPage + pageRange >= totalPages) {
+                    startPage = totalPages - maxPagesToShow;
+                    endPage = totalPages - 1;
+                } else {
+                    startPage = currentPage - pageRange;
+                    endPage = currentPage + pageRange;
+                }
+            }
+
+            if (startPage > 0) {
+                pagingCinema.append('<a href="#" class="paging-item paging-item-cinema" data-value="0">1</a>');
+                if (startPage > 1) {
+                    pagingCinema.append('<span class="hidden-paging">...</span>');
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const isActive = i === currentPage ? 'active' : '';
+                pagingCinema.append(`<a href="#" class="paging-item paging-item-cinema ${isActive}" data-value="${i}">${i + 1}</a>`);
+            }
+
+            if (endPage < totalPages - 1) {
+                if (endPage < totalPages - 2) {
+                    pagingCinema.append('<span class="hidden-paging">...</span>');
+                }
+                pagingCinema.append(`<a href="#" class="paging-item paging-item-cinema" data-value="${totalPages - 1}">${totalPages}</a>`);
+            }
+
+        }
+        function renderCinema(cinema) {
+            let btnEnableDisplay = cinema.isEnabled ? 'inline' : 'none';
+            let btnDisableDisplay = cinema.isEnabled ? 'none' : 'inline';
+            const cinemaTr = `<tr>
+                                <td>${cinema.id}</td>
+                                <td>${cinema.name}</td>
+                                <td>${cinema.address}</td>
+                                <td>
+                                    <button class = "btn-update-isEnable btn-enable cinema-enable" data-id = "${cinema.id}" data-value="${cinema.isEnabled}" style="display: ${btnEnableDisplay}">
+                                        <i class="fas fa-eye"></i>
+                                        Enabled
+                                    </button>
+                                    <button class = "btn-update-isEnable btn-disable =cinema-disable" data-id = "${cinema.id}" data-value="${cinema.isEnabled}" style="display: ${btnDisableDisplay}">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Disabled
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn-detail btn-detail-cinema-manager" data-id="${cinema.id}">
+                                        <i class="fas fa-info-circle"></i>
+                                        Xem chi tiết
+                                    </button>
+                                    <button data-id="${cinema.id}" class="btn-manager-room">Quản lý phòng</button>
+                                </td>`;
+            $('.list-cinema tbody').append(cinemaTr);
+        }
+
+        function callApiGetCinemaById(id) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/cinema/" + id,
+                method: "GET",
+                success: function (response) {
+                    renderCinemaDetail(response);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function renderCinemaDetail(cinema) {
+            $('#cinema-id-update').val(cinema.id);
+            $('#cinema-name-update').val(cinema.name);
+            $('#cinema-address-update').val(cinema.address);
+            $('#img-large').attr('src', cinema.imageUrl);
+            $('#hotline-update').val(cinema.hotline);
+            $('#cinema-description-update').val(cinema.description);
+        }
+
+        function updateCinema() {
+            $(document).on('click', ".btn-update-cinema", function (e) {
+                e.preventDefault();
+                const cinemaId = parseInt($('#cinema-id-update').val(), 10);
+                var form = new FormData();
+                form.append('name', $('#cinema-name-update').val());
+                form.append('address', $('#cinema-address-update').val());
+                form.append('hotline', $('#hotline-update').val());
+                form.append('description', $('#cinema-description-update').val());
+
+                var imageUrl = $('#image-large-update')[0].files[0];
+                form.append('imageUrl', imageUrl);
+
+                callApiUpdateCinema(cinemaId, form);
+            })
+        }
+
+        function callApiUpdateCinema(cinemaId, formData) {
+            $('.background').show();
+            var settings = {
+                url: "http://localhost:8080/api/pub/cinema/" + cinemaId,
+                type: "PUT",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $('.background').hide();
+                    toastr.success(data.message);
+                    callApiGetAllCinema(0, localStorage.getItem('sizeElementCinema'), "", "");
+                    $('.form-cinema-manager').css('opacity', '0').css('top', '150%');
+                    $('.manager-container-cinema').css('opacity', '0').css('z-index', '-1');
+                },
+                error: function (xhr) {
+                    $('.background').hide();
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiUpdateIsEnable(id, isEnable) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/cinema/updateStatus?id=" + id + "&isEnable=" + isEnable,
+                method: "POST",
+                contentType: "application/json",
+                success: function (response) {
+                    updateCinemaIsEnable(id, isEnable);
+                    toastr.success(response.message);
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function updateCinemaIsEnable(id, isEnable) {
+            var $row = $('button[data-id="' + id + '"]').closest('tr');
+            var $btnEnable = $row.find('.btn-enable');
+            var $btnDisable = $row.find('.btn-disable');
+
+            if (isEnable) {
+                $btnEnable.show();
+                $btnDisable.hide();
+            } else {
+                $btnEnable.hide();
+                $btnDisable.show();
+            }
+        }
+
+        $(document).ready(function () {
+
+            var suggestionsList = $('#suggestions-list');
+
+            callApiGetNameCinema();
+
+            $('#search-cinema').on('input', function () {
+                var query = $(this).val().toLowerCase();
+                if (query.length >= 2) { // Chỉ hiển thị gợi ý khi người dùng gõ ít nhất 2 ký tự
+                    displaySuggestions(query);
+                } else {
+                    suggestionsList.empty();
+                }
+            });
+
+            function displaySuggestions(query) {
+                var filteredNames = listCinemaName.filter(function (name) {
+                    return name.toLowerCase().includes(query);
+                });
+
+                suggestionsList.empty();
+
+                if (filteredNames.length === 0) {
+                    suggestionsList.append('<li>Không có gợi ý nào</li>');
+                } else {
+                    for (var name of filteredNames) {
+                        suggestionsList.append(`<li>${name}</li>`);
+                    }
+                }
+            }
+
+            suggestionsList.on('click', 'li', function () {
+                var selectedName = $(this).text();
+                $('#search-cinema').val(selectedName);
+                $('#suggestions-list').empty();
+            });
+
+            $(document).on('click', function (event) {
+                if (!$(event.target).closest('#search-cinema, #suggestions-list').length) {
+                    $('#suggestions-list').empty();
+                }
+            });
+        });
+
+        function callApiGetNameCinema() {
+            var settings = {
+                url: "http://localhost:8080/api/pub/cinema/getName",
+                method: "GET",
+                success: function (response) {
+                    listCinemaName = response.data;
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+
+        function callApiSearchCinemaByName(name) {
+            var settings = {
+                url: "http://localhost:8080/api/pub/cinema/search?name=" + name,
+                method: "GET",
+                success: function (response) {
+                    var idCinema = response.data.id;
+                    var numberPage = Math.ceil(idCinema / localStorage.getItem('sizeElementCinema'));
+                    callApiGetAllCinema(numberPage - 1, localStorage.getItem('sizeElementCinema'), "", "");
+                },
+                error: function (xhr) {
+                    var response = JSON.parse(xhr.responseText);
+                    toastr.error(response.message);
+                }
+            }
+            $.ajax(settings);
+        }
+        // //Hàm call api số lượng phòng theo rạp
+        // function callApiGetNumberRoomByCinema(cinema, cinemaId) {
+        //     var settings = {
+        //         url: "http://localhost:8080/api/pub/room/by-cinema?cinemaId=" + cinemaId,
+        //         method: "GET",
+        //         success: function (response) {
+        //             const numberRoom = response.data.content.length;
+        //             renderCinema(cinema, numberRoom);
+        //         },
+        //         error: function (xhr) {
+        //             var response = JSON.parse(xhr.responseText);
+        //             toastr.error(response.message);
+        //         }
+        //     }
+        //     $.ajax(settings);
+        // }
+    </script>
+
+</body>
+
+</html>

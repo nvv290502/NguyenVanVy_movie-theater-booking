@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cụm rạp
+    </title>
+    <link rel="stylesheet" href="/css/libraries.css">
+    <link rel="stylesheet" href="/css/client/header.css">
+    <link rel="stylesheet" href="/css/client/index.css">
+    <link rel="stylesheet" href="/css/client/booking-more.css">
+    <link rel="stylesheet" href="/css/client/slide.css">
+    <link rel="stylesheet" href="/css/client/shop-food.css">
+    <link rel="stylesheet" href="/css/client/buy-ticket.css">
+    <link rel="stylesheet" href="/css/client/form-payment-food.css">
+    <link rel="stylesheet" href="/css/client/count-down.css" />
+</head>
+
+<body>
+    <div id="header"></div>
+    <div id="shop">
+    </div>
+    <div class="note">
+        <p>Hãy chọn đồ ăn sau đó ấn <strong>Xác nhận</strong>, nhập đúng và đầy đủ thông tin vào form!</p>
+        <p>Chúng tôi sẽ giao đồ ăn sau 10 đến 15 phút</p>
+        <p>Cảm ơn quý khách!</p>
+    </div>
+    <div class="btn-confirm" style="margin-bottom: 5%;">
+        <button>Xác nhận</button>
+    </div>
+
+    <div class="form-payment">
+
+    </div>
+
+    <div class="count-down-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="/js/client/login.js"></script>
+    <script src="/js/client/booking-more.js"></script>
+    <script src="/js/client/shop.js"></script>
+    <script src="/js/client/count-down.js"></script>
+
+
+    <!-- Tải header -->
+    <script>
+        $(document).ready(function () {
+            $('#header').load("/header", function () {
+                // checkAccessToken();
+                $.getScript("/js/client/header.js");
+            });
+
+            $('#shop').load("/shop", function () {
+                checkAccessToken();
+                $.getScript("/js/client/shop.js");
+            });
+
+            $('.count-down-container').load("/count-down", function () {
+                $.getScript("js/client/count-down.js");
+            })
+
+            $(document).on('click', '.btn-confirm', function (e) {
+                e.preventDefault();
+                let formPayment = $('.form-payment');
+                let order = [];
+                formPayment.css('display', 'block');
+                formPayment.load("/bill-food", function () {
+                    let tbody = $('.body-order');
+                    tbody.empty();
+                    let sumMoney = 0;
+                    for (let o of order) {
+                        renderOrder(o);
+                        sumMoney = sumMoney + o.sum;
+                    }
+                    tbody.append(`<tr class="total-row">
+                        <td colspan="2"><strong>Tổng cộng:</strong></td>
+                        <td id="grand-total">${sumMoney}</td>
+                    </tr>`);
+                });
+                $('html, body').animate({ scrollTop: 0 }, 'fast');
+                $('.product').each(function () {
+                    const name = $(this).find('.number-product').data("name");
+                    const quantity = parseInt($(this).find('.number-product').val(), 10);
+                    const price = parseFloat($(this).find('#food-price').text());
+                    if (quantity > 0) {
+                        order.push({
+                            name: name,
+                            quantity: quantity,
+                            sum: quantity * price
+                        });
+                    }
+                })
+            });
+
+            $(document).on('click', '.close-btn', function (e) {
+                e.preventDefault();
+                $('.form-payment').css('display', 'none');
+            });
+            callApiGetALlFood();
+        });
+
+        function renderOrder(order) {
+            const od = `<tr>
+                        <td>${order.name}</td>
+                        <td id="quantity">${order.quantity}</td>
+                        <td id="total-price">${order.sum}</td>
+                    </tr>`
+            $('.body-order').append(od);
+        }
+    </script>
+</body>
+
+</html>

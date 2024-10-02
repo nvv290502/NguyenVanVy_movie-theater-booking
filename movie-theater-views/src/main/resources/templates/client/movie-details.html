@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/libraries.css">
+  <link rel="stylesheet" href="/css/client/header.css">
+  <link rel="stylesheet" href="/css/client/index.css">
+  <!-- <link rel="stylesheet" href="/css/client/content.css"> -->
+  <link rel="stylesheet" href="/css/client/footer.css">
+  <link rel="stylesheet" href="/css/client/movieInfo.css">
+  <link rel="stylesheet" href="/css/client/related-movie.css">
+  <link rel="stylesheet" href="/css/client/count-down.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+</head>
+
+<body>
+  <div id="header"></div>
+
+  <div class="movie-detail">
+    <div class="movie-detail-top-bg">
+      <div class="movie-detail-top">
+        <img src="" alt="" class="movie-detail-image">
+        <div class="movie-top-info">
+          <div class="image">
+            <img id="movie-small-image" src="" alt="Movie Poster">
+          </div>
+          <div class="movie-top-container">
+            <p class="name-movie" id="movie-name"></p>
+            <div class="movie-info-container">
+              <div class="movie-info">
+                <div>
+                  <p class="category"><span class="category-name" id="category-name"></span></p>
+                </div>
+                <div class="action">
+                  <button class="like"><i class="fas fa-heart" style="font-size: 10px;"></i> Thích</button>
+                  <button class="buy-ticket"> Mua vé</button>
+                </div>
+                <div>
+                  <div class="movie-info-content">
+                    <span class="movie-title">Đạo diễn</span>:
+                    <span class="movie-content" id="movie-author"></span>
+                  </div>
+                  <div class="movie-info-content">
+                    <span class="movie-title">Diễn viên</span>:
+                    <span class="movie-content" id="movie-actor"></span>
+                  </div>
+                  <div class="movie-info-content">
+                    <span class="movie-title">Ngôn ngữ</span>:
+                    <span class="movie-content" id="movie-language"></span>
+                  </div>
+                </div>
+                <div class="movie-info-end">
+                  <div class="movie-info-end-element">
+                    <p style="margin-bottom: 0px;"><i class="far fa-star"></i></p>
+                    <p class="rating value">4.0</p>
+                  </div>
+                  <div class="movie-info-end-element">
+                    <p style="margin-bottom: 0px;"><i class="far fa-calendar-alt"></i></p>
+                    <p class="release-date value" id="movie-released-date"></p>
+                  </div>
+                  <div class="movie-info-end-element">
+                    <p style="margin-bottom: 0px;"> <i class="far fa-clock"></i></p>
+                    <p><span class="duration value" id="movie-duration"></span> phút</p>
+                  </div>
+                </div>
+              </div>
+              <div class="movie-summary-container">
+                <p id="movie-summary"></p>
+                <button class="see-more">Xem thêm</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="movie-detail-bottom">
+          <div class="menu">
+            <a href="/movie/info" id="thongtin">Thông Tin</a>
+            <a href="/movie/showtime" id="lichchieu">Lịch Chiếu</a>
+            <a href="/movie/review" id="danhgia">Đánh giá</a>
+          </div>
+          <div class="content-movie">
+
+          </div>
+        </div>
+
+        <div class="movie-detail-end">
+          <div class="related-movie">
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="count-down-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="/css/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/client/login.js"></script>
+    <script src="/js/client/slide.js"></script>
+    <script src="/js/client/cinema.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="/js/client/count-down.js"></script>
+
+
+    <script>
+      var size = 4;
+      $(document).ready(function () {
+
+        $('.count-down-container').load("/count-down", function () {
+          $.getScript("js/client/count-down.js");
+        })
+
+        callApiGetStatisticsReview(id);
+
+        let step = urlParams.get('step');
+        if (step === "review") {
+          $('.menu a').removeClass('active');
+          $('#danhgia').addClass('active');
+          $('.content-movie').load('/movie/review');
+          callApiGetStatisticsReview(id);
+          callApiGetReviewByUser(id, size);
+        } else {
+          $('#thongtin').addClass('active');
+          $('.content-movie').load("/movie/info");
+        }
+
+        $('.related-movie').load("/movie/related-movie");
+        $(document).on('click', '#thongtin', function (e) {
+          e.preventDefault();
+          $('.menu a').removeClass('active');
+          $(this).addClass('active');
+          $('.content-movie').load('/movie/info');
+          callApiGetMovieById(id);
+        });
+
+        $(document).on('click', '#lichchieu', function (e) {
+          e.preventDefault();
+          $('.menu a').removeClass('active');
+          $(this).addClass('active');
+          $('.content-movie').load('/movie/showtime');
+          callApiGetShowTimeByMovie(id);
+        });
+
+        $(document).on('click', '#danhgia', function (e) {
+          e.preventDefault();
+          $('.menu a').removeClass('active');
+          $(this).addClass('active');
+          $('.content-movie').load('/movie/review');
+          callApiGetStatisticsReview(id);
+          callApiGetReviewByUser(id, size);
+        });
+
+        $(document).on('click', ".btn-paging-review", function (e) {
+          e.preventDefault();
+          size += 4;
+          callApiGetReviewByUser(id, size);
+        });
+
+        $(document).on('click', ".like", function (e) {
+          e.preventDefault();
+          $(this).addClass('liked');
+        })
+      });
+
+    </script>
+    <script>
+      var urlParams = new URLSearchParams(window.location.search);
+      var id = urlParams.get('id');
+      var categoryName = [];
+      $(document).ready(function () {
+        //Xử lý sự kiện click vào nút mua vé
+        $(document).on('click', '.buy-ticket', function (e) {
+          e.preventDefault();
+          localStorage.setItem('movie', id);
+          window.location.href = "/movie/buy-ticket?id=" + id;
+        });
+        //Xử lý sự kiện click vào xme chi tiết phim liên quan
+        $(document).on('click', '.btn-detail', function (e) {
+          e.preventDefault();
+          window.location.href = "/movie?id=" + $(this).data("id");
+        });
+        //Xử lý sự kiện click vào mua vé ở lịch chiếu
+        $(document).on('click', '.btn-buy-ticket', function (e) {
+          e.preventDefault();
+          const cinemaId = $(this).data('cinema-id');
+          const roomId = $(this).data('room-id');
+          const showDate = $(this).data('date');
+          const showTime = $(this).data('time');
+          const movieId = $(this).data('movie');
+          localStorage.setItem('movie', movieId);
+          localStorage.setItem('room', roomId);
+          localStorage.setItem('showTime', showTime);
+          localStorage.setItem('showDate', showDate);
+          localStorage.setItem('cinema', cinemaId);
+          window.location.href = "/booking?step=1";
+        });
+
+        $(document).on('click', '.cinema-detail', function (e) {
+          e.preventDefault();
+          window.location.href = "/cinema/detail";
+        });
+
+        callApiGetMovieById(id);
+
+      });
+
+      //Hàm format time về dạng HH:mm
+      function formatTime(time) {
+        if (typeof time === 'string' && time.match(/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/)) {
+          const [hours, minutes] = time.split(':');
+          return `${hours}:${minutes}`;
+        }
+        return time;
+      }
+
+      //Hàm call api lấy danh sách phim theo id
+      function callApiGetMovieById(id) {
+        var settings = {
+          url: "http://localhost:8080/api/pub/movie/" + id,
+          method: "GET",
+          success: function (response) {
+            renderInfoMovie(response.data);
+            callApiGetMovieRelated(response.data.categoryId);
+            displaySummary();
+          },
+          error: function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response.message);
+          }
+        }
+        $.ajax(settings);
+      }
+
+      //Hàm call api lấy danh sách category theo id
+      function callApiGetCategoryById(id) {
+        var settings = {
+          url: "http://localhost:8080/api/pub/category/" + id,
+          method: "GET",
+          success: function (response) {
+            categoryName.push(response.data.name);
+            count--;
+            if (count === 0) {
+              renderCategoryName();
+            }
+          },
+          error: function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            toastr.error(response.message);
+          }
+        }
+
+        $.ajax(settings);
+      }
+      //Hàm map data phim lên giao diện
+      function renderInfoMovie(movie) {
+        $('#movie-name').text(movie.name);
+        $('#movie-duration').text(movie.duration);
+        $('#movie-released-date').text(formatDate(movie.releasedDate));
+        $('#movie-small-image').attr('src', movie.imageSmallUrl).attr('alt', movie.name);
+        $('.movie-detail-image').attr('src', movie.imageLargeUrl);
+        $('#movie-author').text(movie.author);
+        $('#movie-actor').text(movie.actor);
+        $('#movie-language').text(movie.language);
+        $('#movie-summary').text(movie.summary);
+        $('#movie-trailer').attr('src', 'https://www.youtube.com/embed/' + movie.trailerUrl);
+        count = movie.categoryId.length;
+        for (let id of movie.categoryId) {
+          callApiGetCategoryById(id);
+        }
+      }
+
+      //Hàm map data thể loại lên giao diện
+      function renderCategoryName() {
+        var categoryString = categoryName.join(', ');
+        $('#category-name').text(categoryString);
+        categoryName = [];
+      }
+
+      //hàm gọi api lấy danh sách phim liên quan.
+      function callApiGetMovieRelated(categoryIds) {
+        var settings = {
+          url: "http://localhost:8080/api/pub/movie/related?categoryIds=" + categoryIds,
+          method: "GET",
+          contentType: "application/json",
+          success: function (response) {
+            $('.related-movies').empty();
+            for (let movie of response.data) {
+              $(`.card-related-movie[data-id="${id}"]`).hide();
+              renderMovieRelated(movie);
+            }
+          },
+          error: function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response.message);
+          }
+        }
+        $.ajax(settings);
+      }
+
+      //Hàm map data giao diện danh sách phim liên quan
+      function renderMovieRelated(movie) {
+
+        let category = movie.categories;
+        let categoryName = category.map(c => c.name);
+        let categoryHtml = categoryName.join(', ');
+
+        const relatedDiv = `<div class="card-related-movie" data-id="${movie.id}">
+      <img src="${movie.imageSmallUrl}"
+           alt="${movie.name}">
+      <div class="related-movie-info">
+        <p class="r-name">${movie.name}</p>
+        <a href="#"><p class="r-category">${categoryHtml}</p></a>
+        <div>
+        <p class="r-released-date">${movie.releasedDate}</p>
+        <p class="r-minus" style="font-size: 12px; font-weight: bold;">-</p>
+        <p class="r-duration">${movie.duration} phút</p>
+        </div>
+      </div>
+      <div class="btn-detail" data-id="${movie.id}">
+        <button>
+          <span>Xem chi tiết</span>
+        </button>
+      </div>
+    </div>`
+        $('.related-movies').append(relatedDiv);
+        categoryName = [];
+      }
+
+      //Hàm call api lấy danh sách lịch chiếu theo phim
+      function callApiGetShowTimeByMovie(movieId) {
+        var settings = {
+          url: "http://localhost:8080/api/pub/showtime?movieId=" + movieId,
+          method: "GET",
+          success: function (response, status, xhr) {
+            $('tbody').empty();
+            if (xhr.status === 204) {
+              let boxInfo = $('.box-info-schedule');
+              boxInfo.empty();
+              boxInfo.append('<p style="margin: 0;">Không có suất chiếu nào!</p>')
+            }
+            else {
+              for (let showtime of response.data) {
+                renderShowTime(showtime);
+              }
+            }
+          },
+          error: function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response.message);
+          }
+        }
+        $.ajax(settings);
+      }
+
+      //Hàm map data danh sách lịch chiếu
+      function renderShowTime(showtime) {
+        let timeFormat = formatTime(showtime.showTime);
+        let showDateTime = new Date(showtime.showDate + 'T' + showtime.showTime);
+        let now = new Date();
+        let isPast = showDateTime < now;
+        let showtimePast = isPast ? 'past-showtime' : '';
+
+        const tr = `<tr>
+        <td><a class="cinema-detail" href="">${showtime.cinemaName}</a></td>
+        <td>${showtime.roomName}</td>
+        <td>${timeFormat}</td>
+        <td>${showtime.showDate}</td>
+        <td><button class="btn-buy-ticket ${showtimePast}"  data-cinema-id="${showtime.cinemaId}"
+                                            data-room-id="${showtime.roomId}"
+                                            data-time="${showtime.showTime}"
+                                            data-date="${showtime.showDate}"
+                                            data-movie="${id}">
+                                            <i class="fas fa-ticket-alt"></i> Mua Vé</button></td>
+      </tr>`
+        $('tbody').append(tr);
+      }
+
+      //Hàm gọi api lấy thông kê đánh giá theo phim
+      function callApiGetStatisticsReview(movieId) {
+        var settings = {
+          url: "http://localhost:8080/api/pub/review-statistics?movieId=" + movieId,
+          method: "GET",
+          success: function (response) {
+            $('.rating').text(response.data.rating);
+            $('.score').text(response.data.rating);
+            $('#rating-count').text(response.data.countRating);
+            $('#comment-count').text(response.data.countComment);
+
+            const ratingCounts = response.data.ratingCounts;
+            $('.rating-label-five-star').text(ratingCounts['5'] || 0);
+            $('.rating-label-four-star').text(ratingCounts['4'] || 0);
+            $('.rating-label-three-star').text(ratingCounts['3'] || 0);
+            $('.rating-label-two-star').text(ratingCounts['2'] || 0);
+            $('.rating-label-one-star').text(ratingCounts['1'] || 0);
+
+          },
+          error: function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response.message);
+            toastr.error("Có lỗi khi tải dữ liệu!");
+          }
+        }
+        $.ajax(settings);
+      }
+
+      //Hàm gọi api lấy đánh giá theo movieId
+      function callApiGetReviewByUser(movieId, size) {
+        const settings = {
+          url: "http://localhost:8080/api/pub/review?movieId=" + movieId + "&size=" + size,
+          method: "GET",
+          success: function (res) {
+            $('.review-parent').empty();
+            for (let review of res.data.content) {
+              renderReview(review);
+            }
+          },
+          error: function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response.message);
+            toastr.error("Có lỗi khi tải dữ liệu!");
+          }
+        }
+        $.ajax(settings);
+      }
+
+      //Hàm map dữ liệu hiển thị danh sách đánh giá
+      function renderReview(review) {
+        const stars = review.numberStar;
+        let createdDate = review.createdDate;
+        let formatCreatedDate = formatDateTime(createdDate);
+
+        let starHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          if (i <= stars) {
+            starHtml += '&#9733;';
+          } else {
+            starHtml += '&#9734;';
+          }
+        }
+        const div = `<div class="review">
+           <div class="review-left">
+              <img src="${review.user.avatarUrl}" alt="${review.user.fullName}" class="reviewer-img">
+              <div class="stars">
+                ${starHtml}
+              </div>
+            </div>
+            <div class="review-right">
+              <div class="reviewer-info">
+                  <span class="reviewer-name">${review.user.fullName}</span>
+                  <span class="reviewer-date">${formatCreatedDate}</span>
+              </div>
+              <div class="review-content">
+                  <p class="review-text">${review.comment}
+                  </p>
+              </div>
+              <div class="review-like">
+                <i class="fas fa-thumbs-up"></i>
+                <i class="fas fa-thumbs-down"></i>
+              </div>
+            </div>
+            
+        </div>`
+        $('.review-parent').append(div);
+      }
+
+      //Hàm định dạng kiểu localDateTime
+      function formatDateTime(dateTimeString) {
+        const date = new Date(dateTimeString);
+
+        const options = {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        };
+
+        return date.toLocaleString('vi-VN', options);
+      }
+
+      //hàm định dạng ngày tháng năm theo kiểu DD-MM-YYYY
+      function formatDate(dateString) {
+        if (dateString == undefined) {
+          return "";
+        }
+        let [year, month, day] = dateString.split('-');
+
+        return `${day}.${month}.${year}`;
+      }
+
+      //hàm thu gọn tóm tắt phim
+      function displaySummary() {
+        const summary = $('#movie-summary');
+        const seeMore = $('.movie-summary-container .see-more');
+
+        if (summary[0].scrollHeight > summary[0].clientHeight) {
+          seeMore.addClass('active');
+        }
+
+        $(document).on('click', '.see-more', function () {
+          const seeMore = $(this);
+          if (summary.hasClass('expanded')) {
+            summary.removeClass('expanded');
+            summary.css('max-height', '160px');
+            seeMore.text('Xem thêm');
+          } else {
+            summary.addClass('expanded');
+            summary.css('max-height', summary[0].scrollHeight + 'px');
+            seeMore.text('Thu gọn');
+          }
+        })
+      }
+    </script>
+</body>
+
+</html>
